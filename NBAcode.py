@@ -1,12 +1,21 @@
+"""
 NBA code
 
-"""
 Project: NBA shot data visualization
 Authors: Bryce Mann, Juan Carlos del Rio, Maya Calabria
 Abstract: This project will pull data directly from https://stats.nba.com/ to offer
             users a interactive map to visually explore the history of shot trends by
             team, player, or conference.
 """
+
+
+
+import pandas as pd
+# import nba_data as nba
+import numpy as np
+import requests as r
+import json
+
 
 # Call data
 def data_construction():
@@ -48,3 +57,7 @@ def plot_heat_map():
 ### prepare py files
 ### upload to server
 ### scaling?
+
+
+if __name__ == "__main__":
+    print(shots.head())
