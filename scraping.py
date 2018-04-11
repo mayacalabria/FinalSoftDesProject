@@ -3,15 +3,16 @@ import pandas as pd
 import numpy as np
 import requests as r
 import json
+from nba_py.player import get_player
+from nba_py import shotchart
 
-url = 'http://stats.nba.com/stats/playerdashptshotlog?'+ \
-    'DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&' + \
-    'Location=&Month=0&OpponentTeamID=0&Outcome=&Period=0&' + \
-    'PlayerID=201939&Season=2014-15&SeasonSegment=&' + \
-    'SeasonType=Regular+Season&TeamID=0&VsConference=&VsDivision='
+player_id = get_player('Kevin','Durant')
 
-response = r.get(url)
-shots = response.json()['resultSets'][0]['rowSet']
+kevin_durant = shotchart.ShotChart(player_id,season='2012-13')
+
+shots = kevin_durant.shot_chart()
+
+
 
 
 
@@ -68,4 +69,4 @@ shots = response.json()['resultSets'][0]['rowSet']
 # df = pd.DataFrame(shots,columns=rows)
 #
 #
-#
+print(shots)
