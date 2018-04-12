@@ -1,3 +1,7 @@
+"""
+TO INSTALL:
+pip nba_py
+"""
 import pandas as pd
 # import nba_data as nba
 import numpy as np
@@ -5,68 +9,29 @@ import requests as r
 import json
 from nba_py.player import get_player
 from nba_py import shotchart
+import csv
 
-player_id = get_player('Kevin','Durant')
+def get_data():
+    first = 'Lebron'
+    last = 'James'
+    year = '2012-13'
+    player_id = get_player(first, last)
+    Lebron_James = shotchart.ShotChart(player_id,season = year)
+    shots = Lebron_James.shot_chart()
+    return shots
 
-kevin_durant = shotchart.ShotChart(player_id,season='2012-13')
+def write_to_csv():
+    to_write = get_data()
+    fieldnames = []
+    for row in to_write:
+        fieldnames = fieldnames +[row]
 
-shots = kevin_durant.shot_chart()
+    with open('shot_database.csv', 'w', newline='') as database:
+        writer = csv.DictWriter(database, fieldnames=fieldnames)
+        writer.writeheader()
+        i = 0
+        for row in to_write:
+            writer.writerow({'LOC_X': to_write.LOC_X[250],'LOC_Y': to_write.LOC_Y[250]})
+            i = i+1
 
-
-
-
-
-# # shots_url = 'https://stats.nba.com/stats/shotchartdetail?AheadBehind=&CFID=33&CFPARAMS=2017-18&ClutchTime=&Conference=&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&Division=&EndPeriod=10&EndRange=28800&GROUP_ID=&GameEventID=&GameID=&GameSegment=&GroupID=&GroupMode=&GroupQuantity=5&LastNGames=0&LeagueID=00&Location=&Month=0&OnOff=&OpponentTeamID=0&Outcome=&PORound=0&Period=0&PlayerID=202330&PlayerID1=&PlayerID2=&PlayerID3=&PlayerID4=&PlayerID5=&PlayerPosition=&PointDiff=&Position=&RangeType=0&RookieYear=&Season=2017-18&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StartPeriod=1&StartRange=0&StarterBench=&TeamID=0&VsConference=&VsDivision=&VsPlayerID1=&VsPlayerID2=&VsPlayerID3=&VsPlayerID4=&VsPlayerID5=&VsTeamID=.json'
-# # # player_list = nba.player.commonallplayers(currentseason=0)
-# headers = {
-# 'User-Agent':'Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion'
-# }
-# player_id = 201939
-# season = '2015-16'
-# season_type = 'Regular Season'
-#
-# # request parameters
-# req_params = {
-#  'AheadBehind': '',
-#  'ClutchTime': '',
-#  'ContextFilter': '',
-#  'ContextMeasure': 'FGA',
-#  'DateFrom': '',
-#  'DateTo': '',
-#  'EndPeriod': '',
-#  'EndRange': '',
-#  'GameID': '',
-#  'GameSegment': '',
-#  'LastNGames': 0,
-#  'LeagueID': '00',
-#  'Location': '',
-#  'Month': 0,
-#  'OpponentTeamID': 0,
-#  'Outcome': '',
-#  'Period': 0,
-#  'PlayerID': player_id,
-#  'PointDiff': '',
-#  'Position': '',
-#  'RangeType': '',
-#  'RookieYear': '',
-#  'Season': season,
-#  'SeasonSegment': '',
-#  'SeasonType': season_type,
-#  'StartPeriod': '',
-#  'StartRange': '',
-#  'TeamID': 0,
-#  'VsConference': '',
-#  'VsDivision': ''
-# }
-#
-# res = r.get('http://stats.nba.com/stats/shotchartdetail', params=req_params, headers=headers)
-#
-#
-# # response.raise_for_status()
-# shots = res.json()
-# rows = shots['resultSets'][0]['headers']
-# shots = shots['resultSets'][0]['rowSet']
-# df = pd.DataFrame(shots,columns=rows)
-#
-#
-print(shots)
+write_to_csv()
