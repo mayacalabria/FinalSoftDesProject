@@ -1,9 +1,11 @@
 """
+Development environment for scraping shot data from nba.com and storing it to a local csv
+by JC del Rio
+Uses nba_py to insterface with nba.com JSON data files
 TO INSTALL:
 pip nba_py
 """
 import pandas as pd
-# import nba_data as nba
 import numpy as np
 import requests as r
 import json
@@ -11,22 +13,30 @@ from nba_py.player import get_player
 from nba_py import shotchart
 import csv
 
+# Uses integrated classes from nba.py to pull shot data for a given player and year
 def get_data():
+    #Lebron is a place holder, first, last and year will be inputs int the future
     first = 'Lebron'
     last = 'James'
     year = '2012-13'
     player_id = get_player(first, last)
+    #ShotChart creates a readable dictionary of all the data
     Lebron_James = shotchart.ShotChart(player_id,season = year)
     shots = Lebron_James.shot_chart()
     return shots
 
+# Takes the data obtained by get_data and creates a csv with the stored data
+#will take desired csv name as an input in the future
 def write_to_csv():
+    #creates temporary structure form the data from get_data
     to_write = get_data()
     fieldnames = []
+    #looks at to_write and obtains the headers for each column
     for row in to_write:
         fieldnames = fieldnames +[row]
 
-    with open('shot_database_plus.csv', 'w+', newline='') as database:
+    #creates csv file, the  name will be pulled in as an input
+    with open('Lebron_James_2012_2013.csv', 'w+', newline='') as database:
         writer = csv.DictWriter(database, fieldnames=fieldnames)
         writer.writeheader()
         for i in range(0,len(to_write)):
