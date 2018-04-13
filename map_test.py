@@ -30,33 +30,48 @@ def generate_scatter(shots):
 ### Trying to plot only the shots that were made
 # success = []
 # for i in range(len(shots)):
-#     x = shots["LOC_X"][i]
-#     y = shots["LOC_Y"][i]
+#     # x = shots["LOC_X"][i]
+#     # y = shots["LOC_Y"][i]
 #     if shots["SHOT_MADE_FLAG"][i] == 1:
 #         shots.pop(shots.iloc[i])
 
 
-def heat_map(shots):
-    """ Creates heat map from a pandas structure
+def success_heat_map(shots,display=True):
+    """ Creates heat map of all made shots from a pandas structure
     resources: https://seaborn.pydata.org/examples/hexbin_marginals.html
     """
+    successes = shots[(shots.SHOT_MADE_FLAG==1)]
+    sns.set(style="ticks")
+    xs = successes["LOC_X"]
+    ys = successes["LOC_Y"]
+    sns.jointplot(xs, ys, kind="kde", stat_func=None, color="#57c838") ##4CB391
+    if display == True:
+        title = '{} {}'.format(shots["PLAYER_NAME"][0], 'made shots')
+        plt.title(title, x=-5.3,y=1.2)
+        plt.show()
 
+def full_heat_map(shots,display=True):
+    """ Creates heat map of all attempted shots from a pandas structure """
     sns.set(style="ticks")
     xs = shots["LOC_X"]
     ys = shots["LOC_Y"]
-    sns.jointplot(xs, ys, kind="kde", stat_func=kendalltau, color="#FF1200") ##4CB391
+    sns.jointplot(xs, ys, kind="kde", stat_func=None, color="#bb38c8") ##4CB391
+    if display == True:
+        title = '{} {}'.format(shots["PLAYER_NAME"][0], 'attempted shots')
+        plt.title(title, x=-5.3,y=1.2)
+        plt.show()
 
 
 
 if __name__ == "__main__":
-    # Kevin Durant
+    # # Kevin Durant
     durant_shots = generate_shots('Kevin','Durant','2017-18')
     generate_scatter(durant_shots)
-    heat_map(durant_shots)
+    full_heat_map(durant_shots)
+    success_heat_map(durant_shots)
 
-    # James Harden
+    # # James Harden
     harden_shots = generate_shots('James','Harden','2017-18')
     generate_scatter(harden_shots)
-    heat_map(harden_shots)
-
-    plt.show()
+    success_heat_map(harden_shots)
+    full_heat_map(harden_shots)
