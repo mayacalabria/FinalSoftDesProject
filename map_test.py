@@ -25,6 +25,9 @@ def generate_scatter(shots):
             plt.plot(x,y,'go')
         else:
             plt.plot(x,y,'ro')
+        plt.axis('equal')
+        plt.ylim(-100,400)
+
 
 
 ### Trying to plot only the shots that were made
@@ -41,24 +44,26 @@ def success_heat_map(shots,display=True):
     resources: https://seaborn.pydata.org/examples/hexbin_marginals.html
     """
     successes = shots[(shots.SHOT_MADE_FLAG==1)]
-    sns.set(style="ticks")
+    sns.set_style("white")
     xs = successes["LOC_X"]
     ys = successes["LOC_Y"]
     sns.jointplot(xs, ys, kind="kde", stat_func=None, color="#57c838") ##4CB391
     if display == True:
         title = '{} {}'.format(shots["PLAYER_NAME"][0], 'made shots')
-        plt.title(title, x=-5.3,y=1.2)
+        plt.title(title, x=-4,y=1.2)
+        plt.ylim(-100,400)
         plt.show()
 
 def full_heat_map(shots,display=True):
     """ Creates heat map of all attempted shots from a pandas structure """
-    sns.set(style="ticks")
+    sns.set_style("white")
     xs = shots["LOC_X"]
     ys = shots["LOC_Y"]
     sns.jointplot(xs, ys, kind="kde", stat_func=None, color="#bb38c8") ##4CB391
     if display == True:
         title = '{} {}'.format(shots["PLAYER_NAME"][0], 'attempted shots')
-        plt.title(title, x=-5.3,y=1.2)
+        plt.title(title, x=-4,y=1.2)
+        plt.ylim(-100,400)
         plt.show()
 
 
