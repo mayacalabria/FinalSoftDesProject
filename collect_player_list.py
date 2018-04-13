@@ -1,6 +1,7 @@
 from nba_py.player import *
 from nba_py import shotchart
 import requests
+import json
 import numpy as np
 import pickle
 
@@ -23,9 +24,10 @@ player_list = pickle.load(open('player_list.pickle','rb'))
 usable_pids = []
 all_info = []
 
-for i in player_list[:5]:
+for i in player_list[:6]:
     if i == 'Yao Ming':
         first = i
+        last = None
     else:
         name = i.split()
         first = name[0]
@@ -55,4 +57,5 @@ for idx1,i in enumerate(all_info):
 
 
 #print(get_player('Kevin','Durant',just_id=False).TO_YEAR)
-print(shot_data_list)
+for i in shot_data_list:
+    print(i.json['parameters']['Season'])
