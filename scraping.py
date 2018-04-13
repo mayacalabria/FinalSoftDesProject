@@ -26,7 +26,7 @@ def write_to_csv():
     for row in to_write:
         fieldnames = fieldnames +[row]
 
-    with open('shot_database.csv', 'w', newline='') as database:
+    with open('shot_database_plus.csv', 'w+', newline='') as database:
         writer = csv.DictWriter(database, fieldnames=fieldnames)
         writer.writeheader()
         for i in range(0,len(to_write)):

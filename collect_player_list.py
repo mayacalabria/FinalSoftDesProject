@@ -7,8 +7,6 @@ from the internet every time and run this script overnight"""
 
 from nba_py.player import *
 from nba_py import shotchart
-import requests
-import json
 import numpy as np
 import pickle
 
@@ -39,7 +37,7 @@ player_list = pickle.load(open('player_list.pickle','rb'))
 all_info = []
 
 #loop through player list to format names correctly for get_player function
-for i in player_list[:6]:
+for i in player_list[:4]:
 
     #random test revealed Yao Ming's name needed to be formatted this way
     #it might apply to others but that is too much manual checking to do
