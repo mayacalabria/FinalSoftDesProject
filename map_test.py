@@ -15,12 +15,13 @@ def generate_shots(first,last,season):
     shots = player.shot_chart()
     return shots
 
-
 def generate_scatter(shots):
     """ Creates scatter plot of all shots taken by player over season """
+    #evaluate each shot individually
     for i in range(len(shots)):
         x = shots["LOC_X"][i]
         y = shots["LOC_Y"][i]
+        #plot made shots as green and missed shots as red
         if shots["SHOT_MADE_FLAG"][i] == 1:
             plt.plot(x,y,'go')
         else:
@@ -28,25 +29,16 @@ def generate_scatter(shots):
         plt.axis('equal')
         plt.ylim(-100,400)
 
-
-
-### Trying to plot only the shots that were made
-# success = []
-# for i in range(len(shots)):
-#     # x = shots["LOC_X"][i]
-#     # y = shots["LOC_Y"][i]
-#     if shots["SHOT_MADE_FLAG"][i] == 1:
-#         shots.pop(shots.iloc[i])
-
-
 def success_heat_map(shots,display=True):
     """ Creates heat map of all made shots from a pandas structure
     resources: https://seaborn.pydata.org/examples/hexbin_marginals.html
     """
+    #create separate pandas structure for made shots
     successes = shots[(shots.SHOT_MADE_FLAG==1)]
     sns.set_style("white")
     xs = successes["LOC_X"]
     ys = successes["LOC_Y"]
+    #heat map of made shots
     sns.jointplot(xs, ys, kind="kde", stat_func=None, color="#57c838") ##4CB391
     if display == True:
         title = '{} {}'.format(shots["PLAYER_NAME"][0], 'made shots')
@@ -59,14 +51,13 @@ def full_heat_map(shots,display=True):
     sns.set_style("white")
     xs = shots["LOC_X"]
     ys = shots["LOC_Y"]
+    #heat map of all shots
     sns.jointplot(xs, ys, kind="kde", stat_func=None, color="#bb38c8") ##4CB391
     if display == True:
         title = '{} {}'.format(shots["PLAYER_NAME"][0], 'attempted shots')
         plt.title(title, x=-4,y=1.2)
         plt.ylim(-100,400)
         plt.show()
-
-
 
 if __name__ == "__main__":
     # # Kevin Durant
