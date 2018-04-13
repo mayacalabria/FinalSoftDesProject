@@ -29,9 +29,19 @@ def write_to_csv():
     with open('shot_database.csv', 'w', newline='') as database:
         writer = csv.DictWriter(database, fieldnames=fieldnames)
         writer.writeheader()
-        i = 0
-        for row in to_write:
-            writer.writerow({'LOC_X': to_write.LOC_X[250],'LOC_Y': to_write.LOC_Y[250]})
-            i = i+1
+        for i in range(0,len(to_write)):
+            writer.writerow({'GRID_TYPE': to_write.GRID_TYPE[i],
+            'GAME_ID':to_write.GAME_ID[i],'GAME_EVENT_ID':to_write.GAME_EVENT_ID[i],
+            'PLAYER_ID':to_write.PLAYER_ID[i],'PLAYER_NAME':to_write.PLAYER_NAME[i],
+            'TEAM_ID':to_write.TEAM_ID[i],'TEAM_NAME':to_write.TEAM_NAME[i],
+            'PERIOD':to_write.PERIOD[i],'MINUTES_REMAINING':to_write.MINUTES_REMAINING[i]
+            ,'SECONDS_REMAINING':to_write.SECONDS_REMAINING[i],
+            'EVENT_TYPE':to_write.EVENT_TYPE[i],'ACTION_TYPE':to_write.ACTION_TYPE[i],
+            'SHOT_TYPE':to_write.SHOT_TYPE[i],'SHOT_ZONE_BASIC':to_write.SHOT_ZONE_BASIC[i],
+            'SHOT_ZONE_AREA':to_write.SHOT_ZONE_AREA[i],'SHOT_ZONE_RANGE':to_write.SHOT_ZONE_RANGE[i],
+            'SHOT_DISTANCE':to_write.SHOT_DISTANCE[i],'LOC_X': to_write.LOC_X[i],
+            'LOC_Y': to_write.LOC_Y[i],'SHOT_ATTEMPTED_FLAG': to_write.SHOT_ATTEMPTED_FLAG[i],
+            'SHOT_MADE_FLAG': to_write.SHOT_MADE_FLAG[i],'GAME_DATE': to_write.GAME_DATE[i],
+            'HTM': to_write.HTM[i],'VTM': to_write.VTM[i]})
 
 write_to_csv()
