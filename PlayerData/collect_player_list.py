@@ -7,9 +7,10 @@ from the internet every time and run this script overnight"""
 
 from nba_py.player import *
 from nba_py import shotchart
+import pandas as pd
 import numpy as np
 import pickle
-from scraping.py import write_to_csv
+from scraping import write_to_csv
 
 #only seasons where shot position data was collected
 iterate_through_seasons = range(1996,2018)
@@ -71,9 +72,11 @@ shot_data_list = []
 for idx1,i in enumerate(all_info):
     #only continue if they played at all after shot data is collected
     if int(i.TO_YEAR)>1996:
-        name = i.DISPLAY_FIRST_LAST.replace(' ','')
+        name = str(i.DISPLAY_FIRST_LAST).split()
+        name = ''.join(name[1:3])
         #loop through all seasons that have data
         for idx2,j in enumerate(seasons):
+            first_half = j[:4]
             #take care of issue where year is 1999-00
             if idx2==3:
                 second_half = '2000'
@@ -82,12 +85,17 @@ for idx1,i in enumerate(all_info):
                 second_half = j[:2]+j[5:]
             #check if the second half of the current year is still during career
             #of player
-            if int(second_half) <= int(i.TO_YEAR):
+            if int(second_half) <= int(i.TO_YEAR) and int(first_half) >= int(i.FROM_YEAR):
                 #finally add shot data to list
                 #shot_data_list.append(shotchart.ShotChart(i.PERSON_ID[idx1],season=j))
-                shots = shotchart.ShotChart(i.PERSON_ID[idx1],season=j).shot_chart
-                write_to_csv(shots,name,j)
+                shots = shotchart.ShotChart(i.PERSON_ID[idx1],season=j).shot_chart()
+                if shots.empty:
+                    pass
+                else:
+                    write_to_csv(shots,name,j)
 
 #quick verification that only data from the correct years are being stored
-#for i in all_info:
-#    print(i)
+# for i in all_info:
+#     a = str(i.DISPLAY_FIRST_LAST).split()
+#     b = ''
+#     print(b.join(a[1:3]))
