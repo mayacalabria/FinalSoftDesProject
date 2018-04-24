@@ -15,6 +15,7 @@ import pickle
 import os.path
 import pandas as pd
 
+
 def generate_shots_fromNBA(first,last,season):
     """ Takes first, last, and season as string,
     returns pandas structure of all shots
@@ -23,17 +24,18 @@ def generate_shots_fromNBA(first,last,season):
     player = shotchart.ShotChart(player_id,season=season)
     shots = player.shot_chart()
     return shots
-    ### rewrite to pull the correct csv
 
-
-def generate_shots(first,last,season):
+def generate_shots(first,last,season): # currently can't access 2017-18 season
+    """ Takes first, last, and season as string,
+    returns pandas structure of all shots from locally stored
+    data CSVs
+    """
 
     pid_dict = pickle.load(open('pid_dict.pickle','rb'))
     new_dict = {v: k for k, v in pid_dict.items()}
     player_id = new_dict[first.title()+' '+last.title()]
-    # playerData = '/home/maya/miniprojects/PlayerData'
+    # shots_dir should be named relatively eventually
     shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData/'+player_id+'/'+season+'.csv'))
-    # shots = open(shots_dir,'r')
     shots = pd.DataFrame.from_csv(shots_dir)
     return shots
 
@@ -70,7 +72,10 @@ def hist_heat(shots, bin_size = 60):
     plt.axis('off')
     plt.show()
 
-def hex_plot(shots):
+def hex_plot(shots, binsize=5):
+    """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
+    optional binsize, controls resolution
+    """
     xs = []
     ys = []
     for i in range(len(shots)):
@@ -122,24 +127,20 @@ def full_heat_map(shots,display=True):
 
 if __name__ == "__main__":
     # # # Kevin Durant
-    # durant_shots = generate_shots('Kevin','Durant','2017-18')
+    durant_shots = generate_shots('Kevin','Durant','2016-17')
     # generate_scatter(durant_shots)
     # full_heat_map(durant_shots)
     # success_heat_map(durant_shots)
     # hist_heat(durant_shots)
-    # hex_plot(durant_shots)
+    hex_plot(durant_shots)
     # print(durant_shots)
 
-    durant = generate_shots('Kevin','Durant','2016-17')
-    full_heat_map(durant)
 
-    # print(durant)
-    # durant = shotchart.ShotChart(201142)
-    # avgs = durant.league_average()
-    # print(avgs)
-    #
+
+
     # # James Harden
-    # harden_shots = generate_shots('James','Harden','2017-18') ## consider point weighting
+    harden_shots = generate_shots('James','Harden','2016-17') ## consider point weighting
+    hex_plot(harden_shots)
     # generate_scatter(harden_shots)
     # success_heat_map(harden_shots)
     # full_heat_map(harden_shots)
