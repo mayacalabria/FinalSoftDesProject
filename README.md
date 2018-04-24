@@ -1,3 +1,10 @@
+# NBA Shot Atlas
+For our final project in Software Design, we wanted to create an interactive data map for shot location in the NBA. User can interact with the data by selecting either individual players, teams, or the entire league...
+
+
+
+
+
 # FinalSoftDesProject
 NBA Shot Data Viz (eventually) integrated into our project website.
 
