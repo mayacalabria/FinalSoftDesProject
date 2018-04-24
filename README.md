@@ -15,3 +15,6 @@ $pip install scipy
 $python -m pip install matplotlib
 
 $sudo apt-get install python3-pandas
+
+# install bokeh
+$pip install bokeh
