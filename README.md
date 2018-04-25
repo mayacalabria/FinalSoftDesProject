@@ -11,6 +11,7 @@ As avid followers of the sport the main movtivation of this project was to creat
 ***
 
 #Data Collection and Processing
+
 ![System Arhitecture](ClassMaterials/updated_architecture_diagram.png)
 
 ## NBA.com
@@ -19,7 +20,7 @@ The NBA hosts and upates shot statistics for every player and every game on thei
 
 ## Python Heat Map Plots
 
-We then proceeded to use this data to 
+We then proceeded to use this data to plot het maps. (We will write more about this process later as we are currently changing our approach)
 
 # Results
 
@@ -29,7 +30,7 @@ We then proceeded to use this data to
 
 ## Integrated Webapp
 
-[Shot Data Webapp](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[FULLY FUNCTIONAL Shot Data Webapp](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 ### To Install before use
 
