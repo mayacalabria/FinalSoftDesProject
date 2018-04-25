@@ -2,18 +2,17 @@
 
 By Maya Calabria, Bryce Mann, and Juan Carlos del Rio
 Software Design, Olin College of Engineering, Spring 2018
-___
+
+...
 
 ## Project Goals
 
 As avid followers of the sport the main movtivation of this project was to create an easy way for people to understand the shooting and scoring dynamics of a sport that has meticulously been gathering this data since 1995. Throught this project we hoped to learn about the process of creating compeling vissuals that help illustrate the story that this data has to tell. Adittionally, in accorance with the spirit of this project we wanted to provide a beautiful, accessible, and intuitve graphic user interface that would help potential users navigate through the vast amounts of data. Lastly, it was our intention to host this tool as a webapp that would allow other basketball fans  arround the world could have access to this well of information currently quitely stitting deep within the NBA’s dtatabase. 
 
-___
+...
 
 ##Data Collection and Processing
 ![System Arhitecture](ClassMaterials/updated_architecture_diagram.png)
-Format: ![System Arhitecture](https://github.com/mayacalabria/FinalSoftDesProject/blob/master/ClassMaterials/updated_architecture_diagram.png)
-
 
 ### NBA.com
 
@@ -28,10 +27,9 @@ We then proceeded to use this data to
 ### Example Plots
 
 ![NBA Court](half_court.jpg)
-Format: ![Stand In for plot](https://github.com/mayacalabria/FinalSoftDesProject/blob/master/half_court.jpg)
 
 ### Integrated Webapp
-
+https://www.youtube.com/watch?v=dQw4w9WgXcQ - automatic!
 
 #### To Install before use
 To run the files that we are submitting for the code review, make sure that the following libraries are installed:
