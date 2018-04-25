@@ -13,6 +13,7 @@ As avid followers of the sport the main movtivation of this project was to creat
 
 # Data Collection and Processing
 
+
 ![System Arhitecture](ClassMaterials/updated_architecture_diagram.png)
 
 
