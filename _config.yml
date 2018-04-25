@@ -1,5 +1,3 @@
 theme: jekyll-theme-cayman
-background-image: url(https://github.com/mayacalabria/FinalSoftDesProject/blob/master/curry-1.jpg);
-background-size: cover;
 title: NBA Shot Atlas
 description: Project website for NBA shot data visualization Olin College SofDes Spring '18
