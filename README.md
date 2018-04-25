@@ -1,6 +1,5 @@
 
-By Maya Calabria, Bryce Mann, and Juan Carlos del Rio
-Software Design, Olin College of Engineering, Spring 2018
+By Maya Calabria, Bryce Mann, and Juan Carlos del Rio  Software Design, Olin College of Engineering, Spring 2018
 
 ***
 
