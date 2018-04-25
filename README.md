@@ -12,7 +12,7 @@ As avid followers of the sport the main movtivation of this project was to creat
 ...
 
 ##Data Collection and Processing
-![System Arhitecture](ClassMaterials/updated_architecture_diagram.png)
+Format: ![System Arhitecture](ClassMaterials/updated_architecture_diagram.png)
 
 ### NBA.com
 
@@ -26,13 +26,13 @@ We then proceeded to use this data to
 
 ### Example Plots
 
-![NBA Court](half_court.jpg)
+Format: ![NBA Court](half_court.jpg)
 
 ### Integrated Webapp
-https://www.youtube.com/watch?v=dQw4w9WgXcQ - automatic!
+
+[Shot Data Webapp](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 #### To Install before use
-To run the files that we are submitting for the code review, make sure that the following libraries are installed:
 
 $pip install nba_py
 
