@@ -140,6 +140,9 @@ def league_average(season=None, first='Kevin', last='Durant'):
 
 
 def sort_successes(shots):
+    """ Takes a pandas DataFrame of a players shots and returns a data set
+    with only shots that were successful
+    """
     successes = shots[(shots.SHOT_MADE_FLAG==1)]
     return successes
 
@@ -167,6 +170,19 @@ if __name__ == "__main__":
 
     durant = generate_shots('Kevin','Durant','2016-17')
     durant_success = sort_successes(durant)
-    print(durant_success)
+    league_avg = league_average(season='2016-17')
+    print(league_avg)
+    # print(durant_success,league_avg)
+
+
+    # successes = shots[(shots.SHOT_ZONE_BASIC==Center(C))]
+    Center = durant[(durant.SHOT_ZONE_AREA=='Center(C)')]  #filters for only Center court shots
+    Center_8_16 = Center[(Center.SHOT_ZONE_RANGE=='8-16 ft.')] #Center shots range (8-16 ft)
+    Center_8_16_s = Center_8_16[(Center_8_16.SHOT_MADE_FLAG==1)] # only successful center 8-16 ft shots
+    percent = len(Center_8_16_s.index)/len(Center_8_16.index)
+    print(percent)
+    # print(durant)
+
+
     # league = durant.league_average()
     # print(league)
