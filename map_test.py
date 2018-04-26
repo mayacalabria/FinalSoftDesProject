@@ -125,25 +125,48 @@ def full_heat_map(shots,display=True):
         # plt.plot([0,100],[50,150],zorder=2)
         plt.show()
 
+def league_average(season=None, first='Kevin', last='Durant'):
+    """ Generates the leage averages by zone for the given season
+    default value for first/last name is Kevin Durant, but any player
+    could be used to initialize the ShotChart class from nba_py
+    takes season as a string and defaults to current season
+
+    returns: Pandas DataFrame
+    """
+    player = shotchart.ShotChart('201142',season=season)
+    league_average = player.league_average()
+    return league_average
+
+
+
+def sort_successes(shots):
+    successes = shots[(shots.SHOT_MADE_FLAG==1)]
+    return successes
+
+
 if __name__ == "__main__":
     # # # Kevin Durant
-    durant_shots = generate_shots('Kevin','Durant','2016-17')
+    # durant_shots = generate_shots('Kevin','Durant','2016-17')
     # generate_scatter(durant_shots)
     # full_heat_map(durant_shots)
     # success_heat_map(durant_shots)
     # hist_heat(durant_shots)
-    hex_plot(durant_shots)
+    # hex_plot(durant_shots)
     # print(durant_shots)
 
 
-
-
-    # # James Harden
-    harden_shots = generate_shots('James','Harden','2016-17') ## consider point weighting
-    hex_plot(harden_shots)
+    # # # James Harden
+    # harden_shots = generate_shots('James','Harden','2016-17') ## consider point weighting
+    # hex_plot(harden_shots)
     # generate_scatter(harden_shots)
     # success_heat_map(harden_shots)
     # full_heat_map(harden_shots)
     # im = plt.imread('court.png')
     # implot = plt.imshow(im)
     # plt.show()
+
+    durant = generate_shots('Kevin','Durant','2016-17')
+    durant_success = sort_successes(durant)
+    print(durant_success)
+    # league = durant.league_average()
+    # print(league)
