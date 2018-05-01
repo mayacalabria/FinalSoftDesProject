@@ -12,11 +12,13 @@ import numpy as np
 import pickle
 import requests_cache
 from scraping import write_to_csv
+from map_test import calc_all_zone_percentage, calc_zone_percentage
+from compare_to_league_avg import add_zone_percentages
 
 requests_cache.install_cache('demo_cache')
 
 #only seasons where shot position data was collected
-iterate_through_seasons = range(1996,2018)
+iterate_through_seasons = range(1996,2019)
 seasons = []
 
 #create list of properly formatted seasons for input into later function and
@@ -42,7 +44,7 @@ player_list = pickle.load(open('player_list.pickle','rb'))
 all_info = []
 
 #loop through player list to format names correctly for get_player function
-for i in player_list:
+for i in player_list[:11]:
 
     #random test revealed Yao Ming's name needed to be formatted this way
     #it might apply to others but that is too much manual checking to do
@@ -72,13 +74,16 @@ for i in player_list:
 #initialize list of players we can get shot data for
 shot_data_list = []
 pid_dict = {}
-#print(enumerate(all_info), len(all_info))
+
 
 #loop through every person's info
 for idx1,i in enumerate(all_info):
     #only continue if they played at all after shot data is collected
 
-    if int(i.TO_YEAR)>1996:
+    TO_YEAR = str(i["TO_YEAR"]).split()[1]
+    FROM_YEAR = str(i["FROM_YEAR"]).split()[1]
+
+    if int(TO_YEAR)>1996:
 
         #find pid and name of each player and format them how we need
         name = str(i.DISPLAY_FIRST_LAST).split()
@@ -98,17 +103,21 @@ for idx1,i in enumerate(all_info):
                 second_half = j[:2]+j[5:]
                 #check if the second half of the current year is still during career
                 #of player
-            if int(second_half) <= int(i.TO_YEAR) and int(first_half) >= int(i.FROM_YEAR):
+
                 #finally add shot data to list
                 #shot_data_list.append(shotchart.ShotChart(i.PERSON_ID[idx1],season=j))
+            if int(first_half) >= int(FROM_YEAR):
                 shots = shotchart.ShotChart(pid,season=j).shot_chart()
                 if shots.empty:
                     pass
                 else:
-                    write_to_csv(shots,j,pid)
+                    percentage_dict = calc_all_zone_percentage(shots=shots,season=j)
+                    shots = add_zone_percentages(shots,percentage_dict)
+                    write_to_csv(shots=shots,name=pid,year=j)
 
-pickle.dump(pid_dict,open('pid_dict.pickle','wb+'))
-print(pid_dict)
+# pickle.dump(pid_dict,open('pid_dict.pickle','wb+'))
+# print(pid_dict)
+
 #quick verification that only data from the correct years are being stored
 # for i in all_info:
 #     a = str(i.DISPLAY_FIRST_LAST).split()

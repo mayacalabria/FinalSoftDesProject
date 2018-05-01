@@ -62,6 +62,6 @@ def write_to_csv(shots, name, year):
             'SHOT_DISTANCE':to_write.SHOT_DISTANCE[i],'LOC_X': to_write.LOC_X[i],
             'LOC_Y': to_write.LOC_Y[i],'SHOT_ATTEMPTED_FLAG': to_write.SHOT_ATTEMPTED_FLAG[i],
             'SHOT_MADE_FLAG': to_write.SHOT_MADE_FLAG[i],'GAME_DATE': to_write.GAME_DATE[i],
-            'HTM': to_write.HTM[i],'VTM': to_write.VTM[i]})
+            'HTM': to_write.HTM[i],'VTM': to_write.VTM[i]},'ZONE_PERCENTAGE': to_write.ZONE_PERCENTAGE[i])
 
 #write_to_csv('LebronJames','2012-13')
