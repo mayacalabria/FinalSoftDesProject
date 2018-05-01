@@ -33,7 +33,7 @@ def generate_shots(first,last,season): # currently can't access 2017-18 season
 
     pid_dict = pickle.load(open('pid_dict.pickle','rb'))
     new_dict = {v: k for k, v in pid_dict.items()}
-    player_id = new_dict[first.title()+' '+last.title()]
+    player_id = new_dict[first+' '+last]
     # shots_dir should be named relatively eventually
     shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData/'+player_id+'/'+season+'.csv'))
     shots = pd.DataFrame.from_csv(shots_dir)
@@ -146,8 +146,58 @@ def sort_successes(shots):
     successes = shots[(shots.SHOT_MADE_FLAG==1)]
     return successes
 
+def calc_all_zone_percentage(shots,season='2017-18'):
+    """ Takes a pandas DataFrame of a players shots and the season to calculate
+    their shooting percentage by zone, returns a dictionary of the players zone
+    percentage minus the league average percentage for that zone
+    """
+    basic_zones = ['Above the Break 3', 'Above the Break 3',
+        'Above the Break 3', 'Above the Break 3', 'Backcourt',
+        'In The Paint (Non-RA)', 'In The Paint (Non-RA)',
+        'In The Paint (Non-RA)', 'In The Paint (Non-RA)', 'Left Corner 3',
+        'Mid-Range', 'Mid-Range', 'Mid-Range', 'Mid-Range', 'Mid-Range',
+        'Mid-Range', 'Mid-Range', 'Mid-Range', 'Restricted Area',
+        'Right Corner 3']
+    zone_areas = ['Back Court(BC)', 'Center(C)', 'Left Side Center(LC)',
+        'Right Side Center(RC)', 'Back Court(BC)', 'Center(C)', 'Center(C)',
+        'Left Side(L)', 'Right Side(R)', 'Left Side(L)', 'Center(C)',
+        'Center(C)', 'Left Side Center(LC)', 'Left Side(L)', 'Left Side(L)',
+        'Right Side Center(RC)', 'Right Side(R)', 'Right Side(R)', 'Center(C)',
+        'Right Side(R)']
+    ranges = ['Back Court Shot', '24+ ft.', '24+ ft.', '24+ ft.',
+        'Back Court Shot', '8-16 ft.', 'Less Than 8 ft.', '8-16 ft.',
+        '8-16 ft.', '24+ ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.',
+        '16-24 ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.', '8-16 ft.',
+        'Less Than 8 ft.', '24+ ft.']
+
+    all_percentages = {}
+    league_avg = league_average(season=season)
+
+    for i in range(len(zone_areas)):
+        league_percent = 100 * (league_avg['FG_PCT'].iloc[i])
+        zone_percent = calc_zone_percentage(shots,str(zone_areas[i]),
+            str(ranges[i]),str(basic_zones[i]))
+        relative_zone_percent = zone_percent - league_percent
+        dict_key = (str(basic_zones[i]),str(zone_areas[i]),str(ranges[i]))
+        all_percentages[dict_key] = relative_zone_percent
+
+    return all_percentages
+
+def calc_zone_percentage(shots,zone_area,zone_range,basic_zone):
+    """calculates an individual zone percentage in a dataframe of shot data
+    """
+    basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
+    zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
+    zone_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
+    if len(zone_range.index)==0:
+        return 0.0
+    zone_range_s = zone_range[(zone_range.SHOT_MADE_FLAG==1)]#isolate all of the successful shots
+    zone_percentage = 100 * (len(zone_range_s.index)/len(zone_range.index))#calculate percentage
+
+    return zone_percentage
 
 if __name__ == "__main__":
+
     # # # Kevin Durant
     # durant_shots = generate_shots('Kevin','Durant','2016-17')
     # generate_scatter(durant_shots)
@@ -168,21 +218,21 @@ if __name__ == "__main__":
     # implot = plt.imshow(im)
     # plt.show()
 
-    durant = generate_shots('Kevin','Durant','2016-17')
+    durant = generate_shots('LeBron','James','2016-17')
     durant_success = sort_successes(durant)
     league_avg = league_average(season='2016-17')
     print(league_avg)
+    league_avg2 = league_average(season='2017-18')
     # print(durant_success,league_avg)
 
-
+    print(calc_all_zone_percentage(durant))
     # successes = shots[(shots.SHOT_ZONE_BASIC==Center(C))]
-    Center = durant[(durant.SHOT_ZONE_AREA=='Center(C)')]  #filters for only Center court shots
-    Center_8_16 = Center[(Center.SHOT_ZONE_RANGE=='8-16 ft.')] #Center shots range (8-16 ft)
+    Center = durant[durant.SHOT_ZONE_AREA=='Center(C)']  #filters for only Center court shots
+    Center_8_16 = Center[Center.SHOT_ZONE_RANGE=='8-16 ft.'] #Center shots range (8-16 ft)
     Center_8_16_s = Center_8_16[(Center_8_16.SHOT_MADE_FLAG==1)] # only successful center 8-16 ft shots
     percent = len(Center_8_16_s.index)/len(Center_8_16.index)
-    print(percent)
+    #print(percent)
     # print(durant)
-
 
     # league = durant.league_average()
     # print(league)

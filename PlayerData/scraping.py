@@ -28,7 +28,7 @@ def get_data():
 
 # Takes the data obtained by get_data and creates a csv with the stored data
 #will take desired csv name as an input in the future
-def write_to_csv(shots, name, year):
+def write_to_csv(shots, year, pid):
     #creates temporary structure form the data from get_data
     #to_write = get_data()
     to_write = shots
@@ -38,7 +38,7 @@ def write_to_csv(shots, name, year):
         fieldnames = fieldnames +[row]
 
     current_directory = os.getcwd()
-    final_directory = os.path.join(current_directory, r''+name)
+    final_directory = os.path.join(current_directory, r''+str(pid))
 
     if not os.path.exists(final_directory):
         os.makedirs(final_directory)

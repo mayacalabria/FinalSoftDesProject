@@ -10,7 +10,10 @@ from nba_py import shotchart
 import pandas as pd
 import numpy as np
 import pickle
+import requests_cache
 from scraping import write_to_csv
+
+requests_cache.install_cache('demo_cache')
 
 #only seasons where shot position data was collected
 iterate_through_seasons = range(1996,2018)
@@ -39,7 +42,7 @@ player_list = pickle.load(open('player_list.pickle','rb'))
 all_info = []
 
 #loop through player list to format names correctly for get_player function
-for i in player_list[:4]:
+for i in player_list:
 
     #random test revealed Yao Ming's name needed to be formatted this way
     #it might apply to others but that is too much manual checking to do
@@ -65,35 +68,47 @@ for i in player_list[:4]:
     except PlayerNotFoundException:
         pass
 
+#print(str(all_info[0]["PERSON_ID"]).split()[1])
 #initialize list of players we can get shot data for
 shot_data_list = []
+pid_dict = {}
+#print(enumerate(all_info), len(all_info))
 
 #loop through every person's info
 for idx1,i in enumerate(all_info):
     #only continue if they played at all after shot data is collected
+
     if int(i.TO_YEAR)>1996:
+
+        #find pid and name of each player and format them how we need
         name = str(i.DISPLAY_FIRST_LAST).split()
-        name = ''.join(name[1:3])
+        name = ' '.join(name[1:3])
+        #need to format pid in this way to store in dictionary
+        pid = str(i["PERSON_ID"]).split()[1]
+        pid_dict[pid] = name
+
         #loop through all seasons that have data
         for idx2,j in enumerate(seasons):
             first_half = j[:4]
             #take care of issue where year is 1999-00
             if idx2==3:
                 second_half = '2000'
-            #formatting year correctly for integer comparison
+                #formatting year correctly for integer comparison
             else:
                 second_half = j[:2]+j[5:]
-            #check if the second half of the current year is still during career
-            #of player
+                #check if the second half of the current year is still during career
+                #of player
             if int(second_half) <= int(i.TO_YEAR) and int(first_half) >= int(i.FROM_YEAR):
                 #finally add shot data to list
                 #shot_data_list.append(shotchart.ShotChart(i.PERSON_ID[idx1],season=j))
-                shots = shotchart.ShotChart(i.PERSON_ID[idx1],season=j).shot_chart()
+                shots = shotchart.ShotChart(pid,season=j).shot_chart()
                 if shots.empty:
                     pass
                 else:
-                    write_to_csv(shots,name,j)
+                    write_to_csv(shots,j,pid)
 
+pickle.dump(pid_dict,open('pid_dict.pickle','wb+'))
+print(pid_dict)
 #quick verification that only data from the correct years are being stored
 # for i in all_info:
 #     a = str(i.DISPLAY_FIRST_LAST).split()
