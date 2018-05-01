@@ -5,7 +5,7 @@ By Maya Calabria, Bryce Mann, and Juan Carlos del Rio  Software Design, Olin Col
 
 # Project Goals
 
-As avid followers of the sport the main movtivation of this project was to create an easy way for people to understand the shooting and scoring dynamics of a sport that has meticulously been gathering this data since 1995. Throught this project we hoped to learn about the process of creating compeling vissuals that help illustrate the story that this data has to tell. Adittionally, in accorance with the spirit of this project we wanted to provide a beautiful, accessible, and intuitve graphic user interface that would help potential users navigate through the vast amounts of data. Lastly, it was our intention to host this tool as a webapp that would allow other basketball fans  arround the world could have access to this well of information currently quitely stitting deep within the NBA’s database. 
+As avid followers of the sport the main movtivation of this project was to create an easy way for people to understand the shooting and scoring dynamics of a sport that has meticulously been gathering this data since 1995. Throught this project we hoped to learn about the process of creating compeling vissuals that help illustrate the story that this data has to tell. Adittionally, in accorance with the spirit of this project we wanted to provide a beautiful, accessible, and intuitve graphic user interface that would help potential users navigate through the vast amounts of data. Lastly, it was our intention to host this tool as a webapp that would allow other basketball fans  arround the world could have access to this well of information currently quitely stitting deep within the NBA’s database.
 
 ***
 
@@ -49,3 +49,5 @@ $python -m pip install matplotlib
 $sudo apt-get install python3-pandas
 
 $pip install bokeh
+
+$pip install colorcet
