@@ -44,7 +44,7 @@ player_list = pickle.load(open('player_list.pickle','rb'))
 all_info = []
 
 #loop through player list to format names correctly for get_player function
-for i in player_list[:11]:
+for i in player_list:
 
     #random test revealed Yao Ming's name needed to be formatted this way
     #it might apply to others but that is too much manual checking to do
