@@ -7,13 +7,17 @@ import plotly.plotly as py
 from scipy.stats import kendalltau
 import seaborn as sns
 from PIL import Image
-from bokeh.io import output_file, show
+from bokeh.io import output_file, show, save
 from bokeh.plotting import figure
 from bokeh.transform import linear_cmap
 from bokeh.util.hex import hexbin
+from bokeh.models import LogColorMapper,LogTicker,ColorBar,LinearColorMapper
+from bokeh.models.tickers import BasicTicker
 import pickle
 import os.path
 import pandas as pd
+import colorcet as cc
+
 
 
 def generate_shots_fromNBA(first,last,season):
@@ -25,7 +29,7 @@ def generate_shots_fromNBA(first,last,season):
     shots = player.shot_chart()
     return shots
 
-def generate_shots(first,last,season): # currently can't access 2017-18 season
+def generate_shots(first,last=None,season='2017-18'):
     """ Takes first, last, and season as string,
     returns pandas structure of all shots from locally stored
     data CSVs
@@ -33,9 +37,12 @@ def generate_shots(first,last,season): # currently can't access 2017-18 season
 
     pid_dict = pickle.load(open('pid_dict.pickle','rb'))
     new_dict = {v: k for k, v in pid_dict.items()}
-    player_id = new_dict[first+' '+last]
+    if last:
+        player_id = new_dict[first+' '+last]
+    else:
+        player_id = new_dict[first]
     # shots_dir should be named relatively eventually
-    shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData/'+player_id+'/'+season+'.csv'))
+    shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData2/'+player_id+'/'+season+'.csv'))
     shots = pd.DataFrame.from_csv(shots_dir)
     return shots
 
@@ -76,23 +83,19 @@ def hex_plot(shots, binsize=5):
     """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
     optional binsize, controls resolution
     """
-    xs = []
-    ys = []
-    for i in range(len(shots)):
-        x = shots["LOC_X"].iloc[i]
-        y = shots["LOC_Y"].iloc[i]
-        xs.append(x)
-        ys.append(y)
-    bins = hexbin(np.array(xs),np.array(ys), 5)
 
+    all_bins = sort_all_bins(shots)
     p = figure(tools="wheel_zoom,reset", match_aspect=True,background_fill_color='#440154')
     p.grid.visible = False
 
-    p.hex_tile(q="q", r="r", size=0.1, line_color=None, source=bins,
-           fill_color=linear_cmap('counts', 'Viridis256', 0, max(bins.counts)))
+    p.hex_tile(q="q", r="r", size=0.1, line_color=None, source=all_bins,
+        fill_color=linear_cmap('counts', cc.coolwarm, -10, 10))
+
+    color_mapper = LinearColorMapper(palette=cc.coolwarm,low=-10,high=10)
+    color_bar = ColorBar(color_mapper=color_mapper, location=(0,0),)
+    p.add_layout(color_bar, 'right')
 
     show(p)
-
 
 def success_heat_map(shots,display=True):
     """ Creates heat map of all made shots from a pandas structure
@@ -188,13 +191,63 @@ def calc_zone_percentage(shots,zone_area,zone_range,basic_zone):
     """
     basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
     zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
-    zone_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
-    if len(zone_range.index)==0:
+    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
+    if len(fin_range.index)==0:
         return 0.0
-    zone_range_s = zone_range[(zone_range.SHOT_MADE_FLAG==1)]#isolate all of the successful shots
-    zone_percentage = 100 * (len(zone_range_s.index)/len(zone_range.index))#calculate percentage
+    fin_range_s = fin_range[(fin_range.SHOT_MADE_FLAG==1)]#isolate all of the successful shots
+    zone_percentage = 100 * (len(fin_range_s.index)/len(fin_range.index))#calculate percentage
 
     return zone_percentage
+
+def sort_hex_bin(shots,zone_area,zone_range,basic_zone):
+    """given 3 parameters to define a zone output all of the x,y position data
+    for that zone"""
+    basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
+    zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
+    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]
+
+    xs = fin_range['LOC_X']
+    ys = fin_range['LOC_Y']
+    zone_percentage = fin_range['ZONE_PERCENTAGE']
+
+    return xs, ys, zone_percentage
+
+def sort_all_bins(shots):
+
+    basic_zones = ['Above the Break 3', 'Above the Break 3',
+        'Above the Break 3', 'Above the Break 3', 'Backcourt',
+        'In The Paint (Non-RA)', 'In The Paint (Non-RA)',
+        'In The Paint (Non-RA)', 'In The Paint (Non-RA)', 'Left Corner 3',
+        'Mid-Range', 'Mid-Range', 'Mid-Range', 'Mid-Range', 'Mid-Range',
+        'Mid-Range', 'Mid-Range', 'Mid-Range', 'Restricted Area',
+        'Right Corner 3']
+    zone_areas = ['Back Court(BC)', 'Center(C)', 'Left Side Center(LC)',
+        'Right Side Center(RC)', 'Back Court(BC)', 'Center(C)', 'Center(C)',
+        'Left Side(L)', 'Right Side(R)', 'Left Side(L)', 'Center(C)',
+        'Center(C)', 'Left Side Center(LC)', 'Left Side(L)', 'Left Side(L)',
+        'Right Side Center(RC)', 'Right Side(R)', 'Right Side(R)', 'Center(C)',
+        'Right Side(R)']
+    ranges = ['Back Court Shot', '24+ ft.', '24+ ft.', '24+ ft.',
+        'Back Court Shot', '8-16 ft.', 'Less Than 8 ft.', '8-16 ft.',
+        '8-16 ft.', '24+ ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.',
+        '16-24 ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.', '8-16 ft.',
+        'Less Than 8 ft.', '24+ ft.']
+
+    list_of_bins = []
+
+    for i in range(len(ranges)):
+        xs,ys,percentage = sort_hex_bin(shots,zone_areas[i],ranges[i],basic_zones[i])
+        bin = hexbin(np.array(xs),np.array(ys),7.5)
+        if len(bin) == 0:
+            bin['counts'] = 0
+        else:
+            bin['counts'] = percentage.iloc[0]
+        list_of_bins.append(bin)
+
+    all_bins = pd.concat(list_of_bins,ignore_index=True)
+
+    return all_bins
+
 
 if __name__ == "__main__":
 
@@ -218,20 +271,23 @@ if __name__ == "__main__":
     # implot = plt.imshow(im)
     # plt.show()
 
-    durant = generate_shots('LeBron','James','2016-17')
-    durant_success = sort_successes(durant)
-    league_avg = league_average(season='2016-17')
-    print(league_avg)
-    league_avg2 = league_average(season='2017-18')
-    # print(durant_success,league_avg)
-
-    print(calc_all_zone_percentage(durant))
-    # successes = shots[(shots.SHOT_ZONE_BASIC==Center(C))]
-    Center = durant[durant.SHOT_ZONE_AREA=='Center(C)']  #filters for only Center court shots
-    Center_8_16 = Center[Center.SHOT_ZONE_RANGE=='8-16 ft.'] #Center shots range (8-16 ft)
-    Center_8_16_s = Center_8_16[(Center_8_16.SHOT_MADE_FLAG==1)] # only successful center 8-16 ft shots
-    percent = len(Center_8_16_s.index)/len(Center_8_16.index)
-    #print(percent)
+    durant = generate_shots('Russell','Westbrook',season='2016-17')
+    #sort_all_bins(durant)
+    #hex_plot(durant)
+    hex_plot(durant)
+    # durant_success = sort_successes(durant)
+    # league_avg = league_average(season='2016-17')
+    # print(league_avg)
+    # league_avg2 = league_average(season='2017-18')
+    # # print(durant_success,league_avg)
+    #
+    # print(calc_all_zone_percentage(durant))
+    # # successes = shots[(shots.SHOT_ZONE_BASIC==Center(C))]
+    # Center = durant[durant.SHOT_ZONE_AREA=='Center(C)']  #filters for only Center court shots
+    # Center_8_16 = Center[Center.SHOT_ZONE_RANGE=='8-16 ft.'] #Center shots range (8-16 ft)
+    # Center_8_16_s = Center_8_16[(Center_8_16.SHOT_MADE_FLAG==1)] # only successful center 8-16 ft shots
+    # percent = len(Center_8_16_s.index)/len(Center_8_16.index)
+    # #print(percent)
     # print(durant)
 
     # league = durant.league_average()
