@@ -83,14 +83,14 @@ def hex_plot(shots, binsize=5):
     """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
     optional binsize, controls resolution
     """
-
+    #sort all bins by zone and the percentage in that zone
     all_bins = sort_all_bins(shots)
-    p = figure(tools="wheel_zoom,reset", match_aspect=True,background_fill_color='#440154')
+    p = figure(tools="wheel_zoom,reset", match_aspect=True,background_fill_color='#BB7E3B')
     p.grid.visible = False
 
     p.hex_tile(q="q", r="r", size=0.1, line_color=None, source=all_bins,
         fill_color=linear_cmap('counts', cc.coolwarm, -10, 10))
-
+    #colorbar stuff
     color_mapper = LinearColorMapper(palette=cc.coolwarm,low=-10,high=10)
     color_bar = ColorBar(color_mapper=color_mapper, location=(0,0),)
     p.add_layout(color_bar, 'right')
@@ -140,8 +140,6 @@ def league_average(season=None, first='Kevin', last='Durant'):
     league_average = player.league_average()
     return league_average
 
-
-
 def sort_successes(shots):
     """ Takes a pandas DataFrame of a players shots and returns a data set
     with only shots that were successful
@@ -154,6 +152,9 @@ def calc_all_zone_percentage(shots,season='2017-18'):
     their shooting percentage by zone, returns a dictionary of the players zone
     percentage minus the league average percentage for that zone
     """
+    #these 3 list element indices correspond to define a shot zone_area
+    #ex. basic_zones[-2],zone_areas[-2],ranges[-2] combine to define the
+    #restricted area
     basic_zones = ['Above the Break 3', 'Above the Break 3',
         'Above the Break 3', 'Above the Break 3', 'Backcourt',
         'In The Paint (Non-RA)', 'In The Paint (Non-RA)',
@@ -173,14 +174,21 @@ def calc_all_zone_percentage(shots,season='2017-18'):
         '16-24 ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.', '8-16 ft.',
         'Less Than 8 ft.', '24+ ft.']
 
+    #initialize dictionary to store players relative zone percentages
     all_percentages = {}
+    #get league average zone percentages
     league_avg = league_average(season=season)
 
+    #loop through indices of zone categories
     for i in range(len(zone_areas)):
+        #get the league avg percent from the current zone
         league_percent = 100 * (league_avg['FG_PCT'].iloc[i])
+        #calculate the zone percent for the current zone
         zone_percent = calc_zone_percentage(shots,str(zone_areas[i]),
             str(ranges[i]),str(basic_zones[i]))
+        #subtract league average from player percent
         relative_zone_percent = zone_percent - league_percent
+        #store zone and corresponding percentage in dictionary
         dict_key = (str(basic_zones[i]),str(zone_areas[i]),str(ranges[i]))
         all_percentages[dict_key] = relative_zone_percent
 
@@ -192,7 +200,7 @@ def calc_zone_percentage(shots,zone_area,zone_range,basic_zone):
     basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
     zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
     fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
-    if len(fin_range.index)==0:
+    if len(fin_range.index)==0:#if their are no shots in the final range return zero for the zone
         return 0.0
     fin_range_s = fin_range[(fin_range.SHOT_MADE_FLAG==1)]#isolate all of the successful shots
     zone_percentage = 100 * (len(fin_range_s.index)/len(fin_range.index))#calculate percentage
@@ -204,8 +212,9 @@ def sort_hex_bin(shots,zone_area,zone_range,basic_zone):
     for that zone"""
     basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
     zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
-    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]
+    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
 
+    #return x,y locations and corresponding percentage for that zone
     xs = fin_range['LOC_X']
     ys = fin_range['LOC_Y']
     zone_percentage = fin_range['ZONE_PERCENTAGE']
@@ -213,7 +222,12 @@ def sort_hex_bin(shots,zone_area,zone_range,basic_zone):
     return xs, ys, zone_percentage
 
 def sort_all_bins(shots):
-
+    """takes a dataframe of shots and sorts them into bins by zone, where
+    the bins for that zone have count values equal to that zone shooting
+    percentage"""
+    #these 3 list element indices correspond to define a shot zone_area
+    #ex. basic_zones[-2],zone_areas[-2],ranges[-2] combine to define the
+    #restricted area
     basic_zones = ['Above the Break 3', 'Above the Break 3',
         'Above the Break 3', 'Above the Break 3', 'Backcourt',
         'In The Paint (Non-RA)', 'In The Paint (Non-RA)',
@@ -233,17 +247,23 @@ def sort_all_bins(shots):
         '16-24 ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.', '8-16 ft.',
         'Less Than 8 ft.', '24+ ft.']
 
+    #initialize list of bins
     list_of_bins = []
 
+    #loop through zone categories
     for i in range(len(ranges)):
+        #get the x,y location and percentage for the current zone
         xs,ys,percentage = sort_hex_bin(shots,zone_areas[i],ranges[i],basic_zones[i])
+        #make the bins with x,y location data
         bin = hexbin(np.array(xs),np.array(ys),7.5)
+        #if nothing in the bin set the count for that area equal to zero
         if len(bin) == 0:
             bin['counts'] = 0
+        #set the count for a zone's bins to be equal to the zone percentage
         else:
             bin['counts'] = percentage.iloc[0]
         list_of_bins.append(bin)
-
+    #concatenate all of the zones together
     all_bins = pd.concat(list_of_bins,ignore_index=True)
 
     return all_bins

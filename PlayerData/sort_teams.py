@@ -9,9 +9,6 @@ import csv
 player_directory = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData'))
 team_directory = os.path.abspath(os.path.join(os.getcwd(),'../TeamData'))
 
-#luc longley: 486
-#dennis rodman: 772
-
 #loop through playerdata folders
 for folder in os.listdir(player_directory):
     folder = os.path.join(player_directory,folder)
@@ -39,6 +36,7 @@ for folder in os.listdir(player_directory):
                 #when the file is made write the headers to the first row
                 writer.writerow(headers)
                 first_year_file.close()
+            #append row to the current year and team file
             add_to_year_file = open(year_file,'a',newline='')
             writer = csv.writer(add_to_year_file)
             writer.writerow(row)

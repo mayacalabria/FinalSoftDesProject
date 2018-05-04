@@ -95,31 +95,20 @@ for idx1,i in enumerate(all_info):
         #loop through all seasons that have data
         for idx2,j in enumerate(seasons):
             first_half = j[:4]
-            #take care of issue where year is 1999-00
-            if idx2==3:
-                second_half = '2000'
-                #formatting year correctly for integer comparison
-            else:
-                second_half = j[:2]+j[5:]
-                #check if the second half of the current year is still during career
-                #of player
 
-                #finally add shot data to list
-                #shot_data_list.append(shotchart.ShotChart(i.PERSON_ID[idx1],season=j))
+            #finally add shot data to list
             if int(first_half) >= int(FROM_YEAR):
+                #get shot dataframe from nba.com
                 shots = shotchart.ShotChart(pid,season=j).shot_chart()
+                #dont do anything if dataframe is empty
                 if shots.empty:
                     pass
+                #calculate percentage by zone, add percentages to dataframe
+                #and write to csv file
                 else:
                     percentage_dict = calc_all_zone_percentage(shots=shots,season=j)
                     shots = add_zone_percentages(shots,percentage_dict)
-                    write_to_csv(shots=shots,name=pid,year=j)
+                    write_to_csv(shots=shots,pid=pid,year=j)
 
-# pickle.dump(pid_dict,open('pid_dict.pickle','wb+'))
-# print(pid_dict)
-
-#quick verification that only data from the correct years are being stored
-# for i in all_info:
-#     a = str(i.DISPLAY_FIRST_LAST).split()
-#     b = ''
-#     print(b.join(a[1:3]))
+#pickle player id dictionary for future use
+pickle.dump(pid_dict,open('pid_dict.pickle','wb+'))

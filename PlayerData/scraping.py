@@ -28,10 +28,11 @@ def get_data():
 
 # Takes the data obtained by get_data and creates a csv with the stored data
 #will take desired csv name as an input in the future
-def write_to_csv(shots, name, year):
+def write_to_csv(shots, pid, year):
     #creates temporary structure form the data from get_data
     #to_write = get_data()
     to_write = shots
+    #headers that we will use
     fieldnames = ['PLAYER_ID', 'PLAYER_NAME', 'TEAM_ID', 'TEAM_NAME',
     'SHOT_ZONE_BASIC', 'SHOT_ZONE_AREA', 'SHOT_ZONE_RANGE', 'SHOT_DISTANCE',
     'LOC_X', 'LOC_Y', 'SHOT_ATTEMPTED_FLAG', 'SHOT_MADE_FLAG', 'ZONE_PERCENTAGE']
@@ -40,8 +41,9 @@ def write_to_csv(shots, name, year):
     #     fieldnames = fieldnames +[row]
 
     current_directory = os.getcwd()
-    final_directory = os.path.join(current_directory, r''+name)
+    final_directory = os.path.join(current_directory, r''+pid)
 
+    #if player folder doesn't exist, create it
     if not os.path.exists(final_directory):
         os.makedirs(final_directory)
 
@@ -52,6 +54,7 @@ def write_to_csv(shots, name, year):
         writer = csv.DictWriter(database, fieldnames=fieldnames)
         writer.writeheader()
         for i in range(0,len(to_write)):
+            #only include headers that we will use
             writer.writerow({
             'PLAYER_ID':to_write.PLAYER_ID[i],'PLAYER_NAME':to_write.PLAYER_NAME[i],
             'TEAM_ID':to_write.TEAM_ID[i],'TEAM_NAME':to_write.TEAM_NAME[i],
