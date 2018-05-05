@@ -46,6 +46,20 @@ def generate_shots(first,last=None,season='2017-18'):
     shots = pd.DataFrame.from_csv(shots_dir)
     return shots
 
+def generate_team_shots(team_abv,season='2017-18'):
+    """ Takes first, last, and season as string,
+    returns pandas structure of all shots from locally stored
+    data CSVs
+    """
+
+    teamid_dict = pickle.load(open('teamid_dict.pickle','rb'))
+    new_dict = {v: k for k, v in teamid_dict.items()}
+    teamid = str(new_dict[team_abv])
+    team_shots_dir = os.path.abspath(os.path.join(os.getcwd(),
+        '../TeamData2/'+teamid+'/'+season+'.csv'))
+    shots = pd.DataFrame.from_csv(team_shots_dir)
+    return shots
+
 def generate_scatter(shots):
     """ Creates scatter plot of all shots taken by player over season """
     #evaluate each shot individually
@@ -79,19 +93,41 @@ def hist_heat(shots, bin_size = 60):
     plt.axis('off')
     plt.show()
 
-def hex_plot(shots, binsize=5):
+def hex_plot_player(shots):
     """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
     optional binsize, controls resolution
     """
-    #sort all bins by zone and the percentage in that zone
+    #sort all bins by zone and percentage for that zone
     all_bins = sort_all_bins(shots)
-    p = figure(tools="wheel_zoom,reset", match_aspect=True,background_fill_color='#BB7E3B')
+    title = shots['PLAYER_NAME'].iloc[0]
+    p = figure(title=title, tools="wheel_zoom,reset", match_aspect=True,
+        background_fill_color='#BB7E3B')
     p.grid.visible = False
 
-    p.hex_tile(q="q", r="r", size=0.1, line_color=None, source=all_bins,
+    p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
         fill_color=linear_cmap('counts', cc.coolwarm, -10, 10))
-    #colorbar stuff
+    draw_court(p)
     color_mapper = LinearColorMapper(palette=cc.coolwarm,low=-10,high=10)
+    color_bar = ColorBar(color_mapper=color_mapper, location=(0,0),)
+    p.add_layout(color_bar, 'right')
+
+    show(p)
+
+def hex_plot_team(shots):
+    """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
+    optional binsize, controls resolution
+    """
+    #sort all bins by zone and percentage for that zone
+    all_bins = sort_all_bins(shots)
+    title = shots['TEAM_NAME'].iloc[0]
+    p = figure(title=title, tools="wheel_zoom,reset", match_aspect=True,
+        background_fill_color='#BB7E3B')
+    p.grid.visible = False
+
+    p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+        fill_color=linear_cmap('counts', cc.coolwarm, -5, 5))
+    draw_court(p)
+    color_mapper = LinearColorMapper(palette=cc.coolwarm,low=-5,high=5)
     color_bar = ColorBar(color_mapper=color_mapper, location=(0,0),)
     p.add_layout(color_bar, 'right')
 
@@ -252,22 +288,74 @@ def sort_all_bins(shots):
 
     #loop through zone categories
     for i in range(len(ranges)):
-        #get the x,y location and percentage for the current zone
-        xs,ys,percentage = sort_hex_bin(shots,zone_areas[i],ranges[i],basic_zones[i])
-        #make the bins with x,y location data
-        bin = hexbin(np.array(xs),np.array(ys),7.5)
-        #if nothing in the bin set the count for that area equal to zero
-        if len(bin) == 0:
-            bin['counts'] = 0
-        #set the count for a zone's bins to be equal to the zone percentage
+        #to keep the bounds of the plots consistent we will not visualize
+        #back court shots, as a single shot from the other side of the court
+        #can make x and y limits of the plots inconsistent
+        if i == 0 or i == 4:
+            pass
         else:
-            bin['counts'] = percentage.iloc[0]
-        list_of_bins.append(bin)
+            #get the x,y location and percentage for the current zone
+            xs,ys,percentage = sort_hex_bin(shots,zone_areas[i],ranges[i],basic_zones[i])
+            #make the bins with x,y location data
+            bin = hexbin(np.array(xs),np.array(ys),7.5)
+            #if nothing in the bin set the count for that area equal to zero
+            if len(bin) == 0:
+                bin['counts'] = 0
+            #set the count for a zone's bins to be equal to the zone percentage
+            else:
+                bin['counts'] = percentage.iloc[0]
+            list_of_bins.append(bin)
     #concatenate all of the zones together
     all_bins = pd.concat(list_of_bins,ignore_index=True)
 
     return all_bins
 
+def draw_court(fig_obj,line_width=3,line_color='black',line_alpha=1):
+    """takes a bokeh hex plot figure object and draws court lines over
+    the figure"""
+    lw = line_width
+    lc = line_color
+    la = line_alpha
+    #3pt line
+    fig_obj.line(x=[-2.9, -2.9],y=[-.5, 1.3],line_width=lw,line_color=lc,
+        line_alpha=la)
+    fig_obj.line(x=[2.9, 2.9],y=[-.5, 1.3],line_width=lw,line_color=lc,
+        line_alpha=la)
+    fig_obj.arc(x=0,y=0,radius=3.178,start_angle=.4214,end_angle=2.7202,line_width=lw,
+        line_color=lc,line_alpha=la)
+    #baseline, sidelines, centercourt boundries
+    fig_obj.line(x=[-3.5, 3.5],y=[-.5, -.5],line_width=lw,line_color=lc,
+        line_alpha=la)
+    fig_obj.line(x=[-3.5, -3.5],y=[-.5, 5.892],line_width=lw,line_color=lc,
+        line_alpha=la)
+    fig_obj.line(x=[3.5, 3.5],y=[-.5, 5.892],line_width=lw,line_color=lc,
+        line_alpha=la)
+    fig_obj.line(x=[-3.5, 3.5],y=[5.892, 5.892],line_width=lw,line_color=lc,
+        line_alpha=la)
+    fig_obj.arc(x=0,y=5.892,radius=.3,start_angle=np.pi,end_angle=2*np.pi,
+        line_width=lw,line_color=lc,line_alpha=la)
+    fig_obj.arc(x=0,y=5.892,radius=.9,start_angle=np.pi,end_angle=2*np.pi,
+        line_width=lw,line_color=lc,line_alpha=la)
+    #hoop, backboard, restricted Area
+    fig_obj.arc(x=0,y=0,radius=.1,start_angle=0,end_angle=np.pi*2,
+        line_width=lw,line_color=lc,line_alpha=la)
+    fig_obj.line(x=[-.4,.4],y=[-.1,-.1],line_width=lw,line_color=lc,
+        line_alpha=la)
+    fig_obj.arc(x=0,y=0,radius=.533,start_angle=0,end_angle=np.pi,
+        line_width=lw,line_color=lc,line_alpha=la)
+    #key, free throw lines
+    fig_obj.rect(x=.933,y=.7635,width=.266,height=2.527,fill_alpha=0,
+        line_width=lw,line_color=lc,line_alpha=la)
+    fig_obj.rect(x=-.933,y=.7635,width=.266,height=2.527,fill_alpha=0,
+        line_width=lw,line_color=lc,line_alpha=la)
+    fig_obj.arc(x=0,y=2.027,radius=.8,start_angle=0,end_angle=np.pi,
+        line_width=lw,line_color=lc,line_alpha=la)
+    fig_obj.arc(x=0,y=2.027,radius=.8,start_angle=np.pi,end_angle=np.pi*2,
+        line_width=lw,line_color=lc,line_alpha=la,line_dash='dashed')
+    fig_obj.line(x=[-.8, .8],y=[2.027, 2.027],line_width=lw,line_color=lc,
+        line_alpha=la)
+
+    return fig_obj
 
 if __name__ == "__main__":
 
