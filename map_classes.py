@@ -8,6 +8,8 @@ from bokeh.transform import linear_cmap
 from bokeh.util.hex import hexbin
 from bokeh.models import LogColorMapper,LogTicker,ColorBar,LinearColorMapper
 from bokeh.models.tickers import BasicTicker
+from bokeh.resources import CDN
+from bokeh.embed import file_html
 import pickle
 import os.path
 import pandas as pd
@@ -95,8 +97,7 @@ class Player():
         color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
         p.add_layout(color_bar, 'right')
 
-        show(p)
-
+        return file_html(p,CDN,'hex_plot')
 
 class Team(Player):
 
