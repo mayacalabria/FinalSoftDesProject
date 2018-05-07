@@ -33,13 +33,13 @@ p1 = player.hex_freq('2017-18')
 # Set up widgets
 search_bar = TextInput(title="Search (eg. Kevin Durant or GSW)", value='Kevin Durant')
 search = Button(label="Go", button_type="success")
-slider = Slider(start=2007, end=2017, value=2017, step=1, title="Season",name="slider")
+slider = Slider(start=2007, end=2017, value=2017, step=1, title="Season",name="slider",callback_policy = "mouseup")
 button_group1 = RadioButtonGroup(labels=["Player", "Team"], active=0)
 button_group2 = RadioButtonGroup(labels=["Frequency", "Accuracy"], active=0)
 
 # Set up layouts and add to document
 inputs = widgetbox(button_group1, search_bar,search, button_group2, slider,name='Widgets')
-mainLayout = column(row(inputs),p1,name='mainLayout')
+mainLayout = row(column(inputs),p1,name='mainLayout')
 curdoc().add_root(mainLayout)
 session = push_session(curdoc())
 
@@ -47,35 +47,66 @@ session = push_session(curdoc())
 def update_search_term(attrname, old, new):
     rootLayout = curdoc().get_model_by_name('mainLayout')
     listOfSubLayouts = rootLayout.children
-    if button_group1.active == 0:
-        print(search_bar.value)
-        plotToRemove = curdoc().get_model_by_name('plot')
-        listOfSubLayouts.remove(plotToRemove)
-        player = map_classes.Player(search_bar.value)
-        season = player.final_season()
-        p2 = player.hex_freq(season)
-        rookie = player.rookie_season()
-        final = player.final_season()
-        index1 = int(rookie[0:4])
-        index2 = int(final[0:4])
-        slider = curdoc().get_model_by_name('slider')
-        slider.start = index1
-        slider.end = index2
-        slider.value = index2
-        plotToAdd = p2
-        listOfSubLayouts.append(plotToAdd)
+    if button_group2.active == 0:
+        if button_group1.active == 0:
+            print(search_bar.value)
+            plotToRemove = curdoc().get_model_by_name('plot')
+            listOfSubLayouts.remove(plotToRemove)
+            player = map_classes.Player(search_bar.value)
+            season = player.final_season()
+            p2 = player.hex_freq(season)
+            rookie = player.rookie_season()
+            final = player.final_season()
+            index1 = int(rookie[0:4])
+            index2 = int(final[0:4])
+            slider = curdoc().get_model_by_name('slider')
+            slider.start = index1
+            slider.end = index2
+            slider.value = index2
+            plotToAdd = p2
+            listOfSubLayouts.append(plotToAdd)
+        else:
+            print(search_bar.value)
+            plotToRemove = curdoc().get_model_by_name('plot')
+            listOfSubLayouts.remove(plotToRemove)
+            team = map_classes.Team(search_bar.value)
+            p2 = team.hex_freq('2017-18')
+            slider = curdoc().get_model_by_name('slider')
+            slider.start = 1996
+            slider.end = 2017
+            slider.value = 2017
+            plotToAdd = p2
+            listOfSubLayouts.append(plotToAdd)
     else:
-        print(search_bar.value)
-        plotToRemove = curdoc().get_model_by_name('plot')
-        listOfSubLayouts.remove(plotToRemove)
-        team = map_classes.Team(search_bar.value)
-        p2 = team.hex_freq('2017-18')
-        slider = curdoc().get_model_by_name('slider')
-        slider.start = 1996
-        slider.end = 2017
-        slider.value = 2017
-        plotToAdd = p2
-        listOfSubLayouts.append(plotToAdd)
+        if button_group1.active == 0:
+            print(search_bar.value)
+            plotToRemove = curdoc().get_model_by_name('plot')
+            listOfSubLayouts.remove(plotToRemove)
+            player = map_classes.Player(search_bar.value)
+            season = player.final_season()
+            p2 = player.hex_accuracy(season)
+            rookie = player.rookie_season()
+            final = player.final_season()
+            index1 = int(rookie[0:4])
+            index2 = int(final[0:4])
+            slider = curdoc().get_model_by_name('slider')
+            slider.start = index1
+            slider.end = index2
+            slider.value = index2
+            plotToAdd = p2
+            listOfSubLayouts.append(plotToAdd)
+        else:
+            print(search_bar.value)
+            plotToRemove = curdoc().get_model_by_name('plot')
+            listOfSubLayouts.remove(plotToRemove)
+            team = map_classes.Team(search_bar.value)
+            p2 = team.hex_accuracy('2017-18')
+            slider = curdoc().get_model_by_name('slider')
+            slider.start = 1996
+            slider.end = 2017
+            slider.value = 2017
+            plotToAdd = p2
+            listOfSubLayouts.append(plotToAdd)
 
 def update_plot_type(attrname, old, new):
     rootLayout = curdoc().get_model_by_name('mainLayout')
