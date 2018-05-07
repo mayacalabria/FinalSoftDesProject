@@ -40,7 +40,7 @@ def generate_shots(first,last=None,season='2017-18'):
     else:
         player_id = new_dict[first]
     # shots_dir should be named relatively eventually
-    shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData3/'+player_id+'/'+season+'.csv'))
+    shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData2/'+player_id+'/'+season+'.csv'))
     shots = pd.read_csv(shots_dir)
     return shots
 
@@ -54,7 +54,7 @@ def generate_team_shots(team_abv,season='2017-18'):
     new_dict = {v: k for k, v in teamid_dict.items()}
     teamid = str(new_dict[team_abv])
     team_shots_dir = os.path.abspath(os.path.join(os.getcwd(),
-        '../TeamData3/'+teamid+'/'+season+'.csv'))
+        '../TeamData2/'+teamid+'/'+season+'.csv'))
     shots = pd.DataFrame.from_csv(team_shots_dir)
     return shots
 
@@ -448,12 +448,11 @@ if __name__ == "__main__":
     # print(durant_shots)
     # team_test = os.path.abspath(os.path.join(os.getcwd(),'../TeamData2/1610612744/2016-17.csv'))
     # shots = pd.DataFrame.from_csv(team_test)
-    shots = generate_shots('LeBron','James','2017-18')
-    hist_heat(shots)
-    full_heat_map(shots)
-    #team_shots = generate_team_shots('GSW','2017-18')
+    #shots = generate_shots('LeBron','James','2017-18')
+
+    team_shots = generate_team_shots('CHI','1998-99')
     #hex_plot_team_freq(team_shots)
-    #hex_plot_team(team_shots)
+    hex_plot_team(team_shots)
     #hex_plot_team(team_shots)
     # # # James Harden
     # harden_shots = generate_shots('James','Harden','2016-17') ## consider point weighting

@@ -41,7 +41,7 @@ button_group2 = RadioButtonGroup(labels=["Frequency", "Accuracy"], active=0)
 inputs = widgetbox(button_group1, search_bar,search, button_group2, slider,name='Widgets')
 mainLayout = row(column(inputs),p1,name='mainLayout')
 curdoc().add_root(mainLayout)
-session = push_session(curdoc())
+#session = push_session(curdoc())
 
 #Set up callbacks
 def update_search_term(attrname, old, new):
@@ -116,7 +116,7 @@ def update_plot_type(attrname, old, new):
             plotToRemove = curdoc().get_model_by_name('plot')
             listOfSubLayouts.remove(plotToRemove)
             player = map_classes.Player(search_bar.value)
-            season = player.final_season()
+            season = str(slider.value)+'-'+str(slider.value+1)[2:4]
             p2 = player.hex_freq(season)
             plotToAdd = p2
             listOfSubLayouts.append(plotToAdd)
@@ -124,7 +124,7 @@ def update_plot_type(attrname, old, new):
             plotToRemove = curdoc().get_model_by_name('plot')
             listOfSubLayouts.remove(plotToRemove)
             player = map_classes.Player(search_bar.value)
-            season = player.final_season()
+            season = str(slider.value)+'-'+str(slider.value+1)[2:4]
             p2 = player.hex_accuracy(season)
             plotToAdd = p2
             listOfSubLayouts.append(plotToAdd)
@@ -133,14 +133,16 @@ def update_plot_type(attrname, old, new):
             plotToRemove = curdoc().get_model_by_name('plot')
             listOfSubLayouts.remove(plotToRemove)
             team = map_classes.Team(search_bar.value)
-            p2 = team.hex_freq('2017-18')
+            season = str(slider.value)+'-'+str(slider.value+1)[2:4]
+            p2 = team.hex_freq(season)
             plotToAdd = p2
             listOfSubLayouts.append(plotToAdd)
         else:
             plotToRemove = curdoc().get_model_by_name('plot')
             listOfSubLayouts.remove(plotToRemove)
             team = map_classes.Team(search_bar.value)
-            p2 = team.hex_accuracy('2017-18')
+            season = str(slider.value)+'-'+str(slider.value+1)[2:4]
+            p2 = team.hex_accuracy(season)
             plotToAdd = p2
             listOfSubLayouts.append(plotToAdd)
 
@@ -202,11 +204,11 @@ search.on_change('clicks', update_search_term, update_year)
 button_group2.on_change('active', update_plot_type)
 slider.on_change('value',update_year)
 # Set up layouts and add to document
-# inputs = widgetbox(button_group1, search_bar,search, button_group2, slider)
-# one = row(inputs, plot , width=1200)
-# curdoc().add_root(one)
-# curdoc().title = "GUI"
+inputs = widgetbox(button_group1, search_bar,search, button_group2, slider)
+one = row(inputs, plot, width=1200)
+curdoc().add_root(one)
+curdoc().title = "GUI"
 
 #Set up session
-session.show()
-session.loop_until_closed()
+# session.show()
+# session.loop_until_closed()
