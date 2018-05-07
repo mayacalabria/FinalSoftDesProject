@@ -6,7 +6,7 @@ from bokeh.io import output_file, show, save
 from bokeh.plotting import figure
 from bokeh.transform import linear_cmap
 from bokeh.util.hex import hexbin
-from bokeh.models import ColorBar,LinearColorMapper, Title
+from bokeh.models import ColorBar,LinearColorMapper, Title, HoverTool
 from bokeh.models.tickers import BasicTicker
 from bokeh.resources import CDN
 from bokeh.embed import file_html
@@ -98,7 +98,11 @@ class Player():
         p.add_layout(color_bar, 'right')
         p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
 
-        # return file_html(p,CDN,'accuracy_hex')
+        hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
+                  mode="mouse", point_policy="follow_mouse")
+
+        p.add_tools(hover)
+        # show(p)
         return p
 
     def hex_freq(self,season=None):
@@ -120,7 +124,11 @@ class Player():
         p.add_layout(color_bar, 'right')
         p.add_layout(Title(text="Percentage of shots taken in zone compared to league",align = 'center'),'right')
 
-        # return file_html(p,CDN,'freq_hex')
+        hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
+                  mode="mouse", point_policy="follow_mouse")
+
+        p.add_tools(hover)
+        # show(p)
         return p
 
 class Team(Player):
