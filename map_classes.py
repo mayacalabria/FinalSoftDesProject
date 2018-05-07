@@ -96,7 +96,7 @@ class Player():
         color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
         color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
         p.add_layout(color_bar, 'right')
-        show(p)
+
         return p
 
     def hex_freq(self,season=None):
@@ -116,7 +116,7 @@ class Player():
         color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low/2,high=self.percent_hi/2)
         color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
         p.add_layout(color_bar, 'right')
-        show(p)
+
         return p
 
 class Team(Player):
@@ -146,9 +146,11 @@ class Team(Player):
 
 
 if __name__ == "__main__":
-    durant = Player('Stephen Curry')
-    durant.hex_freq()
-    durant.hex_accuracy()
+    # durant = Player('Stephen Curry')
+    # durant.hex_freq()
+    # durant.hex_accuracy()
 
+    player = Player('Kevin Durant')
+    plot = player.hex_freq('2017-18')
     # gsw = Team('GSW')
     # gsw.hex_freq()
