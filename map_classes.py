@@ -58,7 +58,10 @@ class Player():
         if season == None:  # defaults to the most recent season played, if no season passed
             season = self.final_season()
         shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData2/'+self.id+'/'+season+'.csv'))
-        shots = pd.DataFrame.from_csv(shots_dir)
+        if os.path.exists(shots_dir):
+            shots = pd.DataFrame.read_csv(shots_dir)
+        else:
+            shots = pd.DataFrame()
         return shots
 
     def scatter(self,season=None):
@@ -85,24 +88,32 @@ class Player():
         Takes season as a string, defaults to last played season"""
 
         shots = self.generate_shots(season)
-        all_bins = sort_all_bins(shots)
-        p = figure(title=self.name+' Heatmap: accuracy compared to league',tools="wheel_zoom,reset", match_aspect=True,
-            background_fill_color='#BB7E3B',name='plot')
-        p.grid.visible = False
+        if shots.empty:
+            p = figure(title='No Data for the Selected Season',
+                tools="wheel_zoom,reset", match_aspect=True,
+                background_fill_color='#BB7E3B')
+            p.grid.visible = False
+            draw_court(p)
+        else:
+            all_bins = sort_all_bins(shots)
+            p = figure(title=self.name+' Heatmap: accuracy compared to league',
+                tools="wheel_zoom,reset", match_aspect=True,
+                background_fill_color='#BB7E3B',name='plot')
+            p.grid.visible = False
 
-        p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
-            fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low, self.percent_hi))
-        draw_court(p)
-        color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
-        color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
-        p.add_layout(color_bar, 'right')
-        p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
+            p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+                fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low, self.percent_hi))
+            draw_court(p)
+            color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
+            color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
+            p.add_layout(color_bar, 'right')
+            p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
 
-        hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
-                  mode="mouse", point_policy="follow_mouse")
+            hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
+                      mode="mouse", point_policy="follow_mouse")
 
-        p.add_tools(hover)
-        # show(p)
+            p.add_tools(hover)
+
         return p
 
     def hex_freq(self,season=None):
@@ -111,24 +122,31 @@ class Player():
         Takes season as a string, defaults to last played season"""
 
         shots = self.generate_shots(season)
-        all_bins = sort_all_bins_freq(shots)
-        p = figure(title=self.name+' Heatmap: frequency compared to league',tools="wheel_zoom,reset", match_aspect=True,
-            background_fill_color='#BB7E3B', name='plot')
-        p.grid.visible = False
+        if shots.empty:
+            p = figure(title='No Data for the Selected Season',
+                tools="wheel_zoom,reset", match_aspect=True,
+                background_fill_color='#BB7E3B')
+            p.grid.visible = False
+            draw_court(p)
+        else:
+            all_bins = sort_all_bins_freq(shots)
+            p = figure(title=self.name+' Heatmap: frequency compared to league',tools="wheel_zoom,reset", match_aspect=True,
+                background_fill_color='#BB7E3B', name='plot')
+            p.grid.visible = False
 
-        p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
-            fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low/2, self.percent_hi/2))
-        draw_court(p)
-        color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low/2,high=self.percent_hi/2)
-        color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
-        p.add_layout(color_bar, 'right')
-        p.add_layout(Title(text="Percentage of shots taken in zone compared to league",align = 'center'),'right')
+            p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+                fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low/2, self.percent_hi/2))
+            draw_court(p)
+            color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low/2,high=self.percent_hi/2)
+            color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
+            p.add_layout(color_bar, 'right')
+            p.add_layout(Title(text="Percentage of shots taken in zone compared to league",align = 'center'),'right')
 
-        hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
-                  mode="mouse", point_policy="follow_mouse")
+            hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
+                      mode="mouse", point_policy="follow_mouse")
 
-        p.add_tools(hover)
-        # show(p)
+            p.add_tools(hover)
+
         return p
 
 class Team(Player):
@@ -151,7 +169,10 @@ class Team(Player):
         if season == None:
             season = '2017-18'
         shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../TeamData2/'+self.id+'/'+season+'.csv'))
-        shots = pd.DataFrame.from_csv(shots_dir)
+        if os.path.exists(shots_dir):
+            shots = pd.DataFrame.from_csv(shots_dir)
+        else:
+            shots = pd.DataFrame()
         return shots
 
 
