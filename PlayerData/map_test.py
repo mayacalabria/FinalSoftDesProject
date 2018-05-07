@@ -291,10 +291,8 @@ if __name__ == "__main__":
     # implot = plt.imshow(im)
     # plt.show()
 
-    durant = generate_shots('Russell','Westbrook',season='2016-17')
     #sort_all_bins(durant)
     #hex_plot(durant)
-    hex_plot(durant)
     # durant_success = sort_successes(durant)
     # league_avg = league_average(season='2016-17')
     # print(league_avg)

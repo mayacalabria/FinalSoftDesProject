@@ -449,8 +449,10 @@ if __name__ == "__main__":
     # team_test = os.path.abspath(os.path.join(os.getcwd(),'../TeamData2/1610612744/2016-17.csv'))
     # shots = pd.DataFrame.from_csv(team_test)
     shots = generate_shots('LeBron','James','2017-18')
-    team_shots = generate_team_shots('GSW','2017-18')
-    hex_plot_team_freq(team_shots)
+    hist_heat(shots)
+    full_heat_map(shots)
+    #team_shots = generate_team_shots('GSW','2017-18')
+    #hex_plot_team_freq(team_shots)
     #hex_plot_team(team_shots)
     #hex_plot_team(team_shots)
     # # # James Harden
