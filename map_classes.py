@@ -6,7 +6,7 @@ from bokeh.io import output_file, show, save
 from bokeh.plotting import figure
 from bokeh.transform import linear_cmap
 from bokeh.util.hex import hexbin
-from bokeh.models import LogColorMapper,LogTicker,ColorBar,LinearColorMapper
+from bokeh.models import ColorBar,LinearColorMapper, Title
 from bokeh.models.tickers import BasicTicker
 from bokeh.resources import CDN
 from bokeh.embed import file_html
@@ -96,8 +96,10 @@ class Player():
         color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
         color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
         p.add_layout(color_bar, 'right')
+        p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
 
-        return p
+        return file_html(p,CDN,'accuracy_hex')
+        # return p
 
     def hex_freq(self,season=None):
         """ Generates a hex bin plot that compares a player's shooting percentages to the
@@ -116,8 +118,10 @@ class Player():
         color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low/2,high=self.percent_hi/2)
         color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
         p.add_layout(color_bar, 'right')
+        p.add_layout(Title(text="Percentage of shots taken in zone compared to league",align = 'center'),'right')
 
-        return p
+        return file_html(p,CDN,'freq_hex')
+        # return p
 
 class Team(Player):
 
