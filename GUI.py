@@ -70,7 +70,7 @@ def update_search_term(attrname, old, new):
             print(search_bar.value)
             plotToRemove = curdoc().get_model_by_name('plot')
             #listOfSubLayouts.remove(plotToRemove)
-            shots,team = map_classes.Team(search_bar.value)
+            team = map_classes.Team(search_bar.value)
             p2 = team.hex_freq('2017-18')
             slider = curdoc().get_model_by_name('slider')
             slider.start = 1996
