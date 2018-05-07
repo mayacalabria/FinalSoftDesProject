@@ -59,10 +59,9 @@ class Player():
             season = self.final_season()
         shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData2/'+self.id+'/'+season+'.csv'))
         if os.path.exists(shots_dir):
-            shots = pd.DataFrame.from_csv(shots_dir)
+            return pd.DataFrame.from_csv(shots_dir)
         else:
-            shots = pd.DataFrame()
-        return shots
+            return pd.DataFrame()
 
     def scatter(self,season=None):
         """ Generates a scatter plot of made and missed shots over the course of a season. """
@@ -91,8 +90,9 @@ class Player():
         if shots.empty:
             p = figure(title='No Data for the Selected Season',
                 tools="wheel_zoom,reset", match_aspect=True,
-                background_fill_color='#BB7E3B')
+                background_fill_color='#BB7E3B',name='plot')
             p.grid.visible = False
+            p.axis.visible = False
             draw_court(p)
         else:
             all_bins = sort_all_bins(shots)
@@ -100,7 +100,7 @@ class Player():
                 tools="wheel_zoom,reset", match_aspect=True,
                 background_fill_color='#BB7E3B',name='plot')
             p.grid.visible = False
-
+            p.axis.visible = False
             p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
                 fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low, self.percent_hi))
             draw_court(p)
@@ -125,15 +125,16 @@ class Player():
         if shots.empty:
             p = figure(title='No Data for the Selected Season',
                 tools="wheel_zoom,reset", match_aspect=True,
-                background_fill_color='#BB7E3B')
+                background_fill_color='#BB7E3B',name='plot')
             p.grid.visible = False
+            p.axis.visible = False
             draw_court(p)
         else:
             all_bins = sort_all_bins_freq(shots)
             p = figure(title=self.name+' Heatmap: frequency compared to league',tools="wheel_zoom,reset", match_aspect=True,
                 background_fill_color='#BB7E3B', name='plot')
             p.grid.visible = False
-
+            p.axis.visible= False
             p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
                 fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low/2, self.percent_hi/2))
             draw_court(p)
@@ -184,6 +185,6 @@ if __name__ == "__main__":
     # durant.hex_accuracy()
 
     player = Player('Kevin Durant')
-    plot = player.hex_freq('2017-18')
+    show(player.hex_accuracy('2003-04'))
     # gsw = Team('GSW')
     # gsw.hex_freq()
