@@ -87,7 +87,7 @@ class Player():
         shots = self.generate_shots(season)
         all_bins = sort_all_bins(shots)
         p = figure(title=self.name+' Heatmap: accuracy compared to league',tools="wheel_zoom,reset", match_aspect=True,
-            background_fill_color='#BB7E3B')
+            background_fill_color='#BB7E3B',name='plot')
         p.grid.visible = False
 
         p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
@@ -109,7 +109,7 @@ class Player():
         shots = self.generate_shots(season)
         all_bins = sort_all_bins_freq(shots)
         p = figure(title=self.name+' Heatmap: frequency compared to league',tools="wheel_zoom,reset", match_aspect=True,
-            background_fill_color='#BB7E3B')
+            background_fill_color='#BB7E3B', name='plot')
         p.grid.visible = False
 
         p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
