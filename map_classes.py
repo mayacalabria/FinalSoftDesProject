@@ -26,12 +26,14 @@ class Player():
         """
         pid_dict = pickle.load(open('pid_dict.pickle','rb'))
         new_dict = {v: k for k, v in pid_dict.items()}
-        player_id = new_dict[name]
-
-        self.name = name
-        self.id = player_id
-        self.percent_low = -10
-        self.percent_hi = 10
+        if name in new_dict:
+            self.name = name
+            self.id = new_dict[name]
+            self.percent_low = -10
+            self.percent_hi = 10
+            self.error_flag = 0
+        else:
+            self.error_flag = 1
 
     def final_season(self):
         """ Returns the last season that a player played in. """
@@ -85,34 +87,37 @@ class Player():
         """ Generates a hex bin plot that compares a player's shooting percentages to the
         leagues by zone. Shows accuracy compared to league.
         Takes season as a string, defaults to last played season"""
-
-        shots = self.generate_shots(season)
-        if shots.empty:
-            p = figure(title='No Data for the Selected Season',
-                tools="wheel_zoom,reset", match_aspect=True,
-                background_fill_color='#BB7E3B',name='plot')
-            p.grid.visible = False
-            p.axis.visible = False
-            draw_court(p)
+        if self.error_flag == 1:
+            error = Error()
+            return error.error_graph()
         else:
-            all_bins = sort_all_bins(shots)
-            p = figure(title=self.name+' Heatmap: accuracy compared to league',
-                tools="wheel_zoom,reset", match_aspect=True,
-                background_fill_color='#BB7E3B',name='plot')
-            p.grid.visible = False
-            p.axis.visible = False
-            p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
-                fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low, self.percent_hi))
-            draw_court(p)
-            color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
-            color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
-            p.add_layout(color_bar, 'right')
-            p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
+            shots = self.generate_shots(season)
+            if shots.empty:
+                p = figure(title='No Data for the Selected Season',
+                    tools="wheel_zoom,reset", match_aspect=True,
+                    background_fill_color='#BB7E3B',name='plot')
+                p.grid.visible = False
+                p.axis.visible = False
+                draw_court(p)
+            else:
+                all_bins = sort_all_bins(shots)
+                p = figure(title=self.name+' Heatmap: accuracy compared to league',
+                    tools="wheel_zoom,reset", match_aspect=True,
+                    background_fill_color='#BB7E3B',name='plot')
+                p.grid.visible = False
+                p.axis.visible = False
+                p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+                    fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low, self.percent_hi))
+                draw_court(p)
+                color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
+                color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
+                p.add_layout(color_bar, 'right')
+                p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
 
-            hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
-                      mode="mouse", point_policy="follow_mouse")
+                hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
+                          mode="mouse", point_policy="follow_mouse")
 
-            p.add_tools(hover)
+                p.add_tools(hover)
 
         return p
 
@@ -120,33 +125,36 @@ class Player():
         """ Generates a hex bin plot that compares a player's shooting percentages to the
         leagues by zone. Shows accuracy compared to league.
         Takes season as a string, defaults to last played season"""
-
-        shots = self.generate_shots(season)
-        if shots.empty:
-            p = figure(title='No Data for the Selected Season',
-                tools="wheel_zoom,reset", match_aspect=True,
-                background_fill_color='#BB7E3B',name='plot')
-            p.grid.visible = False
-            p.axis.visible = False
-            draw_court(p)
+        if self.error_flag == 1:
+            error = Error()
+            return error.error_graph()
         else:
-            all_bins = sort_all_bins_freq(shots)
-            p = figure(title=self.name+' Heatmap: frequency compared to league',tools="wheel_zoom,reset", match_aspect=True,
-                background_fill_color='#BB7E3B', name='plot')
-            p.grid.visible = False
-            p.axis.visible= False
-            p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
-                fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low/2, self.percent_hi/2))
-            draw_court(p)
-            color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low/2,high=self.percent_hi/2)
-            color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
-            p.add_layout(color_bar, 'right')
-            p.add_layout(Title(text="Percentage of shots taken in zone compared to league",align = 'center'),'right')
+            shots = self.generate_shots(season)
+            if shots.empty:
+                p = figure(title='No Data for the Selected Season',
+                    tools="wheel_zoom,reset", match_aspect=True,
+                    background_fill_color='#BB7E3B',name='plot')
+                p.grid.visible = False
+                p.axis.visible = False
+                draw_court(p)
+            else:
+                all_bins = sort_all_bins_freq(shots)
+                p = figure(title=self.name+' Heatmap: frequency compared to league',tools="wheel_zoom,reset", match_aspect=True,
+                    background_fill_color='#BB7E3B', name='plot')
+                p.grid.visible = False
+                p.axis.visible= False
+                p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+                    fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low/2, self.percent_hi/2))
+                draw_court(p)
+                color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low/2,high=self.percent_hi/2)
+                color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
+                p.add_layout(color_bar, 'right')
+                p.add_layout(Title(text="Percentage of shots taken in zone compared to league",align = 'center'),'right')
 
-            hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
-                      mode="mouse", point_policy="follow_mouse")
+                hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
+                          mode="mouse", point_policy="follow_mouse")
 
-            p.add_tools(hover)
+                p.add_tools(hover)
 
         return p
 
@@ -157,12 +165,16 @@ class Team(Player):
         "GSW", "BOS", etc.
 
          """
-        self.name = abrv
         teamid_dict = pickle.load(open('teamid_dict.pickle','rb'))
         new_dict = {v: k for k, v in teamid_dict.items()}
-        self.id = str(new_dict[self.name])
-        self.percent_low = -5
-        self.percent_hi = 5
+        if abrv in new_dict:
+            self.name = abrv
+            self.id = str(new_dict[self.name])
+            self.percent_low = -5
+            self.percent_hi = 5
+            self.error_flag = 0
+        else:
+            self.error_flag = 1
 
     def generate_shots(self,season=None):
         """ Takes season, and returns all team shot data for that season as a pandas frame.
@@ -176,15 +188,26 @@ class Team(Player):
             shots = pd.DataFrame()
         return shots
 
+class Error():
+    """ An class used by player or team classes when the name/team entered is not found in database. """
+    def __init__(self):
+        pass
+
+    def error_graph(self):
+        p = figure(title='Uh oh!', x_range=(0,1), y_range=(0,1),
+            tools="wheel_zoom,reset", match_aspect=True,
+            background_fill_color='#BB7E3B',name='plot')
+        p.image_url(url=["error_img.png"],x=0,y=1,w=1,h=1)
+        p.grid.visible = False
+        p.axis.visible = False
+        p.toolbar.logo = None
+        p.toolbar_location = None
+        return p
+
+
 
 
 
 if __name__ == "__main__":
-    # durant = Player('Stephen Curry')
-    # durant.hex_freq()
-    # durant.hex_accuracy()
-
-    player = Player('Kevin Durant')
-    show(player.hex_accuracy('2003-04'))
-    # gsw = Team('GSW')
-    # gsw.hex_freq()
+    durant = Player('Steen Curry')
+    show(durant.hex_freq())
