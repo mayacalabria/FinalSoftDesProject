@@ -59,7 +59,7 @@ class Player():
             season = self.final_season()
         shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData2/'+self.id+'/'+season+'.csv'))
         if os.path.exists(shots_dir):
-            shots = pd.DataFrame.read_csv(shots_dir)
+            shots = pd.DataFrame.from_csv(shots_dir)
         else:
             shots = pd.DataFrame()
         return shots
