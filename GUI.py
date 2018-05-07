@@ -60,6 +60,8 @@ def update_search_term(attrname, old, new):
             final = player.final_season()
             index1 = int(rookie[0:4])
             index2 = int(final[0:4])
+            if index1==index2:
+                index1 = index2-1
             slider = curdoc().get_model_by_name('slider')
             slider.start = index1
             slider.end = index2
@@ -90,6 +92,8 @@ def update_search_term(attrname, old, new):
             final = player.final_season()
             index1 = int(rookie[0:4])
             index2 = int(final[0:4])
+            if index1==index2:
+                index1 = index2-1
             slider = curdoc().get_model_by_name('slider')
             slider.start = index1
             slider.end = index2
@@ -208,7 +212,7 @@ slider.on_change('value',update_year)
 # inputs = widgetbox(button_group1, search_bar,search, button_group2, slider)
 # one = row(inputs, plot, width=1200)
 # curdoc().add_root(one)
-# curdoc().title = "GUI"
+curdoc().title = "GUI"
 
 #Set up session
 # session.show()
