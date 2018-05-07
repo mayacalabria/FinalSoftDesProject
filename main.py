@@ -1,7 +1,7 @@
 """main web app file"""
 
 from flask import *
-from bokeh.embed import server_session
+from bokeh.embed import server_session,server_document
 from bokeh.client import pull_session
 from map_classes import Player,Team
 
@@ -15,12 +15,10 @@ def home_page():
 @app.route('/backend', methods=['POST','GET'])
 def backend():
     if request.method == 'POST':
-        if request.form['choice']=='project':
+        if request.form['choice']=='More Project Information':
             return project_description()
-        if request.form['choice']=='player':
-            return player_heat()
-        if request.form['choice']=='team':
-            return team_heat()
+        if request.form['choice']=='Interactive Visualization Tool':
+            return data_viz()
     return render_template('home_page.html')
 
 @app.route('/project_description', methods=['POST','GET'])
@@ -28,10 +26,10 @@ def project_description():
     return 'Project Description Coming'
 
 @app.route('/player', methods=['POST','GET'])
-def player_heat():
-    session = pull_session(url='http://localhost:5006/GUI')
-    session.document.roots[0].children[1].title.text = 'I do not know what this will do'
-    script = server_session(None,session.id,url='http://localhost:5006/GUI')
+def data_viz():
+    # session = pull_session(url='http://localhost:5006/GUI')
+    # script = server_session(None,session.id,url='http://localhost:5006/GUI')
+    script = server_document(url='http://localhost:5006/GUI')
     return render_template('interactive_data.html',bokS=script,template="Flask")
 
 @app.route('/viz_player', methods=['POST','GET'])

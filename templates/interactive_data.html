@@ -1,7 +1,22 @@
 <html>
+<head>
+<style>
+p,p2 {text-align:center;}
+p,p2 {color:black;}
+p,p2 {font-family: "Courier New",Courier,monospace;}}
+body {
+    background-color: rgba(0, 50, 200, 1);
+}
+</style>
+</head>
 <body>
- <p>Flask embedding Bokeh test</p>
-{{ bokS|indent(4)|safe }}
+
+<p>Interactive Visualization Tool</p>
+
+{{ bokS|safe }}
+
+<p2>****EXPLANATION OF WHAT THE DIFFERENT PLOTS MEAN AND WHY THEY
+  ARE IMPORTANT****</p2>
 
 </body>
 </html>
