@@ -14,7 +14,7 @@ import pickle
 import os.path
 import pandas as pd
 import colorcet as cc
-from map_test import sort_all_bins, sort_hex_bin, draw_court
+from map_test import sort_all_bins, sort_hex_bin, draw_court, sort_all_bins_freq
 
 
 
@@ -79,14 +79,14 @@ class Player():
         plt.title(self.name+' shot locations')
         plt.show()
 
-    def hex(self,season=None):
+    def hex_accuracy(self,season=None):
         """ Generates a hex bin plot that compares a player's shooting percentages to the
         leagues by zone. Shows accuracy compared to league.
         Takes season as a string, defaults to last played season"""
 
         shots = self.generate_shots(season)
         all_bins = sort_all_bins(shots)
-        p = figure(title=self.name+' heatmap',tools="wheel_zoom,reset", match_aspect=True,
+        p = figure(title=self.name+' Heatmap: accuracy compared to league',tools="wheel_zoom,reset", match_aspect=True,
             background_fill_color='#BB7E3B')
         p.grid.visible = False
 
@@ -96,8 +96,28 @@ class Player():
         color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
         color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
         p.add_layout(color_bar, 'right')
+        show(p)
+        return p
 
-        return file_html(p,CDN,'hex_plot')
+    def hex_freq(self,season=None):
+        """ Generates a hex bin plot that compares a player's shooting percentages to the
+        leagues by zone. Shows accuracy compared to league.
+        Takes season as a string, defaults to last played season"""
+
+        shots = self.generate_shots(season)
+        all_bins = sort_all_bins_freq(shots)
+        p = figure(title=self.name+' Heatmap: frequency compared to league',tools="wheel_zoom,reset", match_aspect=True,
+            background_fill_color='#BB7E3B')
+        p.grid.visible = False
+
+        p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+            fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low/2, self.percent_hi/2))
+        draw_court(p)
+        color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low/2,high=self.percent_hi/2)
+        color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
+        p.add_layout(color_bar, 'right')
+        show(p)
+        return p
 
 class Team(Player):
 
@@ -127,7 +147,8 @@ class Team(Player):
 
 if __name__ == "__main__":
     durant = Player('Stephen Curry')
-    d = durant.hex('2017-18')
+    durant.hex_freq()
+    durant.hex_accuracy()
 
-    gsw = Team('IND')
-    gsw.hex()
+    # gsw = Team('GSW')
+    # gsw.hex_freq()
