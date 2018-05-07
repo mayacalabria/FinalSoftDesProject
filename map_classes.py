@@ -8,6 +8,8 @@ from bokeh.transform import linear_cmap
 from bokeh.util.hex import hexbin
 from bokeh.models import ColorBar,LinearColorMapper, Title, HoverTool
 from bokeh.models.tickers import BasicTicker
+from bokeh.models.glyphs import Text
+from bokeh.models.annotations import Label
 from bokeh.resources import CDN
 from bokeh.embed import file_html
 import pickle
@@ -37,23 +39,29 @@ class Player():
 
     def final_season(self):
         """ Returns the last season that a player played in. """
-        player_dir = os.listdir(os.path.join(os.getcwd(),'../PlayerData2/'+self.id))
-        years = []
-        for i in range(len(player_dir)):
-            year = player_dir[i]
-            years.append(year)
-        final_season = max(years)
-        return final_season[0:-4] # last season, removes '.csv'
+        if self.error_flag == 1:
+            return '2017-18'
+        else:
+            player_dir = os.listdir(os.path.join(os.getcwd(),'../PlayerData2/'+self.id))
+            years = []
+            for i in range(len(player_dir)):
+                year = player_dir[i]
+                years.append(year)
+            final_season = max(years)
+            return final_season[0:-4] # last season, removes '.csv'
 
     def rookie_season(self):
         """ Returns first season of player's career. """
-        player_dir = os.listdir(os.path.join(os.getcwd(),'../PlayerData2/'+self.id))
-        years = []
-        for i in range(len(player_dir)):
-            year = player_dir[i]
-            years.append(year)
-        final_season = min(years)
-        return final_season[0:-4] # first season, removes '.csv'
+        if self.error_flag == 1:
+            return '2016-17'
+        else:
+            player_dir = os.listdir(os.path.join(os.getcwd(),'../PlayerData2/'+self.id))
+            years = []
+            for i in range(len(player_dir)):
+                year = player_dir[i]
+                years.append(year)
+            final_season = min(years)
+            return final_season[0:-4] # first season, removes '.csv'
 
     def generate_shots(self,season=None):
         """ Takes season, and returns all player shot data for that season as a pandas frame. """
@@ -194,16 +202,29 @@ class Error():
         pass
 
     def error_graph(self):
-        p = figure(title='Uh oh!', x_range=(0,1), y_range=(0,1),
-            tools="wheel_zoom,reset", match_aspect=True,
-            background_fill_color='#BB7E3B',name='plot')
-        p.image_url(url=["error_img.png"],x=0,y=1,w=1,h=1)
+        p = figure(title='Uh oh!', x_range=(0,1), y_range=(0,2),
+            tools="wheel_zoom,reset", match_aspect=True, name='plot')
+
+        text1 ='Uh oh! It looks like you misspelled a word. If you are searching for'
+        text2 ='a player make sure that their full name is spelled correctly. If you'
+        text3 ='are looking for a team make sure that their 3 letter, NBA specific'
+        text4 ='abbreviation is correct.'
+
+        mytext1 = Label(x=0.1,y=1.4,text=text1)
+        mytext2 = Label(x=0.1,y=1.2,text=text2)
+        mytext3 = Label(x=0.1,y=1,text=text3)
+        mytext4 = Label(x=0.35,y=.8,text=text4)
+
+        p.add_layout(mytext1)
+        p.add_layout(mytext2)
+        p.add_layout(mytext3)
+        p.add_layout(mytext4)
+
         p.grid.visible = False
         p.axis.visible = False
         p.toolbar.logo = None
         p.toolbar_location = None
         return p
-
 
 
 
