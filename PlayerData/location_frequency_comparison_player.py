@@ -1,20 +1,19 @@
-"""script to take the league avg zone percentages and subtract it from
-a teams zone percentage, in order to build a team heat map.
-To do this the current team files are read, and then new files are created
-in a different folder that has the correct team zone percentages"""
+"""Script to write location frequency data to existing player csvs"""
 
+import pandas as pd
 import os
-import sys
 import csv
 import pickle
 import numpy as np
-import pandas as pd
-from map_test import calc_all_zone_percentage
+from location_frequency_comparison_team import calc_all_zone_frequency, calc_zone_frequency
 
+#dictionary where each key is a season, and each value is a list of the league
+#average zone frequencies, corresponding to the zone lists in
+#calc_all_zone_frequency
+avg_zone_frequency = pickle.load(open('avg_zone_frequency.pickle','rb'))
 
-teamid_dict = pickle.load(open('teamid_dict.pickle','rb'))
-
-team_directory = os.path.abspath(os.path.join(os.getcwd(),'../TeamData'))
+pid_dict = pickle.load(open('pid_dict.pickle','rb'))
+player_directory = os.path.abspath(os.path.join(os.getcwd(),'../../PlayerData2'))
 
 #lists of corresponding zone elements
 basic_zones = ['Above the Break 3', 'Above the Break 3',
@@ -43,23 +42,23 @@ for i in range(len(seasons_to_calc)-1):
     season = str(seasons_to_calc[i]) + '-' + str(seasons_to_calc[i+1])[2:]
     seasons.append(season)
 
-#loop through team files
-for team in os.listdir(team_directory):
-    #specify current and new team file paths
-    team_path = os.path.abspath(os.path.join(team_directory,team))
-    new_team_path = os.path.abspath(os.path.join(os.getcwd(),'../TeamData2/'+team))
-    #if the new team folder doesn't exist, create it
-    if not os.path.exists(new_team_path):
-        os.makedirs(new_team_path)
-    #loop through year files in current team folder
-    for year_file in os.listdir(team_path):
-        #specify old team filepath
-        year_filepath = os.path.join(team_path,year_file)
-        #specify new team filepath
-        new_file = os.path.join(new_team_path,year_file)
+#loop through player files
+for player in os.listdir(player_directory):
+    #specify current and new player file paths
+    player_path = os.path.abspath(os.path.join(player_directory,player))
+    new_player_path = os.path.abspath(os.path.join(os.getcwd(),'../../PlayerData3/'+player))
+    #if the new player folder doesn't exist, create it
+    if not os.path.exists(new_player_path):
+        os.makedirs(new_player_path)
+    #loop through year files in current player folder
+    for year_file in os.listdir(player_path):
+        #specify old player filepath
+        year_filepath = os.path.join(player_path,year_file)
+        #specify new player filepath
+        new_file = os.path.join(new_player_path,year_file)
         #convert current year file to dataframe to pass to zone calculate function
         df = pd.read_csv(year_filepath)
-        all_percentages = calc_all_zone_percentage(df,year_file[:7])
+        all_frequencies = calc_all_zone_frequency(df,year_file[:7],avg_zone_frequency)
         #open the old file for reading, and create the new one to write to
         csv_r = csv.reader(open(year_filepath,'r'))
         csv_w = csv.writer(open(new_file,'w'))
@@ -67,11 +66,12 @@ for team in os.listdir(team_directory):
         for idx,row in enumerate(csv_r):
             #write the headers without modification on the first iteration
             if idx == 0:
+                row.append('ZONE FREQUENCY')
                 csv_w.writerow(row)
             #after the first iteration use the percentages dictionary and
             #the current shots zone to replace the ZONE PERCENTAGE column with
             #the correct one
             else:
                 dict_key = (row[4],row[5],row[6])
-                row[-1] = all_percentages[dict_key]
+                row.append(all_frequencies[dict_key])
                 csv_w.writerow(row)

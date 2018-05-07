@@ -12,7 +12,7 @@ from operator import add
 
 teamid_dict = pickle.load(open('teamid_dict.pickle','rb'))
 
-team_directory = os.path.abspath(os.path.join(os.getcwd(),'../TeamData'))
+team_directory = os.path.abspath(os.path.join(os.getcwd(),'../../TeamData2'))
 
 basic_zones = ['Above the Break 3', 'Above the Break 3',
     'Above the Break 3', 'Above the Break 3', 'Backcourt',
@@ -80,6 +80,7 @@ for i in seasons:
     #by the total shots
     avg_zone_frequency[i] = [100*(x / total_shots) for x in season_zone_totals]
 
+print(avg_zone_frequency)
 #store avg_zone_frequency for later use
 pickle.dump(avg_zone_frequency,open('avg_zone_frequency.pickle','wb+'))
 """NEXT STEPS:

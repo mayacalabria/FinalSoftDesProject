@@ -18,8 +18,6 @@ import os.path
 import pandas as pd
 import colorcet as cc
 
-
-
 def generate_shots_fromNBA(first,last,season):
     """ Takes first, last, and season as string,
     returns pandas structure of all shots
@@ -42,8 +40,8 @@ def generate_shots(first,last=None,season='2017-18'):
     else:
         player_id = new_dict[first]
     # shots_dir should be named relatively eventually
-    shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData2/'+player_id+'/'+season+'.csv'))
-    shots = pd.DataFrame.from_csv(shots_dir)
+    shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData3/'+player_id+'/'+season+'.csv'))
+    shots = pd.read_csv(shots_dir)
     return shots
 
 def generate_team_shots(team_abv,season='2017-18'):
@@ -56,7 +54,7 @@ def generate_team_shots(team_abv,season='2017-18'):
     new_dict = {v: k for k, v in teamid_dict.items()}
     teamid = str(new_dict[team_abv])
     team_shots_dir = os.path.abspath(os.path.join(os.getcwd(),
-        '../TeamData2/'+teamid+'/'+season+'.csv'))
+        '../TeamData3/'+teamid+'/'+season+'.csv'))
     shots = pd.DataFrame.from_csv(team_shots_dir)
     return shots
 
@@ -113,6 +111,26 @@ def hex_plot_player(shots):
 
     show(p)
 
+def hex_plot_player_freq(shots):
+    """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
+    optional binsize, controls resolution
+    """
+    #sort all bins by zone and percentage for that zone
+    all_bins = sort_all_bins_freq(shots)
+    title = shots['PLAYER_NAME'].iloc[0]
+    p = figure(title=title, tools="wheel_zoom,reset", match_aspect=True,
+        background_fill_color='#BB7E3B')
+    p.grid.visible = False
+
+    p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+        fill_color=linear_cmap('counts', cc.coolwarm, -5, 5))
+    draw_court(p)
+    color_mapper = LinearColorMapper(palette=cc.coolwarm,low=-5,high=5)
+    color_bar = ColorBar(color_mapper=color_mapper, location=(0,0),)
+    p.add_layout(color_bar, 'right')
+
+    show(p)
+
 def hex_plot_team(shots):
     """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
     optional binsize, controls resolution
@@ -128,6 +146,26 @@ def hex_plot_team(shots):
         fill_color=linear_cmap('counts', cc.coolwarm, -5, 5))
     draw_court(p)
     color_mapper = LinearColorMapper(palette=cc.coolwarm,low=-5,high=5)
+    color_bar = ColorBar(color_mapper=color_mapper, location=(0,0),)
+    p.add_layout(color_bar, 'right')
+
+    show(p)
+
+def hex_plot_team_freq(shots):
+    """ Takes pandas DataFrame of shots and creates Bokeh hex plot,
+    optional binsize, controls resolution
+    """
+    #sort all bins by zone and percentage for that zone
+    all_bins = sort_all_bins_freq(shots)
+    title = shots['TEAM_NAME'].iloc[0]
+    p = figure(title=title, tools="wheel_zoom,reset", match_aspect=True,
+        background_fill_color='#BB7E3B')
+    p.grid.visible = False
+
+    p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
+        fill_color=linear_cmap('counts', cc.coolwarm, -2.5, 2.5))
+    draw_court(p)
+    color_mapper = LinearColorMapper(palette=cc.coolwarm,low=-2.5,high=2.5)
     color_bar = ColorBar(color_mapper=color_mapper, location=(0,0),)
     p.add_layout(color_bar, 'right')
 
@@ -176,6 +214,8 @@ def league_average(season=None, first='Kevin', last='Durant'):
     league_average = player.league_average()
     return league_average
 
+
+
 def sort_successes(shots):
     """ Takes a pandas DataFrame of a players shots and returns a data set
     with only shots that were successful
@@ -188,9 +228,6 @@ def calc_all_zone_percentage(shots,season='2017-18'):
     their shooting percentage by zone, returns a dictionary of the players zone
     percentage minus the league average percentage for that zone
     """
-    #these 3 list element indices correspond to define a shot zone_area
-    #ex. basic_zones[-2],zone_areas[-2],ranges[-2] combine to define the
-    #restricted area
     basic_zones = ['Above the Break 3', 'Above the Break 3',
         'Above the Break 3', 'Above the Break 3', 'Backcourt',
         'In The Paint (Non-RA)', 'In The Paint (Non-RA)',
@@ -210,21 +247,14 @@ def calc_all_zone_percentage(shots,season='2017-18'):
         '16-24 ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.', '8-16 ft.',
         'Less Than 8 ft.', '24+ ft.']
 
-    #initialize dictionary to store players relative zone percentages
     all_percentages = {}
-    #get league average zone percentages
     league_avg = league_average(season=season)
 
-    #loop through indices of zone categories
     for i in range(len(zone_areas)):
-        #get the league avg percent from the current zone
         league_percent = 100 * (league_avg['FG_PCT'].iloc[i])
-        #calculate the zone percent for the current zone
         zone_percent = calc_zone_percentage(shots,str(zone_areas[i]),
             str(ranges[i]),str(basic_zones[i]))
-        #subtract league average from player percent
         relative_zone_percent = zone_percent - league_percent
-        #store zone and corresponding percentage in dictionary
         dict_key = (str(basic_zones[i]),str(zone_areas[i]),str(ranges[i]))
         all_percentages[dict_key] = relative_zone_percent
 
@@ -236,7 +266,7 @@ def calc_zone_percentage(shots,zone_area,zone_range,basic_zone):
     basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
     zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
     fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
-    if len(fin_range.index)==0:#if their are no shots in the final range return zero for the zone
+    if len(fin_range.index)==0:
         return 0.0
     fin_range_s = fin_range[(fin_range.SHOT_MADE_FLAG==1)]#isolate all of the successful shots
     zone_percentage = 100 * (len(fin_range_s.index)/len(fin_range.index))#calculate percentage
@@ -248,9 +278,8 @@ def sort_hex_bin(shots,zone_area,zone_range,basic_zone):
     for that zone"""
     basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
     zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
-    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
+    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]
 
-    #return x,y locations and corresponding percentage for that zone
     xs = fin_range['LOC_X']
     ys = fin_range['LOC_Y']
     zone_percentage = fin_range['ZONE_PERCENTAGE']
@@ -258,12 +287,7 @@ def sort_hex_bin(shots,zone_area,zone_range,basic_zone):
     return xs, ys, zone_percentage
 
 def sort_all_bins(shots):
-    """takes a dataframe of shots and sorts them into bins by zone, where
-    the bins for that zone have count values equal to that zone shooting
-    percentage"""
-    #these 3 list element indices correspond to define a shot zone_area
-    #ex. basic_zones[-2],zone_areas[-2],ranges[-2] combine to define the
-    #restricted area
+
     basic_zones = ['Above the Break 3', 'Above the Break 3',
         'Above the Break 3', 'Above the Break 3', 'Backcourt',
         'In The Paint (Non-RA)', 'In The Paint (Non-RA)',
@@ -283,29 +307,20 @@ def sort_all_bins(shots):
         '16-24 ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.', '8-16 ft.',
         'Less Than 8 ft.', '24+ ft.']
 
-    #initialize list of bins
     list_of_bins = []
 
-    #loop through zone categories
     for i in range(len(ranges)):
-        #to keep the bounds of the plots consistent we will not visualize
-        #back court shots, as a single shot from the other side of the court
-        #can make x and y limits of the plots inconsistent
-        if i == 0 or i == 4:
+        if i==0 or i==4:
             pass
         else:
-            #get the x,y location and percentage for the current zone
             xs,ys,percentage = sort_hex_bin(shots,zone_areas[i],ranges[i],basic_zones[i])
-            #make the bins with x,y location data
             bin = hexbin(np.array(xs),np.array(ys),7.5)
-            #if nothing in the bin set the count for that area equal to zero
             if len(bin) == 0:
                 bin['counts'] = 0
-            #set the count for a zone's bins to be equal to the zone percentage
             else:
                 bin['counts'] = percentage.iloc[0]
             list_of_bins.append(bin)
-    #concatenate all of the zones together
+
     all_bins = pd.concat(list_of_bins,ignore_index=True)
 
     return all_bins
@@ -357,6 +372,70 @@ def draw_court(fig_obj,line_width=3,line_color='black',line_alpha=1):
 
     return fig_obj
 
+def sort_hex_bin_freq(shots,zone_area,zone_range,basic_zone):
+    """given 3 parameters to define a zone output all of the x,y position data
+    for that zone"""
+    basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
+    zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
+    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]
+
+    xs = fin_range['LOC_X']
+    ys = fin_range['LOC_Y']
+    zone_freq = fin_range['ZONE FREQUENCY']
+
+    return xs, ys, zone_freq
+
+def sort_all_bins_freq(shots):
+
+    basic_zones = ['Above the Break 3', 'Above the Break 3',
+        'Above the Break 3', 'Above the Break 3', 'Backcourt',
+        'In The Paint (Non-RA)', 'In The Paint (Non-RA)',
+        'In The Paint (Non-RA)', 'In The Paint (Non-RA)', 'Left Corner 3',
+        'Mid-Range', 'Mid-Range', 'Mid-Range', 'Mid-Range', 'Mid-Range',
+        'Mid-Range', 'Mid-Range', 'Mid-Range', 'Restricted Area',
+        'Right Corner 3']
+    zone_areas = ['Back Court(BC)', 'Center(C)', 'Left Side Center(LC)',
+        'Right Side Center(RC)', 'Back Court(BC)', 'Center(C)', 'Center(C)',
+        'Left Side(L)', 'Right Side(R)', 'Left Side(L)', 'Center(C)',
+        'Center(C)', 'Left Side Center(LC)', 'Left Side(L)', 'Left Side(L)',
+        'Right Side Center(RC)', 'Right Side(R)', 'Right Side(R)', 'Center(C)',
+        'Right Side(R)']
+    ranges = ['Back Court Shot', '24+ ft.', '24+ ft.', '24+ ft.',
+        'Back Court Shot', '8-16 ft.', 'Less Than 8 ft.', '8-16 ft.',
+        '8-16 ft.', '24+ ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.',
+        '16-24 ft.', '8-16 ft.', '16-24 ft.', '16-24 ft.', '8-16 ft.',
+        'Less Than 8 ft.', '24+ ft.']
+
+    list_of_bins = []
+
+    for i in range(len(ranges)):
+        if i==0 or i==4:
+            pass
+        else:
+            xs,ys,freq = sort_hex_bin_freq(shots,zone_areas[i],ranges[i],basic_zones[i])
+            bin = hexbin(np.array(xs),np.array(ys),7.5)
+            if len(bin) == 0:
+                bin['counts'] = 0
+            else:
+                bin['counts'] = freq.iloc[0]
+            list_of_bins.append(bin)
+
+    all_bins = pd.concat(list_of_bins,ignore_index=True)
+
+    return all_bins
+
+def calc_zone_frequency(shots,basic_zone,zone_area,zone_range):
+    """takes a dataframe of shot data and returns a dictionary with each
+    zones relative frequency"""
+
+    basic = shots[(shots.SHOT_ZONE_BASIC==basic_zone)]#filters for basic zone
+    zone = basic[(basic.SHOT_ZONE_AREA==zone_area)]#filters for only the area
+    fin_range = zone[(zone.SHOT_ZONE_RANGE==zone_range)]#gets all from a specific range in that area
+
+    zone_percentage = 100 * (len(fin_range.index)/len(shots.index))
+
+    return zone_percentage
+
 if __name__ == "__main__":
 
     # # # Kevin Durant
@@ -367,8 +446,13 @@ if __name__ == "__main__":
     # hist_heat(durant_shots)
     # hex_plot(durant_shots)
     # print(durant_shots)
-
-
+    # team_test = os.path.abspath(os.path.join(os.getcwd(),'../TeamData2/1610612744/2016-17.csv'))
+    # shots = pd.DataFrame.from_csv(team_test)
+    shots = generate_shots('LeBron','James','2017-18')
+    team_shots = generate_team_shots('GSW','2017-18')
+    hex_plot_team_freq(team_shots)
+    #hex_plot_team(team_shots)
+    #hex_plot_team(team_shots)
     # # # James Harden
     # harden_shots = generate_shots('James','Harden','2016-17') ## consider point weighting
     # hex_plot(harden_shots)
@@ -379,10 +463,10 @@ if __name__ == "__main__":
     # implot = plt.imshow(im)
     # plt.show()
 
-    durant = generate_shots('Russell','Westbrook',season='2016-17')
+    #durant = generate_shots('Russell','Westbrook',season='2016-17')
     #sort_all_bins(durant)
     #hex_plot(durant)
-    hex_plot(durant)
+    #hex_plot(durant)
     # durant_success = sort_successes(durant)
     # league_avg = league_average(season='2016-17')
     # print(league_avg)
