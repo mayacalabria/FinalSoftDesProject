@@ -53,4 +53,4 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ## Documentation
 
- For all documentation open [Documentation](file:///_build/html/index.html)
+ For all documentation open [Documentation](file:///index.html)

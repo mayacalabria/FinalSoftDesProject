@@ -1,0 +1,138 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>&lt;no title&gt; &#8212; NBA Data Visualization 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="map_classes_documentation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>GUI.py Documentation</p>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first">Complete integration of Bokeh widget based GUI with bokeh hxbin plots.
+Use the <code class="docutils literal"><span class="pre">bokeh</span> <span class="pre">serve</span></code> command to run the webapp by executing:</p>
+<blockquote>
+<div>bokeh serve GUI.py</div></blockquote>
+<p>at your command prompt.
+Then navigate to the URL</p>
+<blockquote>
+<div><a class="reference external" href="http://localhost:5006/GUI">http://localhost:5006/GUI</a></div></blockquote>
+<p>in your browser.</p>
+<dl class="last docutils">
+<dt>or use the command:</dt>
+<dd>bokeh serve –show GUI.py</dd>
+</dl>
+</dd>
+<dt>FUNCTIONS</dt>
+<dd><p class="first">update_plot_type(attrname, old, new)
+Activted by the radio button callback function when the staus of the button pressed changes. The function will check the new state and display the desired frequency or accuracy plot for the team or player string in the search input box</p>
+<p>update_search_term(attrname, old, new)
+Activated by the search button callback. It will check for if the player is looking for a player or a team, then it will checks the style of plot requested. The function will then generate the desired plot and update the values of the slider to match the active years of the player or team</p>
+<p class="last">update_year(attrname, old, new)
+Activates when the mouse is released over a new slider position or when a new palyer/team is requested. The plot for the correct year is generated using the slider value to create a string for the correct season to pass to map_classes (eg. 2017 –&gt; ‘2018-2018’). The script removes the old plot from the layout matrix and renders the new one in its place. Both radio button groups are also checked to provide the correct plot type.</p>
+</dd>
+<dt>DATA</dt>
+<dd>CDN = &lt;bokeh.resources.Resources object&gt;
+button_group1 = RadioButtonGroup(id=’fe9bee1d-a7db-4d4e-902d-5d893f075…
+button_group2 = RadioButtonGroup(id=‘911313da-912b-461b-81dc-453c588a0…
+inputs = WidgetBox(id=‘5fdab5e2-f978-4f57-9a86-ba3f889234bc’, …)
+mainLayout = Row(id=’b47905bf-6df1-479f-94de-bc4b2e2f6363’, …)
+p1 = Figure(id=’f6b6c489-858d-49b1-879b-67dd2c954f00’, …)
+player = &lt;map_classes.Player object&gt;
+search = Button(id=‘8e3d6526-7b35-4b35-8f42-6a6a379154e7’, …)
+search_bar = TextInput(id=‘273a8753-bc04-4b8d-a0e6-88b0940d5bde’, …)
+slider = Slider(id=’e723c0f3-bc2d-450e-8272-a4fa1509ed91’, …)</dd>
+<dt>FILE</dt>
+<dd>FinalSoftDesProject/GUI.py</dd>
+</dl>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">NBA Data Visualization</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="map_classes_documentation.html" title="previous chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Maya Calabria, Bryce Mann, Juan Carlos del Rio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/GUI_documentation.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
