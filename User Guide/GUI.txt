@@ -1,0 +1,32 @@
+.. _GUI:
+
+************************
+GUI Script Documentation
+************************
+
+DESCRIPTION
+===========
+
+Complete integration of Bokeh widget based GUI with bokeh hexbin plots.
+Use the ``bokeh serve`` command to run the webapp by executing:
+    bokeh serve GUI.py
+at your command prompt.Then navigate to the URL
+    http://localhost:5006/GUI
+in your browser. or use the command:
+    bokeh serve --show GUI.py
+
+FUNCTIONS
+=========
+
+**update_plot_type(attrname, old, new)**
+    Activated by the radio button callback function when the status of the button pressed changes. The function will check the new state and display the desired frequency or accuracy plot for the team or player string in the search input box
+
+**update_search_term(attrname, old, new)**
+    Activated by the search button callback. It will check for if the player is looking for a player or a team, then it will checks the style of plot requested. The function will then generate the desired plot and update the values of the slider to match the active years of the player or team
+
+**update_year(attrname, old, new)**
+    Activates when the mouse is released over a new slider position or when a new player/team is requested. The plot for the correct year is generated using the slider value to create a string for the correct season to pass to map_classes (eg. 2017 --> '2018-2018'). The script removes the old plot from the layout matrix and renders the new one in its place. Both radio button groups are also checked to provide the correct plot type.
+
+SOURCE CODE
+===========
+.. literalinclude:: GUI.py

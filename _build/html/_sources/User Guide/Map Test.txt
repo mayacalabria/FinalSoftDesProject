@@ -1,0 +1,88 @@
+.. _Map Test:
+
+*****************************
+Map Test Script Documentation
+*****************************
+
+FUNCTIONS
+==========
+
+    **calc_all_zone_percentage(shots, season='2017-18')**
+        Takes a pandas DataFrame of a players shots and the season to calculate
+        their shooting percentage by zone, returns a dictionary of the players zone
+        percentage minus the league average percentage for that zone
+
+    **calc_zone_frequency(shots, basic_zone, zone_area, zone_range)**
+        takes a dataframe of shot data and returns a dictionary with each
+        zones relative frequency
+
+    **calc_zone_percentage(shots, zone_area, zone_range, basic_zone)**
+        calculates an individual zone percentage in a dataframe of shot data
+
+    **draw_court(fig_obj, line_width=3, line_color='black', line_alpha=1)**
+        takes a bokeh hex plot figure object and draws court lines over
+        the figure
+
+    **full_heat_map(shots, display=True)**
+        Creates heat map of all attempted shots from a pandas structure
+
+    **generate_scatter(shots)**
+        Creates scatter plot of all shots taken by player over season
+
+    **generate_shots(first, last=None, season='2017-18')**
+        Takes first, last, and season as string,
+        returns pandas structure of all shots from locally stored
+        data CSVs
+
+    **generate_shots_fromNBA(first, last, season)**
+        Takes first, last, and season as string,
+        returns pandas structure of all shots
+
+    **generate_team_shots(team_abv, season='2017-18')**
+        Takes first, last, and season as string,
+        returns pandas structure of all shots from locally stored
+        data CSVs
+
+    **hex_plot_player(shots)**
+        Takes pandas DataFrame of shots and creates Bokeh hex plot,hex_plot_player_freq(shots)
+        Takes pandas DataFrame of shots and creates Bokeh hex plot,
+        optional binsize, controls resolution
+
+    **hex_plot_team(shots)**
+        Takes pandas DataFrame of shots and creates Bokeh hex plot,
+        optional binsize, controls resolution
+
+    **hex_plot_team_freq(shots)**
+        Takes pandas DataFrame of shots and creates Bokeh hex plot,
+        optional binsize, controls resolution
+
+    **hist_heat(shots, bin_size=60)**
+        Uses matplotlib to generate a 2D histogram and display heat map
+
+    **league_average(season=None, first='Kevin', last='Durant')**
+        Generates the leage averages by zone for the given season
+        default value for first/last name is Kevin Durant, but any player
+        could be used to initialize the ShotChart class from nba_py
+        takes season as a string and defaults to current season
+
+        returns: Pandas DataFrame
+
+    **sort_hex_bin(shots, zone_area, zone_range, basic_zone)**
+        given 3 parameters to define a zone output all of the x,y position data
+        for that zone
+
+    **sort_hex_bin_freq(shots, zone_area, zone_range, basic_zone)**
+        given 3 parameters to define a zone output all of the x,y position data
+        for that zone
+
+    **sort_successes(shots)**
+        Takes a pandas DataFrame of a players shots and returns a data set
+        with only shots that were successful
+
+    **success_heat_map(shots, display=True)**
+        Creates heat map of all made shots from a pandas structure
+        resources: https://seaborn.pydata.org/examples/hexbin_marginals.html
+
+SOURCE CODE
+===========
+.. literalinclude:: map_test.py

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>&lt;no title&gt; &#8212; NBA Data Visualization 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="map_classes_documentation.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="requirements.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <dl class="docutils">
+<dt>NAME</dt>
+<dd>map_test</dd>
+<dt>FUNCTIONS</dt>
+<dd><dl class="first docutils">
+<dt>calc_all_zone_percentage(shots, season=‘2017-18’)</dt>
+<dd>Takes a pandas DataFrame of a players shots and the season to calculate
+their shooting percentage by zone, returns a dictionary of the players zone
+percentage minus the league average percentage for that zone</dd>
+<dt>calc_zone_frequency(shots, basic_zone, zone_area, zone_range)</dt>
+<dd>takes a dataframe of shot data and returns a dictionary with each
+zones relative frequency</dd>
+<dt>calc_zone_percentage(shots, zone_area, zone_range, basic_zone)</dt>
+<dd>calculates an individual zone percentage in a dataframe of shot data</dd>
+<dt>draw_court(fig_obj, line_width=3, line_color=’black’, line_alpha=1)</dt>
+<dd>takes a bokeh hex plot figure object and draws court lines over
+the figure</dd>
+<dt>full_heat_map(shots, display=True)</dt>
+<dd>Creates heat map of all attempted shots from a pandas structure</dd>
+<dt>generate_scatter(shots)</dt>
+<dd>Creates scatter plot of all shots taken by player over season</dd>
+<dt>generate_shots(first, last=None, season=‘2017-18’)</dt>
+<dd>Takes first, last, and season as string,
+returns pandas structure of all shots from locally stored
+data CSVs</dd>
+<dt>generate_shots_fromNBA(first, last, season)</dt>
+<dd>Takes first, last, and season as string,
+returns pandas structure of all shots</dd>
+<dt>generate_team_shots(team_abv, season=‘2017-18’)</dt>
+<dd>Takes first, last, and season as string,
+returns pandas structure of all shots from locally stored
+data CSVs</dd>
+<dt>hex_plot_player(shots)</dt>
+<dd>Takes pandas DataFrame of shots and creates Bokeh hex plot,hex_plot_player_freq(shots)
+Takes pandas DataFrame of shots and creates Bokeh hex plot,
+optional binsize, controls resolution</dd>
+<dt>hex_plot_team(shots)</dt>
+<dd>Takes pandas DataFrame of shots and creates Bokeh hex plot,
+optional binsize, controls resolution</dd>
+<dt>hex_plot_team_freq(shots)</dt>
+<dd>Takes pandas DataFrame of shots and creates Bokeh hex plot,
+optional binsize, controls resolution</dd>
+<dt>hist_heat(shots, bin_size=60)</dt>
+<dd>Uses matplotlib to generate a 2D histogram and display heat map</dd>
+<dt>league_average(season=None, first=’Kevin’, last=’Durant’)</dt>
+<dd><p class="first">Generates the leage averages by zone for the given season
+default value for first/last name is Kevin Durant, but any player
+could be used to initialize the ShotChart class from nba_py
+takes season as a string and defaults to current season</p>
+<p class="last">returns: Pandas DataFrame</p>
+</dd>
+</dl>
+<p>sort_all_bins(shots)</p>
+<p>sort_all_bins_freq(shots)</p>
+<dl class="last docutils">
+<dt>sort_hex_bin(shots, zone_area, zone_range, basic_zone)</dt>
+<dd>given 3 parameters to define a zone output all of the x,y position data
+for that zone</dd>
+<dt>sort_hex_bin_freq(shots, zone_area, zone_range, basic_zone)</dt>
+<dd>given 3 parameters to define a zone output all of the x,y position data
+for that zone</dd>
+<dt>sort_successes(shots)</dt>
+<dd>Takes a pandas DataFrame of a players shots and returns a data set
+with only shots that were successful</dd>
+<dt>success_heat_map(shots, display=True)</dt>
+<dd>Creates heat map of all made shots from a pandas structure
+resources: <a class="reference external" href="https://seaborn.pydata.org/examples/hexbin_marginals.html">https://seaborn.pydata.org/examples/hexbin_marginals.html</a></dd>
+</dl>
+</dd>
+<dt>FILE</dt>
+<dd>FinalSoftDesProject/map_test.py</dd>
+</dl>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">NBA Data Visualization</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="requirements.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="map_classes_documentation.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Maya Calabria, Bryce Mann, Juan Carlos del Rio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/map_test_documentation.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

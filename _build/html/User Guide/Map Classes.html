@@ -1,0 +1,473 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>5. Map Classes Script Documentation &#8212; NBA Data Visualization 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. GUI Script Documentation" href="GUI.html" />
+    <link rel="prev" title="4. Map Test Script Documentation" href="Map Test.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="map-classes-script-documentation">
+<span id="map-classes"></span><h1>5. Map Classes Script Documentation<a class="headerlink" href="#map-classes-script-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes">
+<h2>5.1. CLASSES<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><strong>class Error(builtins.object)</strong></dt>
+<dd><p class="first">A class used by player or team classes when the name/team entered is not found in database</p>
+<p><em>Methods defined here:</em></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>  <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Initialize</span> <span class="bp">self</span><span class="o">.</span>  <span class="n">See</span> <span class="n">help</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span> <span class="k">for</span> <span class="n">accurate</span> <span class="n">signature</span><span class="o">.</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">error_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Data descriptors defined here:</em></p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>  <span class="vm">__dict__</span>
+<span class="o">|</span>      <span class="n">dictionary</span> <span class="k">for</span> <span class="n">instance</span> <span class="n">variables</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="vm">__weakref__</span>
+<span class="o">|</span>      <span class="nb">list</span> <span class="n">of</span> <span class="n">weak</span> <span class="n">references</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">object</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>class Player(builtins.object)</strong></dt>
+<dd><p class="first"><em>Methods defined here:</em></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>  <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">string</span> <span class="k">for</span> <span class="n">name</span> <span class="k">with</span> <span class="n">following</span> <span class="n">formatting</span><span class="p">:</span>
+<span class="o">|</span>      <span class="s1">&#39;Kevin Durant&#39;</span><span class="p">,</span> <span class="s1">&#39;LeBron James&#39;</span><span class="p">,</span> <span class="s2">&quot;Shaquille O&#39;Neal&quot;</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">final_season</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Returns</span> <span class="n">the</span> <span class="n">last</span> <span class="n">season</span> <span class="n">that</span> <span class="n">a</span> <span class="n">player</span> <span class="n">played</span> <span class="ow">in</span><span class="o">.</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">generate_shots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">season</span><span class="p">,</span> <span class="ow">and</span> <span class="n">returns</span> <span class="nb">all</span> <span class="n">player</span> <span class="n">shot</span> <span class="n">data</span> <span class="k">for</span> <span class="n">that</span> <span class="n">season</span> <span class="k">as</span> <span class="n">a</span> <span class="n">pandas</span> <span class="n">frame</span><span class="o">.</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">hex_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Generates</span> <span class="n">a</span> <span class="nb">hex</span> <span class="nb">bin</span> <span class="n">plot</span> <span class="n">that</span> <span class="n">compares</span> <span class="n">a</span> <span class="n">player</span><span class="s1">&#39;s shooting percentages to the</span>
+<span class="o">|</span>      <span class="n">leagues</span> <span class="n">by</span> <span class="n">zone</span><span class="o">.</span> <span class="n">Shows</span> <span class="n">accuracy</span> <span class="n">compared</span> <span class="n">to</span> <span class="n">league</span><span class="o">.</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">season</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span><span class="p">,</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">last</span> <span class="n">played</span> <span class="n">season</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">hex_freq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Generates</span> <span class="n">a</span> <span class="nb">hex</span> <span class="nb">bin</span> <span class="n">plot</span> <span class="n">that</span> <span class="n">compares</span> <span class="n">a</span> <span class="n">player</span><span class="s1">&#39;s shooting percentages to the</span>
+<span class="o">|</span>      <span class="n">leagues</span> <span class="n">by</span> <span class="n">zone</span><span class="o">.</span> <span class="n">Shows</span> <span class="n">accuracy</span> <span class="n">compared</span> <span class="n">to</span> <span class="n">league</span><span class="o">.</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">season</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span><span class="p">,</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">last</span> <span class="n">played</span> <span class="n">season</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">rookie_season</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Returns</span> <span class="n">first</span> <span class="n">season</span> <span class="n">of</span> <span class="n">player</span><span class="s1">&#39;s career.</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">scatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Generates</span> <span class="n">a</span> <span class="n">scatter</span> <span class="n">plot</span> <span class="n">of</span> <span class="n">made</span> <span class="ow">and</span> <span class="n">missed</span> <span class="n">shots</span> <span class="n">over</span> <span class="n">the</span> <span class="n">course</span> <span class="n">of</span> <span class="n">a</span> <span class="n">season</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><em>Data descriptors defined here:</em></p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>
+<span class="o">|</span>  <span class="vm">__dict__</span>
+<span class="o">|</span>      <span class="n">dictionary</span> <span class="k">for</span> <span class="n">instance</span> <span class="n">variables</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="vm">__weakref__</span>
+<span class="o">|</span>      <span class="nb">list</span> <span class="n">of</span> <span class="n">weak</span> <span class="n">references</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">object</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>class Team(Player)</strong></dt>
+<dd><dl class="first docutils">
+<dt><em>Method resolution order:</em></dt>
+<dd><div class="first last line-block">
+<div class="line"><a href="#id1"><span class="problematic" id="id2">*</span></a>Team</div>
+<div class="line"><a href="#id3"><span class="problematic" id="id4">*</span></a>Player</div>
+<div class="line"><a href="#id5"><span class="problematic" id="id6">*</span></a>builtins.object</div>
+</div>
+</dd>
+</dl>
+<p><em>Methods defined here:</em></p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>  <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">abrv</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">abrv</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span> <span class="n">that</span> <span class="n">has</span> <span class="n">to</span> <span class="n">be</span> <span class="nb">all</span> <span class="n">caps</span><span class="p">,</span> <span class="n">three</span> <span class="n">letters</span> <span class="n">like</span>
+<span class="o">|</span>      <span class="s2">&quot;GSW&quot;</span><span class="p">,</span> <span class="s2">&quot;BOS&quot;</span><span class="p">,</span> <span class="n">et</span>    <span class="o">**</span><span class="n">sort_all_bins</span><span class="p">(</span><span class="n">shots</span><span class="p">)</span><span class="o">**</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p><strong>sort_all_bins_freq(shots)</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>
+<span class="o">|</span>  <span class="n">generate_shots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">season</span><span class="p">,</span> <span class="ow">and</span> <span class="n">returns</span> <span class="nb">all</span> <span class="n">team</span> <span class="n">shot</span> <span class="n">data</span> <span class="k">for</span> <span class="n">that</span> <span class="n">season</span> <span class="k">as</span> <span class="n">a</span> <span class="n">pandas</span> <span class="n">frame</span><span class="o">.</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">season</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span><span class="p">,</span> <span class="n">defaults</span> <span class="n">to</span> <span class="s1">&#39;2017-18&#39;</span>
+</pre></div>
+</div>
+<p><strong>Methods inherited from Player:</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>  <span class="n">final_season</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Returns</span> <span class="n">the</span> <span class="n">last</span> <span class="n">season</span> <span class="n">that</span> <span class="n">a</span> <span class="n">player</span> <span class="n">played</span> <span class="ow">in</span><span class="o">.</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">hex_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Generates</span> <span class="n">a</span> <span class="nb">hex</span> <span class="nb">bin</span> <span class="n">plot</span> <span class="n">that</span> <span class="n">compares</span> <span class="n">a</span> <span class="n">player</span><span class="s1">&#39;s shooting percentages to the</span>
+<span class="o">|</span>      <span class="n">leagues</span> <span class="n">by</span> <span class="n">zone</span><span class="o">.</span> <span class="n">Shows</span> <span class="n">accuracy</span> <span class="n">compared</span> <span class="n">to</span> <span class="n">league</span><span class="o">.</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">season</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span><span class="p">,</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">last</span> <span class="n">played</span> <span class="n">season</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">hex_freq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Generates</span> <span class="n">a</span> <span class="nb">hex</span> <span class="nb">bin</span> <span class="n">plot</span> <span class="n">that</span> <span class="n">compares</span> <span class="n">a</span> <span class="n">player</span><span class="s1">&#39;s shooting percentages to the</span>
+<span class="o">|</span>      <span class="n">leagues</span> <span class="n">by</span> <span class="n">zone</span><span class="o">.</span> <span class="n">Shows</span> <span class="n">accuracy</span> <span class="n">compared</span> <span class="n">to</span> <span class="n">league</span><span class="o">.</span>
+<span class="o">|</span>      <span class="n">Takes</span> <span class="n">season</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span><span class="p">,</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">last</span> <span class="n">played</span> <span class="n">season</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">rookie_season</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Returns</span> <span class="n">first</span> <span class="n">season</span> <span class="n">of</span> <span class="n">player</span><span class="s1">&#39;s career.</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="n">scatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="o">|</span>      <span class="n">Generates</span> <span class="n">a</span> <span class="n">scatter</span> <span class="n">plot</span> <span class="n">of</span> <span class="n">made</span> <span class="ow">and</span> <span class="n">missed</span> <span class="n">shots</span> <span class="n">over</span> <span class="n">the</span> <span class="n">course</span> <span class="n">of</span> <span class="n">a</span> <span class="n">season</span><span class="o">.</span>
+<span class="o">|</span>
+</pre></div>
+</div>
+<p><strong>Data descriptors inherited from Player:</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">|</span>
+<span class="o">|</span>  <span class="vm">__dict__</span>
+<span class="o">|</span>      <span class="n">dictionary</span> <span class="k">for</span> <span class="n">instance</span> <span class="n">variables</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+<span class="o">|</span>
+<span class="o">|</span>  <span class="vm">__weakref__</span>
+<span class="o">|</span>      <span class="nb">list</span> <span class="n">of</span> <span class="n">weak</span> <span class="n">references</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">object</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="source-code">
+<h2>5.2. SOURCE CODE<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.lines</span> <span class="k">as</span> <span class="nn">lines</span>
+<span class="kn">import</span> <span class="nn">plotly.plotly</span> <span class="k">as</span> <span class="nn">py</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="k">import</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">save</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">bokeh.transform</span> <span class="k">import</span> <span class="n">linear_cmap</span>
+<span class="kn">from</span> <span class="nn">bokeh.util.hex</span> <span class="k">import</span> <span class="n">hexbin</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">ColorBar</span><span class="p">,</span><span class="n">LinearColorMapper</span><span class="p">,</span> <span class="n">Title</span><span class="p">,</span> <span class="n">HoverTool</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.tickers</span> <span class="k">import</span> <span class="n">BasicTicker</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.glyphs</span> <span class="k">import</span> <span class="n">Text</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.annotations</span> <span class="k">import</span> <span class="n">Label</span>
+<span class="kn">from</span> <span class="nn">bokeh.resources</span> <span class="k">import</span> <span class="n">CDN</span>
+<span class="kn">from</span> <span class="nn">bokeh.embed</span> <span class="k">import</span> <span class="n">file_html</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">colorcet</span> <span class="k">as</span> <span class="nn">cc</span>
+<span class="kn">from</span> <span class="nn">map_test</span> <span class="k">import</span> <span class="n">sort_all_bins</span><span class="p">,</span> <span class="n">sort_hex_bin</span><span class="p">,</span> <span class="n">draw_court</span><span class="p">,</span> <span class="n">sort_all_bins_freq</span>
+
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Takes string for name with following formatting:</span>
+<span class="sd">        &#39;Kevin Durant&#39;, &#39;LeBron James&#39;, &quot;Shaquille O&#39;Neal&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pid_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;pid_dict.pickle&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+        <span class="n">new_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pid_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">new_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">new_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">percent_low</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">percent_hi</span> <span class="o">=</span> <span class="mi">10</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">final_season</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the last season that a player played in. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;2017-18&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">player_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="s1">&#39;../PlayerData2/&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="n">years</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">player_dir</span><span class="p">)):</span>
+                <span class="n">year</span> <span class="o">=</span> <span class="n">player_dir</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">years</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+            <span class="n">final_season</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">years</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">final_season</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="c1"># last season, removes &#39;.csv&#39;</span>
+
+    <span class="k">def</span> <span class="nf">rookie_season</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns first season of player&#39;s career. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;2016-17&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">player_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="s1">&#39;../PlayerData2/&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="n">years</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">player_dir</span><span class="p">)):</span>
+                <span class="n">year</span> <span class="o">=</span> <span class="n">player_dir</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">years</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+            <span class="n">final_season</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">years</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">final_season</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="c1"># first season, removes &#39;.csv&#39;</span>
+
+    <span class="k">def</span> <span class="nf">generate_shots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Takes season, and returns all player shot data for that season as a pandas frame. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">season</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># defaults to the most recent season played, if no season passed</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_season</span><span class="p">()</span>
+        <span class="n">shots_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="s1">&#39;../PlayerData2/&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">season</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">shots_dir</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="n">shots_dir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Generates a scatter plot of made and missed shots over the course of a season. &quot;&quot;&quot;</span>
+        <span class="n">shots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_shots</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shots</span><span class="p">)):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">shots</span><span class="p">[</span><span class="s2">&quot;LOC_X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">shots</span><span class="p">[</span><span class="s2">&quot;LOC_Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="c1">#plot made shots as green and missed shots as red</span>
+            <span class="k">if</span> <span class="n">shots</span><span class="p">[</span><span class="s2">&quot;SHOT_MADE_FLAG&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;go&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="mi">400</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39; shot locations&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">hex_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Generates a hex bin plot that compares a player&#39;s shooting percentages to the</span>
+<span class="sd">        leagues by zone. Shows accuracy compared to league.</span>
+<span class="sd">        Takes season as a string, defaults to last played season&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">Error</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">error</span><span class="o">.</span><span class="n">error_graph</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_shots</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">shots</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;No Data for the Selected Season&#39;</span><span class="p">,</span>
+                    <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;wheel_zoom,reset&quot;</span><span class="p">,</span> <span class="n">match_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">background_fill_color</span><span class="o">=</span><span class="s1">&#39;#BB7E3B&#39;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">draw_court</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">all_bins</span> <span class="o">=</span> <span class="n">sort_all_bins</span><span class="p">(</span><span class="n">shots</span><span class="p">)</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39; Heatmap: accuracy compared to league&#39;</span><span class="p">,</span>
+                    <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;wheel_zoom,reset&quot;</span><span class="p">,</span> <span class="n">match_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">background_fill_color</span><span class="o">=</span><span class="s1">&#39;#BB7E3B&#39;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">hex_tile</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">all_bins</span><span class="p">,</span>
+                    <span class="n">fill_color</span><span class="o">=</span><span class="n">linear_cmap</span><span class="p">(</span><span class="s1">&#39;counts&#39;</span><span class="p">,</span> <span class="n">cc</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_hi</span><span class="p">))</span>
+                <span class="n">draw_court</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">color_mapper</span> <span class="o">=</span> <span class="n">LinearColorMapper</span><span class="p">(</span><span class="n">palette</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span><span class="n">low</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">percent_low</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">percent_hi</span><span class="p">)</span>
+                <span class="n">color_bar</span> <span class="o">=</span> <span class="n">ColorBar</span><span class="p">(</span><span class="n">color_mapper</span><span class="o">=</span><span class="n">color_mapper</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">color_bar</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">Title</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Shooting percentage difference from league&quot;</span><span class="p">,</span><span class="n">align</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">),</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+                <span class="n">hover</span> <span class="o">=</span> <span class="n">HoverTool</span><span class="p">(</span><span class="n">tooltips</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="s2">&quot;difference&quot;</span><span class="p">,</span> <span class="s2">&quot;@counts&quot;</span><span class="o">+</span><span class="s2">&quot;%&quot;</span><span class="p">)],</span>
+                          <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;mouse&quot;</span><span class="p">,</span> <span class="n">point_policy</span><span class="o">=</span><span class="s2">&quot;follow_mouse&quot;</span><span class="p">)</span>
+
+                <span class="n">p</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span><span class="n">hover</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">hex_freq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Generates a hex bin plot that compares a player&#39;s shooting percentages to the</span>
+<span class="sd">        leagues by zone. Shows accuracy compared to league.</span>
+<span class="sd">        Takes season as a string, defaults to last played season&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">Error</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">error</span><span class="o">.</span><span class="n">error_graph</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_shots</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">shots</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;No Data for the Selected Season&#39;</span><span class="p">,</span>
+                    <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;wheel_zoom,reset&quot;</span><span class="p">,</span> <span class="n">match_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">background_fill_color</span><span class="o">=</span><span class="s1">&#39;#BB7E3B&#39;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">draw_court</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">all_bins</span> <span class="o">=</span> <span class="n">sort_all_bins_freq</span><span class="p">(</span><span class="n">shots</span><span class="p">)</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39; Heatmap: frequency compared to league&#39;</span><span class="p">,</span><span class="n">tools</span><span class="o">=</span><span class="s2">&quot;wheel_zoom,reset&quot;</span><span class="p">,</span> <span class="n">match_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">background_fill_color</span><span class="o">=</span><span class="s1">&#39;#BB7E3B&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">visible</span><span class="o">=</span> <span class="kc">False</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">hex_tile</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">all_bins</span><span class="p">,</span>
+                    <span class="n">fill_color</span><span class="o">=</span><span class="n">linear_cmap</span><span class="p">(</span><span class="s1">&#39;counts&#39;</span><span class="p">,</span> <span class="n">cc</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_low</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_hi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+                <span class="n">draw_court</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">color_mapper</span> <span class="o">=</span> <span class="n">LinearColorMapper</span><span class="p">(</span><span class="n">palette</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span><span class="n">low</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">percent_low</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">percent_hi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">color_bar</span> <span class="o">=</span> <span class="n">ColorBar</span><span class="p">(</span><span class="n">color_mapper</span><span class="o">=</span><span class="n">color_mapper</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">color_bar</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">Title</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Percentage of shots taken in zone compared to league&quot;</span><span class="p">,</span><span class="n">align</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">),</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+                <span class="n">hover</span> <span class="o">=</span> <span class="n">HoverTool</span><span class="p">(</span><span class="n">tooltips</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="s2">&quot;difference&quot;</span><span class="p">,</span> <span class="s2">&quot;@counts&quot;</span><span class="o">+</span><span class="s2">&quot;%&quot;</span><span class="p">)],</span>
+                          <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;mouse&quot;</span><span class="p">,</span> <span class="n">point_policy</span><span class="o">=</span><span class="s2">&quot;follow_mouse&quot;</span><span class="p">)</span>
+
+                <span class="n">p</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span><span class="n">hover</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">p</span>
+
+<span class="k">class</span> <span class="nc">Team</span><span class="p">(</span><span class="n">Player</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">abrv</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Takes abrv as a string that has to be all caps, three letters like</span>
+<span class="sd">        &quot;GSW&quot;, &quot;BOS&quot;, etc.</span>
+
+<span class="sd">         &quot;&quot;&quot;</span>
+        <span class="n">teamid_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;teamid_dict.pickle&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+        <span class="n">new_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">teamid_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">if</span> <span class="n">abrv</span> <span class="ow">in</span> <span class="n">new_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">abrv</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">percent_low</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">percent_hi</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_flag</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">generate_shots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">season</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Takes season, and returns all team shot data for that season as a pandas frame.</span>
+<span class="sd">        Takes season as a string, defaults to &#39;2017-18&#39; &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">season</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="s1">&#39;2017-18&#39;</span>
+        <span class="n">shots_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="s1">&#39;../TeamData2/&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">season</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">shots_dir</span><span class="p">):</span>
+            <span class="n">shots</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="n">shots_dir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shots</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">shots</span>
+
+<span class="k">class</span> <span class="nc">Error</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; An class used by player or team classes when the name/team entered is not found in database. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">error_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Uh oh!&#39;</span><span class="p">,</span> <span class="n">x_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;wheel_zoom,reset&quot;</span><span class="p">,</span> <span class="n">match_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+
+        <span class="n">text1</span> <span class="o">=</span><span class="s1">&#39;Uh oh! It looks like you misspelled a word. If you are searching for&#39;</span>
+        <span class="n">text2</span> <span class="o">=</span><span class="s1">&#39;a player make sure that their full name is spelled correctly. If you&#39;</span>
+        <span class="n">text3</span> <span class="o">=</span><span class="s1">&#39;are looking for a team make sure that their 3 letter, NBA specific&#39;</span>
+        <span class="n">text4</span> <span class="o">=</span><span class="s1">&#39;abbreviation is correct.&#39;</span>
+
+        <span class="n">mytext1</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">text1</span><span class="p">)</span>
+        <span class="n">mytext2</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">text2</span><span class="p">)</span>
+        <span class="n">mytext3</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">text3</span><span class="p">)</span>
+        <span class="n">mytext4</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span><span class="n">y</span><span class="o">=.</span><span class="mi">8</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">text4</span><span class="p">)</span>
+
+        <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">mytext1</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">mytext2</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">mytext3</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">mytext4</span><span class="p">)</span>
+
+        <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">logo</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">toolbar_location</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">p</span>
+
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">durant</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="s1">&#39;Steen Curry&#39;</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="n">durant</span><span class="o">.</span><span class="n">hex_freq</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">NBA Data Visualization</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Before Use/README.html">1. NDV Read ME File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Before Use/Requirements.html">2. NDV Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">3. Project Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Map Test.html">4. Map Test Script Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Map Classes Script Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">5.1. CLASSES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code">5.2. SOURCE CODE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="GUI.html">6. GUI Script Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Map Test.html" title="previous chapter">4. Map Test Script Documentation</a></li>
+      <li>Next: <a href="GUI.html" title="next chapter">6. GUI Script Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Maya Calabria, Bryce Mann, Juan Carlos del Rio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/User Guide/Map Classes.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

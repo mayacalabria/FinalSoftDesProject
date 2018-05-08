@@ -1,0 +1,38 @@
+GUI.py Documentation
+
+DESCRIPTION
+    Complete integration of Bokeh widget based GUI with bokeh hxbin plots.
+    Use the ``bokeh serve`` command to run the webapp by executing:
+        bokeh serve GUI.py
+    at your command prompt.
+    Then navigate to the URL
+        http://localhost:5006/GUI
+    in your browser.
+
+    or use the command:
+        bokeh serve --show GUI.py
+
+FUNCTIONS
+      update_plot_type(attrname, old, new)
+      Activted by the radio button callback function when the staus of the button pressed changes. The function will check the new state and display the desired frequency or accuracy plot for the team or player string in the search input box
+
+      update_search_term(attrname, old, new)
+      Activated by the search button callback. It will check for if the player is looking for a player or a team, then it will checks the style of plot requested. The function will then generate the desired plot and update the values of the slider to match the active years of the player or team
+
+      update_year(attrname, old, new)
+      Activates when the mouse is released over a new slider position or when a new palyer/team is requested. The plot for the correct year is generated using the slider value to create a string for the correct season to pass to map_classes (eg. 2017 --> '2018-2018'). The script removes the old plot from the layout matrix and renders the new one in its place. Both radio button groups are also checked to provide the correct plot type.
+
+DATA
+      CDN = <bokeh.resources.Resources object>
+      button_group1 = RadioButtonGroup(id='fe9bee1d-a7db-4d4e-902d-5d893f075...
+      button_group2 = RadioButtonGroup(id='911313da-912b-461b-81dc-453c588a0...
+      inputs = WidgetBox(id='5fdab5e2-f978-4f57-9a86-ba3f889234bc', ...)
+      mainLayout = Row(id='b47905bf-6df1-479f-94de-bc4b2e2f6363', ...)
+      p1 = Figure(id='f6b6c489-858d-49b1-879b-67dd2c954f00', ...)
+      player = <map_classes.Player object>
+      search = Button(id='8e3d6526-7b35-4b35-8f42-6a6a379154e7', ...)
+      search_bar = TextInput(id='273a8753-bc04-4b8d-a0e6-88b0940d5bde', ...)
+      slider = Slider(id='e723c0f3-bc2d-450e-8272-a4fa1509ed91', ...)
+
+FILE
+    FinalSoftDesProject/GUI.py

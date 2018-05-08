@@ -1,0 +1,117 @@
+.. _Map Classes:
+
+********************************
+Map Classes Script Documentation
+********************************
+
+CLASSES
+=============
+**class Error(builtins.object)**
+  A class used by player or team classes when the name/team entered is not found in database
+
+  *Methods defined here:*
+  ::
+     |  __init__(self)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  error_graph(self)
+
+  *Data descriptors defined here:*
+  ::
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+**class Player(builtins.object)**
+    *Methods defined here:*
+    ::
+      |  __init__(self, name)
+      |      Takes string for name with following formatting:
+      |      'Kevin Durant', 'LeBron James', "Shaquille O'Neal"
+      |
+      |  final_season(self)
+      |      Returns the last season that a player played in.
+      |
+      |  generate_shots(self, season=None)
+      |      Takes season, and returns all player shot data for that season as a pandas frame.
+      |
+      |  hex_accuracy(self, season=None)
+      |      Generates a hex bin plot that compares a player's shooting percentages to the
+      |      leagues by zone. Shows accuracy compared to league.
+      |      Takes season as a string, defaults to last played season
+      |
+      |  hex_freq(self, season=None)
+      |      Generates a hex bin plot that compares a player's shooting percentages to the
+      |      leagues by zone. Shows accuracy compared to league.
+      |      Takes season as a string, defaults to last played season
+      |
+      |  rookie_season(self)
+      |      Returns first season of player's career.
+      |
+      |  scatter(self, season=None)
+      |      Generates a scatter plot of made and missed shots over the course of a season.
+
+    *Data descriptors defined here:*
+    ::
+      |
+      |  __dict__
+      |      dictionary for instance variables (if defined)
+      |
+      |  __weakref__
+      |      list of weak references to the object (if defined)
+
+**class Team(Player)**
+  *Method resolution order:*
+    |      *Team
+    |      *Player
+    |      *builtins.object
+
+  *Methods defined here:*
+  ::
+    |  __init__(self, abrv)
+    |      Takes abrv as a string that has to be all caps, three letters like
+    |      "GSW", "BOS", et    **sort_all_bins(shots)**
+
+**sort_all_bins_freq(shots)**
+::
+    |
+    |  generate_shots(self, season=None)
+    |      Takes season, and returns all team shot data for that season as a pandas frame.
+    |      Takes season as a string, defaults to '2017-18'
+
+**Methods inherited from Player:**
+::
+    |  final_season(self)
+    |      Returns the last season that a player played in.
+    |
+    |  hex_accuracy(self, season=None)
+    |      Generates a hex bin plot that compares a player's shooting percentages to the
+    |      leagues by zone. Shows accuracy compared to league.
+    |      Takes season as a string, defaults to last played season
+    |
+    |  hex_freq(self, season=None)
+    |      Generates a hex bin plot that compares a player's shooting percentages to the
+    |      leagues by zone. Shows accuracy compared to league.
+    |      Takes season as a string, defaults to last played season
+    |
+    |  rookie_season(self)
+    |      Returns first season of player's career.
+    |
+    |  scatter(self, season=None)
+    |      Generates a scatter plot of made and missed shots over the course of a season.
+    |
+
+**Data descriptors inherited from Player:**
+::
+    |
+    |  __dict__
+    |      dictionary for instance variables (if defined)
+    |
+    |  __weakref__
+    |      list of weak references to the object (if defined)
+
+SOURCE CODE
+===========
+.. literalinclude:: map_classes.py
