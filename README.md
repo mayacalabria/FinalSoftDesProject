@@ -34,8 +34,9 @@ For our final project we created a webapp that allows users to visualize the sho
 ## How to Run
 
 * Download all data to the same directory where the folder containing all the project files are stored
+  * Google drive link to access this download is on the way
   * Make sure to copy both Player Data and Team Data
-  * Check the the folders are named PlayerData2 and TeamData2 otherwise you will run into 'Key error: ZONE FREQUENCY'
+  * Check the the folders are named PlayerData2 and TeamData2 otherwise the file paths will not be correct
 
 * Go to the directory where the scripts are located
 
@@ -45,11 +46,10 @@ For our final project we created a webapp that allows users to visualize the sho
 * Then run:
   * $ python main.py
 
-
 * Open the link shown in the terminal in your browser of choice
 
 * Enjoy!
 
-## Documentation
-
- For all [documentation](file:///index.html)
+## For all Documentation
+ * Navigate to main project directory
+ * $ firefox _build/html/index.html
