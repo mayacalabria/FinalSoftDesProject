@@ -28,8 +28,8 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ## To Install before use
 
-* $pip install -r requirements.txt
-  * requirements.txt can be found under /Before Use/requirements.txt
+* $pip install -r Requirements.txt
+  * Requirements.txt can be found under /BeforeUse/Requirements.txt
 
 ## How to Run
 
@@ -52,4 +52,4 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ## For all Documentation
  * Navigate to main project directory
- * $firefox_build/html/index.html
+ * $firefox _build/html/index.html
