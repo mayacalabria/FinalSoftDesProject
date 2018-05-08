@@ -30,6 +30,13 @@ We used Bokeh, a visualization tool to make our plots and create the accompanyin
 
 [Progression]: https://raw.githubusercontent.com/mayacalabria/FinalSoftDesProject/master/ClassMaterials/progress.png "Project development over time"
 
+In the early stages of our project we displayed our data via scatter plots. However these plots were susceptible to oversaturation of information which made it impossible to distinguish the magnitude and density of data clusters relative to one another.
+
+We moved from these plots onto heat maps using a package called seaborn. This created much more attractive, and more interesting maps of the data; however, we realized that plots for most players looked very similar. This led us to understand the difference between plotting an individual's raw data vs. plotting that individuals difference from the league. On their own everyone is more successful closer to the net, because it’s a higher likelihood shot. The real interesting information comes when you can see how much better or worse than average an individual player is at certain spots on the court.
+
+Having learned this, we knew we needed a plotting tool that had more customizability than seaborn. We switched to bokeh hex maps because it gave us the ability to manipulate our dataset and give the desired weights for the coloring. Now the really good players stand apart from the rest and you can really see the difference when comparing their plots.
+
+
 ## Demo Video
 
 [NARATED DEMO VIDEO](https://www.youtube.com/watch?v=yQ2LuFMj8M4&feature=youtu.be)
