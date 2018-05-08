@@ -42,7 +42,6 @@ For our final project we created a webapp that allows users to visualize the sho
 * In the comand line run:
   * $ bokeh serve GUI.py --allow-websocket-origin=127.0.0.1:5000
 
-
 * Then run:
   * $ python main.py
 
@@ -53,4 +52,4 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ## Documentation
 
- For all documentation open [Documentation]
+ For all [documentation](index.html)
