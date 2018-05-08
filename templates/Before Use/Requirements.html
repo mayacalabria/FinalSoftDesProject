@@ -1,0 +1,295 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3. NDV Requirements &#8212; NBA Data Visualization 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Map Test Script Documentation" href="../User Guide/Map Test.html" />
+    <link rel="prev" title="2. NDV Read ME File" href="README.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ndv-requirements">
+<span id="requirements"></span><h1>3. NDV Requirements<a class="headerlink" href="#ndv-requirements" title="Permalink to this headline">¶</a></h1>
+<p><a href="#id1"><span class="problematic" id="id2">*</span></a>alabaster==0.7.10
+<a href="#id3"><span class="problematic" id="id4">*</span></a>anaconda-client==1.6.5
+<a href="#id5"><span class="problematic" id="id6">*</span></a>anaconda-navigator==1.6.9
+<a href="#id7"><span class="problematic" id="id8">*</span></a>anaconda-project==0.8.0
+<a href="#id9"><span class="problematic" id="id10">*</span></a>asn1crypto==0.22.0
+<a href="#id11"><span class="problematic" id="id12">*</span></a>astroid==1.5.3
+<a href="#id13"><span class="problematic" id="id14">*</span></a>astropy==2.0.2
+<a href="#id15"><span class="problematic" id="id16">*</span></a>Babel==2.5.0
+<a href="#id17"><span class="problematic" id="id18">*</span></a>backports.shutil-get-terminal-size==1.0.0
+<a href="#id19"><span class="problematic" id="id20">*</span></a>beautifulsoup4==4.6.0
+<a href="#id21"><span class="problematic" id="id22">*</span></a>bitarray==0.8.1
+<a href="#id23"><span class="problematic" id="id24">*</span></a>bkcharts==0.2
+<a href="#id25"><span class="problematic" id="id26">*</span></a>blaze==0.11.3
+<a href="#id27"><span class="problematic" id="id28">*</span></a>bleach==2.0.0
+<a href="#id29"><span class="problematic" id="id30">*</span></a>bokeh==0.12.15
+<a href="#id31"><span class="problematic" id="id32">*</span></a>boto==2.48.0
+<a href="#id33"><span class="problematic" id="id34">*</span></a>Bottleneck==1.2.1
+<a href="#id35"><span class="problematic" id="id36">*</span></a>certifi==2018.1.18
+<a href="#id37"><span class="problematic" id="id38">*</span></a>cffi==1.10.0
+<a href="#id39"><span class="problematic" id="id40">*</span></a>chardet==3.0.4
+<a href="#id41"><span class="problematic" id="id42">*</span></a>click==6.7
+<a href="#id43"><span class="problematic" id="id44">*</span></a>cloudpickle==0.4.0
+<a href="#id45"><span class="problematic" id="id46">*</span></a>clyent==1.2.2
+<a href="#id47"><span class="problematic" id="id48">*</span></a>colorama==0.3.9
+<a href="#id49"><span class="problematic" id="id50">*</span></a>colorcet==0.9.1
+<a href="#id51"><span class="problematic" id="id52">*</span></a>conda==4.4.9
+<a href="#id53"><span class="problematic" id="id54">*</span></a>conda-build==3.0.27
+<a href="#id55"><span class="problematic" id="id56">*</span></a>conda-verify==2.0.0
+<a href="#id57"><span class="problematic" id="id58">*</span></a>contextlib2==0.5.5
+<a href="#id59"><span class="problematic" id="id60">*</span></a>cryptography==2.0.3
+<a href="#id61"><span class="problematic" id="id62">*</span></a>cycler==0.10.0
+<a href="#id63"><span class="problematic" id="id64">*</span></a>Cython==0.26.1
+<a href="#id65"><span class="problematic" id="id66">*</span></a>cytoolz==0.8.2
+<a href="#id67"><span class="problematic" id="id68">*</span></a>dask==0.15.3
+<a href="#id69"><span class="problematic" id="id70">*</span></a>datashape==0.5.4
+<a href="#id71"><span class="problematic" id="id72">*</span></a>decorator==4.1.2
+<a href="#id73"><span class="problematic" id="id74">*</span></a>distributed==1.19.1
+<a href="#id75"><span class="problematic" id="id76">*</span></a>docutils==0.14
+<a href="#id77"><span class="problematic" id="id78">*</span></a>entrypoints==0.2.3
+<a href="#id79"><span class="problematic" id="id80">*</span></a>et-xmlfile==1.0.1
+<a href="#id81"><span class="problematic" id="id82">*</span></a>fastcache==1.0.2
+<a href="#id83"><span class="problematic" id="id84">*</span></a>filelock==2.0.12
+<a href="#id85"><span class="problematic" id="id86">*</span></a>Flask==0.12.2
+<a href="#id87"><span class="problematic" id="id88">*</span></a>Flask-Cors==3.0.3
+<a href="#id89"><span class="problematic" id="id90">*</span></a>future==0.16.0
+<a href="#id91"><span class="problematic" id="id92">*</span></a>geoplotlib==0.3.2
+<a href="#id93"><span class="problematic" id="id94">*</span></a>gevent==1.2.2
+<a href="#id95"><span class="problematic" id="id96">*</span></a>glob2==0.5
+<a href="#id97"><span class="problematic" id="id98">*</span></a>gmplot==1.2.0
+<a href="#id99"><span class="problematic" id="id100">*</span></a>gmpy2==2.0.8
+<a href="#id101"><span class="problematic" id="id102">*</span></a>greenlet==0.4.12
+<a href="#id103"><span class="problematic" id="id104">*</span></a>h5py==2.7.0
+<a href="#id105"><span class="problematic" id="id106">*</span></a>heapdict==1.0.0
+<a href="#id107"><span class="problematic" id="id108">*</span></a>html5lib==0.999999999
+<a href="#id109"><span class="problematic" id="id110">*</span></a>idna==2.6
+<a href="#id111"><span class="problematic" id="id112">*</span></a>imageio==2.2.0
+<a href="#id113"><span class="problematic" id="id114">*</span></a>imagesize==0.7.1
+<a href="#id115"><span class="problematic" id="id116">*</span></a>ipykernel==4.6.1
+<a href="#id117"><span class="problematic" id="id118">*</span></a>ipython==6.1.0
+<a href="#id119"><span class="problematic" id="id120">*</span></a>ipython-genutils==0.2.0
+<a href="#id121"><span class="problematic" id="id122">*</span></a>ipywidgets==7.0.0
+<a href="#id123"><span class="problematic" id="id124">*</span></a>isort==4.2.15
+<a href="#id125"><span class="problematic" id="id126">*</span></a>itsdangerous==0.24
+<a href="#id127"><span class="problematic" id="id128">*</span></a>jdcal==1.3
+<a href="#id129"><span class="problematic" id="id130">*</span></a>jedi==0.10.2
+<a href="#id131"><span class="problematic" id="id132">*</span></a>Jinja2==2.9.6
+<a href="#id133"><span class="problematic" id="id134">*</span></a>jsonschema==2.6.0
+<a href="#id135"><span class="problematic" id="id136">*</span></a>jupyter-client==5.1.0
+<a href="#id137"><span class="problematic" id="id138">*</span></a>jupyter-console==5.2.0
+<a href="#id139"><span class="problematic" id="id140">*</span></a>jupyter-core==4.3.0
+<a href="#id141"><span class="problematic" id="id142">*</span></a>jupyterlab==0.27.0
+<a href="#id143"><span class="problematic" id="id144">*</span></a>jupyterlab-launcher==0.4.0
+<a href="#id145"><span class="problematic" id="id146">*</span></a>kiwisolver==1.0.1
+<a href="#id147"><span class="problematic" id="id148">*</span></a>lazy-object-proxy==1.3.1
+<a href="#id149"><span class="problematic" id="id150">*</span></a>llvmlite==0.20.0
+<a href="#id151"><span class="problematic" id="id152">*</span></a>locket==0.2.0
+<a href="#id153"><span class="problematic" id="id154">*</span></a>lxml==4.1.0
+<a href="#id155"><span class="problematic" id="id156">*</span></a>MarkupSafe==1.0
+<a href="#id157"><span class="problematic" id="id158">*</span></a>matlabruntimeforpython===R2016b
+<a href="#id159"><span class="problematic" id="id160">*</span></a>matplotlib==2.2.0
+<a href="#id161"><span class="problematic" id="id162">*</span></a>mccabe==0.6.1
+<a href="#id163"><span class="problematic" id="id164">*</span></a>mistune==0.7.4
+<a href="#id165"><span class="problematic" id="id166">*</span></a>mpmath==0.19
+<a href="#id167"><span class="problematic" id="id168">*</span></a>msgpack-python==0.4.8
+<a href="#id169"><span class="problematic" id="id170">*</span></a>multipledispatch==0.4.9
+<a href="#id171"><span class="problematic" id="id172">*</span></a>navigator-updater==0.1.0
+<a href="#id173"><span class="problematic" id="id174">*</span></a>nba-py==0.1.1a2
+<a href="#id175"><span class="problematic" id="id176">*</span></a>nbconvert==5.3.1
+<a href="#id177"><span class="problematic" id="id178">*</span></a>nbformat==4.4.0
+<a href="#id179"><span class="problematic" id="id180">*</span></a>networkx==2.0
+<a href="#id181"><span class="problematic" id="id182">*</span></a>nltk==3.2.4
+<a href="#id183"><span class="problematic" id="id184">*</span></a>nose==1.3.7
+<a href="#id185"><span class="problematic" id="id186">*</span></a>notebook==5.0.0
+<a href="#id187"><span class="problematic" id="id188">*</span></a>numba==0.35.0+10.g143f70e90
+<a href="#id189"><span class="problematic" id="id190">*</span></a>numexpr==2.6.2
+<a href="#id191"><span class="problematic" id="id192">*</span></a>numpy==1.14.1
+<a href="#id193"><span class="problematic" id="id194">*</span></a>numpydoc==0.7.0
+<a href="#id195"><span class="problematic" id="id196">*</span></a>odo==0.5.1
+<a href="#id197"><span class="problematic" id="id198">*</span></a>olefile==0.44
+<a href="#id199"><span class="problematic" id="id200">*</span></a>openpyxl==2.4.8
+<a href="#id201"><span class="problematic" id="id202">*</span></a>packaging==16.8
+<a href="#id203"><span class="problematic" id="id204">*</span></a>pandas==0.20.3
+<a href="#id205"><span class="problematic" id="id206">*</span></a>pandocfilters==1.4.2
+<a href="#id207"><span class="problematic" id="id208">*</span></a>partd==0.3.8
+<a href="#id209"><span class="problematic" id="id210">*</span></a>path.py==10.3.1
+<a href="#id211"><span class="problematic" id="id212">*</span></a>pathlib2==2.3.0
+<a href="#id213"><span class="problematic" id="id214">*</span></a>patsy==0.4.1
+<a href="#id215"><span class="problematic" id="id216">*</span></a>pep8==1.7.0
+<a href="#id217"><span class="problematic" id="id218">*</span></a>pexpect==4.2.1
+<a href="#id219"><span class="problematic" id="id220">*</span></a>pickleshare==0.7.4
+<a href="#id221"><span class="problematic" id="id222">*</span></a>Pillow==5.0.0
+<a href="#id223"><span class="problematic" id="id224">*</span></a>pkginfo==1.4.1
+<a href="#id225"><span class="problematic" id="id226">*</span></a>plotly==2.5.1
+<a href="#id227"><span class="problematic" id="id228">*</span></a>ply==3.10
+<a href="#id229"><span class="problematic" id="id230">*</span></a>prompt-toolkit==1.0.15
+<a href="#id231"><span class="problematic" id="id232">*</span></a>psutil==5.4.0
+<a href="#id233"><span class="problematic" id="id234">*</span></a>ptyprocess==0.5.2
+<a href="#id235"><span class="problematic" id="id236">*</span></a>py==1.4.34
+<a href="#id237"><span class="problematic" id="id238">*</span></a>pycodestyle==2.3.1
+<a href="#id239"><span class="problematic" id="id240">*</span></a>pycosat==0.6.3
+<a href="#id241"><span class="problematic" id="id242">*</span></a>pycparser==2.18
+<a href="#id243"><span class="problematic" id="id244">*</span></a>pycrypto==2.6.1
+<a href="#id245"><span class="problematic" id="id246">*</span></a>pycurl==7.43.0
+<a href="#id247"><span class="problematic" id="id248">*</span></a>pyflakes==1.6.0
+<a href="#id249"><span class="problematic" id="id250">*</span></a>pygame==1.9.3
+<a href="#id251"><span class="problematic" id="id252">*</span></a>pyglet==1.3.1
+<a href="#id253"><span class="problematic" id="id254">*</span></a>Pygments==2.2.0
+<a href="#id255"><span class="problematic" id="id256">*</span></a>pylint==1.7.4
+<a href="#id257"><span class="problematic" id="id258">*</span></a>pyodbc==4.0.17
+<a href="#id259"><span class="problematic" id="id260">*</span></a>pyOpenSSL==17.2.0
+<a href="#id261"><span class="problematic" id="id262">*</span></a>pyparsing==2.2.0
+<a href="#id263"><span class="problematic" id="id264">*</span></a>pypl==40.10
+<a href="#id265"><span class="problematic" id="id266">*</span></a>PySocks==1.6.7
+<a href="#id267"><span class="problematic" id="id268">*</span></a>pytest==3.2.1
+<a href="#id269"><span class="problematic" id="id270">*</span></a>python-dateutil==2.6.1
+<a href="#id271"><span class="problematic" id="id272">*</span></a>pytz==2018.3
+<a href="#id273"><span class="problematic" id="id274">*</span></a>PyWavelets==0.5.2
+<a href="#id275"><span class="problematic" id="id276">*</span></a>PyYAML==3.12
+<a href="#id277"><span class="problematic" id="id278">*</span></a>pyzmq==16.0.2
+<a href="#id279"><span class="problematic" id="id280">*</span></a>QtAwesome==0.4.4
+<a href="#id281"><span class="problematic" id="id282">*</span></a>qtconsole==4.3.1
+<a href="#id283"><span class="problematic" id="id284">*</span></a>QtPy==1.3.1
+<a href="#id285"><span class="problematic" id="id286">*</span></a>requests==2.18.4
+<a href="#id287"><span class="problematic" id="id288">*</span></a>rope==0.10.5
+<a href="#id289"><span class="problematic" id="id290">*</span></a>ruamel-yaml==0.11.14
+<a href="#id291"><span class="problematic" id="id292">*</span></a>scikit-image==0.13.0
+<a href="#id293"><span class="problematic" id="id294">*</span></a>scikit-learn==0.19.1
+<a href="#id295"><span class="problematic" id="id296">*</span></a>scipy==0.19.1
+<a href="#id297"><span class="problematic" id="id298">*</span></a>seaborn==0.8
+<a href="#id299"><span class="problematic" id="id300">*</span></a>simplegeneric==0.8.1
+<a href="#id301"><span class="problematic" id="id302">*</span></a>singledispatch==3.4.0.3
+<a href="#id303"><span class="problematic" id="id304">*</span></a>six==1.11.0
+<a href="#id305"><span class="problematic" id="id306">*</span></a>snowballstemmer==1.2.1
+<a href="#id307"><span class="problematic" id="id308">*</span></a>sortedcollections==0.5.3
+<a href="#id309"><span class="problematic" id="id310">*</span></a>sortedcontainers==1.5.7
+<a href="#id311"><span class="problematic" id="id312">*</span></a>Sphinx==1.6.3
+<a href="#id313"><span class="problematic" id="id314">*</span></a>sphinxcontrib-websupport==1.0.1
+<a href="#id315"><span class="problematic" id="id316">*</span></a>spyder==3.2.4
+<a href="#id317"><span class="problematic" id="id318">*</span></a>SQLAlchemy==1.1.13
+<a href="#id319"><span class="problematic" id="id320">*</span></a>statsmodels==0.8.0
+<a href="#id321"><span class="problematic" id="id322">*</span></a>svg.path==2.2
+<a href="#id323"><span class="problematic" id="id324">*</span></a>svgwrite==1.1.12
+<a href="#id325"><span class="problematic" id="id326">*</span></a>sympy==1.1.1
+<a href="#id327"><span class="problematic" id="id328">*</span></a>tables==3.4.2
+<a href="#id329"><span class="problematic" id="id330">*</span></a>tblib==1.3.2
+<a href="#id331"><span class="problematic" id="id332">*</span></a>terminado==0.6
+<a href="#id333"><span class="problematic" id="id334">*</span></a>testpath==0.3.1
+<a href="#id335"><span class="problematic" id="id336">*</span></a>toolz==0.8.2
+<a href="#id337"><span class="problematic" id="id338">*</span></a>tornado==4.5.2
+<a href="#id339"><span class="problematic" id="id340">*</span></a>traitlets==4.3.2
+<a href="#id341"><span class="problematic" id="id342">*</span></a>typing==3.6.2
+<a href="#id343"><span class="problematic" id="id344">*</span></a>unicodecsv==0.14.1
+<a href="#id345"><span class="problematic" id="id346">*</span></a>urllib3==1.22
+<a href="#id347"><span class="problematic" id="id348">*</span></a>wcwidth==0.1.7
+<a href="#id349"><span class="problematic" id="id350">*</span></a>webencodings==0.5.1
+<a href="#id351"><span class="problematic" id="id352">*</span></a>Werkzeug==0.12.2
+<a href="#id353"><span class="problematic" id="id354">*</span></a>widgetsnbextension==3.0.2
+<a href="#id355"><span class="problematic" id="id356">*</span></a>wrapt==1.10.11
+<a href="#id357"><span class="problematic" id="id358">*</span></a>xlrd==1.1.0
+<a href="#id359"><span class="problematic" id="id360">*</span></a>XlsxWriter==1.0.2
+<a href="#id361"><span class="problematic" id="id362">*</span></a>xlwt==1.3.0
+<a href="#id363"><span class="problematic" id="id364">*</span></a>zict==0.1.3</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">NBA Data Visualization</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/Intro.html">1. Project Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">2. NDV Read ME File</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. NDV Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/Map Test.html">4. Map Test Script Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/Map Classes.html">5. Map Classes Script Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/GUI.html">6. GUI Script Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README.html" title="previous chapter">2. NDV Read ME File</a></li>
+      <li>Next: <a href="../User Guide/Map Test.html" title="next chapter">4. Map Test Script Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Maya Calabria, Bryce Mann, Juan Carlos del Rio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/Before Use/Requirements.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

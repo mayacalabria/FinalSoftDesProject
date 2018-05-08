@@ -1,0 +1,15 @@
+
+.. _Intro:
+
+********************
+Project Introduction
+********************
+
+Project Goals
+=============
+
+As avid followers of the sport the main motivation of this project was to create an easy way for people to understand the shooting and scoring dynamics of a sport that has meticulously been gathering this data since 1995. Throughout this project we hoped to learn about the process of creating compelling visuals that help illustrate the story that this data has to tell. Additionally, in accordance with the spirit of this project we wanted to provide a beautiful, accessible, and intuitive graphic user interface that would help potential users navigate through the vast amounts of data. Lastly, it was our intention to host this tool as a webapp that would allow other basketball fans  around the world could have access to this well of information currently quietly sitting deep within the NBA’s database.
+
+Project Functionality
+=====================
+This project uses a third party script (NBA_py) to access the JSON objects storing the shot data on `NBA.com <https://stats.nba.com/players/shots-general/>`_ as data frame in python. Using this data we created a local copy of all available shot data and sorted it into players and teams. We then use this data to create interactive plots that can be rendered on a browser. The webapp allows users to choose a team or player and compare their shot area frequency and accuracy compared to the league average. We are able to display this data for every season since 1996! 

@@ -20,6 +20,8 @@ def backend():
     if request.method == 'POST':
         if request.form['choice']=='README':
             return readme()
+        if request.form['choice']=='Documentation':
+            return documentation()
         if request.form['choice']=='Code Architecture':
             return code_architecture()
         if request.form['choice']=='Interactive Visualization Tool':
@@ -28,7 +30,11 @@ def backend():
 
 @app.route('/readme', methods=['POST'])
 def readme():
-    return render_template('readme.html')
+    return render_template('README.html')
+
+@app.route('/index', methods=['POST'])
+def documentation():
+    return('index.html')
 
 @app.route('/code_architecture', methods=['POST'])
 def code_architecture():

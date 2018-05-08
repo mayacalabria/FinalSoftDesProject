@@ -1,0 +1,176 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2. NDV Read ME File &#8212; NBA Data Visualization 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. NDV Requirements" href="Requirements.html" />
+    <link rel="prev" title="1. Project Introduction" href="../User Guide/Intro.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ndv-read-me-file">
+<span id="readme"></span><h1>2. NDV Read ME File<a class="headerlink" href="#ndv-read-me-file" title="Permalink to this headline">¶</a></h1>
+<p><strong>By Maya Calabria, Bryce Mann, and Juan Carlos del Rio</strong>
+<strong>Software Design, Olin College of Engineering, Spring 2018</strong></p>
+<div class="section" id="demo-video">
+<h2>2.1. Demo Video<a class="headerlink" href="#demo-video" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=yQ2LuFMj8M4&amp;feature=youtu.be">NARATED DEMO VIDEO</a></p>
+</div>
+<div class="section" id="project-description">
+<h2>2.2. Project Description<a class="headerlink" href="#project-description" title="Permalink to this headline">¶</a></h2>
+<p>For our final project we created a webapp that allows users to visualize the shot patterns for every team and player in the NBA since 1996.</p>
+</div>
+<div class="section" id="to-install-before-use">
+<h2>2.3. To Install before use<a class="headerlink" href="#to-install-before-use" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>$pip install -r requirements.txt</dt>
+<dd><ul class="first last">
+<li>requirements.txt can be found under /Before Use/requirements.txt</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="how-to-run">
+<h2>2.4. How to Run<a class="headerlink" href="#how-to-run" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Download all data to the same directory where the folder containing all the project files are stored</p>
+<blockquote>
+<div><ul class="simple">
+<li>Make sure to copy both Player Data and Team Data</li>
+<li>Check the the folders are named PlayerData2 and TeamData2 otherwise you will run into ‘Key error: ZONE FREQUENCY’</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Go to the directory where the scripts are located</p>
+</li>
+<li><p class="first">In the command line run:</p>
+<blockquote>
+<div><ul class="simple">
+<li>$ bokeh serve GUI.py –allow-websocket-origin=127.0.0.1:5000</li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Then run:</dt>
+<dd><ul class="first last simple">
+<li>$ python main.py</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Open the link shown in the terminal in your browser of choice</p>
+</li>
+<li><p class="first">Enjoy!</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">NBA Data Visualization</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/Intro.html">1. Project Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. NDV Read ME File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#demo-video">2.1. Demo Video</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#project-description">2.2. Project Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#to-install-before-use">2.3. To Install before use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-run">2.4. How to Run</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Requirements.html">3. NDV Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/Map Test.html">4. Map Test Script Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/Map Classes.html">5. Map Classes Script Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../User Guide/GUI.html">6. GUI Script Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../User Guide/Intro.html" title="previous chapter">1. Project Introduction</a></li>
+      <li>Next: <a href="Requirements.html" title="next chapter">3. NDV Requirements</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Maya Calabria, Bryce Mann, Juan Carlos del Rio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/Before Use/README.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

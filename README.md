@@ -53,4 +53,4 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ## Documentation
 
- For all documentation open FinalSoftDesProject/_build/html/index.html
+ For all documentation open [Documentation](https://github.com/mayacalabria/FinalSoftDesProject/blob/master/_build/html/index.html)

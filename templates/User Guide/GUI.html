@@ -1,0 +1,355 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>6. GUI Script Documentation &#8212; NBA Data Visualization 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="5. Map Classes Script Documentation" href="Map Classes.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gui-script-documentation">
+<span id="gui"></span><h1>6. GUI Script Documentation<a class="headerlink" href="#gui-script-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>6.1. DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Complete integration of Bokeh widget based GUI with bokeh hexbin plots.
+Use the <code class="docutils literal"><span class="pre">bokeh</span> <span class="pre">serve</span></code> command to run the webapp by executing:</p>
+<blockquote>
+<div>bokeh serve GUI.py</div></blockquote>
+<dl class="docutils">
+<dt>at your command prompt.Then navigate to the URL</dt>
+<dd><a class="reference external" href="http://localhost:5006/GUI">http://localhost:5006/GUI</a></dd>
+<dt>in your browser. or use the command:</dt>
+<dd>bokeh serve –show GUI.py</dd>
+</dl>
+</div>
+<div class="section" id="functions">
+<h2>6.2. FUNCTIONS<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><strong>update_plot_type(attrname, old, new)</strong></dt>
+<dd>Activated by the radio button callback function when the status of the button pressed changes. The function will check the new state and display the desired frequency or accuracy plot for the team or player string in the search input box</dd>
+<dt><strong>update_search_term(attrname, old, new)</strong></dt>
+<dd>Activated by the search button callback. It will check for if the player is looking for a player or a team, then it will checks the style of plot requested. The function will then generate the desired plot and update the values of the slider to match the active years of the player or team</dd>
+<dt><strong>update_year(attrname, old, new)</strong></dt>
+<dd>Activates when the mouse is released over a new slider position or when a new player/team is requested. The plot for the correct year is generated using the slider value to create a string for the correct season to pass to map_classes (eg. 2017 –&gt; ‘2018-2018’). The script removes the old plot from the layout matrix and renders the new one in its place. Both radio button groups are also checked to provide the correct plot type.</dd>
+</dl>
+</div>
+<div class="section" id="source-code">
+<h2>6.3. SOURCE CODE<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Complete integration of Bokeh widget based GUI with bokeh hxbin plots.</span>
+<span class="sd">Use the ``bokeh serve`` command to run the webapp by executing:</span>
+<span class="sd">    bokeh serve GUI.py</span>
+<span class="sd">at your command prompt.</span>
+<span class="sd">Then navigate to the URL</span>
+<span class="sd">    http://localhost:5006/GUI</span>
+<span class="sd">in your browser.</span>
+
+<span class="sd">or use the command:</span>
+<span class="sd">    bokeh serve --show GUI.py</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="k">import</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span><span class="n">curdoc</span>
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="k">import</span> <span class="n">widgetbox</span><span class="p">,</span> <span class="n">gridplot</span><span class="p">,</span> <span class="n">layout</span><span class="p">,</span><span class="n">row</span><span class="p">,</span><span class="n">column</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">Slider</span><span class="p">,</span> <span class="n">TextInput</span><span class="p">,</span> <span class="n">Dropdown</span><span class="p">,</span> <span class="n">Toggle</span><span class="p">,</span><span class="n">RadioButtonGroup</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">show</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">CDSView</span><span class="p">,</span> <span class="n">IndexFilter</span><span class="p">,</span><span class="n">Button</span><span class="p">,</span> <span class="n">CustomJS</span>
+<span class="kn">from</span> <span class="nn">bokeh.events</span> <span class="k">import</span> <span class="n">ButtonClick</span>
+<span class="kn">from</span> <span class="nn">bokeh.util.hex</span> <span class="k">import</span> <span class="n">hexbin</span>
+<span class="kn">from</span> <span class="nn">bokeh.client</span> <span class="k">import</span> <span class="n">push_session</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">map_classes</span>
+<span class="kn">from</span> <span class="nn">map_classes</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1"># Set up plot</span>
+<span class="sd">&quot;&quot;&quot;Deifnes default player plot that will be shown when the page is rendered for the first time&quot;&quot;&quot;</span>
+
+<span class="n">player</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Player</span><span class="p">(</span><span class="s1">&#39;Kevin Durant&#39;</span><span class="p">)</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">hex_accuracy</span><span class="p">(</span><span class="s1">&#39;2017-18&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set up widgets</span>
+<span class="sd">&quot;&quot;&quot;Creates the objects from bokeh.widgets that will be used to interact with the plot&quot;&quot;&quot;</span>
+
+<span class="n">search_bar</span> <span class="o">=</span> <span class="n">TextInput</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Search (eg. Kevin Durant or GSW)&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Kevin Durant&#39;</span><span class="p">)</span>
+<span class="n">search</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Go&quot;</span><span class="p">,</span> <span class="n">button_type</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">)</span>
+<span class="n">slider</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">2007</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">2017</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2017</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Season&quot;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;slider&quot;</span><span class="p">,</span><span class="n">callback_policy</span> <span class="o">=</span> <span class="s2">&quot;mouseup&quot;</span><span class="p">)</span>
+<span class="n">button_group1</span> <span class="o">=</span> <span class="n">RadioButtonGroup</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Player&quot;</span><span class="p">,</span> <span class="s2">&quot;Team&quot;</span><span class="p">],</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">button_group2</span> <span class="o">=</span> <span class="n">RadioButtonGroup</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;Frequency&quot;</span><span class="p">],</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Set up layouts and add to document</span>
+<span class="sd">&quot;&quot;&quot;Sets up the widgets and plot in an html document that will be pushed to the website&quot;&quot;&quot;</span>
+
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">widgetbox</span><span class="p">(</span><span class="n">button_group1</span><span class="p">,</span> <span class="n">search_bar</span><span class="p">,</span><span class="n">search</span><span class="p">,</span> <span class="n">button_group2</span><span class="p">,</span> <span class="n">slider</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Widgets&#39;</span><span class="p">)</span>
+<span class="n">mainLayout</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">inputs</span><span class="p">),</span><span class="n">p1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;mainLayout&#39;</span><span class="p">)</span>
+<span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">add_root</span><span class="p">(</span><span class="n">mainLayout</span><span class="p">)</span>
+
+<span class="c1">#Callback Functions</span>
+<span class="sd">&quot;&quot;&quot;Callback functions define what happens when the user interacts with the html document on their browser. Each widget has their own individual function in order to udate the plot according to the user&#39;s input. &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">update_search_term</span><span class="p">(</span><span class="n">attrname</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Activated by the search button callback. It will check for if the player is looking for a player or a team, then it will checks the style of plot requested. The function will then generate the desired plot and update the values of the slider to match the active years of the player or team &quot;&quot;&quot;</span>
+    <span class="n">rootLayout</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;mainLayout&#39;</span><span class="p">)</span>
+    <span class="n">listOfSubLayouts</span> <span class="o">=</span> <span class="n">rootLayout</span><span class="o">.</span><span class="n">children</span>
+    <span class="k">if</span> <span class="n">button_group2</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">button_group1</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">player</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Player</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">final_season</span><span class="p">()</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">hex_freq</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="n">rookie</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">rookie_season</span><span class="p">()</span>
+            <span class="n">final</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">final_season</span><span class="p">()</span>
+            <span class="n">index1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rookie</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">index2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">index1</span><span class="o">==</span><span class="n">index2</span><span class="p">:</span>
+                <span class="n">index1</span> <span class="o">=</span> <span class="n">index2</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">slider</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;slider&#39;</span><span class="p">)</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">index1</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">index2</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">index2</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">team</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Team</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">team</span><span class="o">.</span><span class="n">hex_freq</span><span class="p">(</span><span class="s1">&#39;2017-18&#39;</span><span class="p">)</span>
+            <span class="n">slider</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;slider&#39;</span><span class="p">)</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="mi">1996</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="mi">2017</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">2017</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">button_group1</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">player</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Player</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">final_season</span><span class="p">()</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">hex_accuracy</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="n">rookie</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">rookie_season</span><span class="p">()</span>
+            <span class="n">final</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">final_season</span><span class="p">()</span>
+            <span class="n">index1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rookie</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">index2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">index1</span><span class="o">==</span><span class="n">index2</span><span class="p">:</span>
+                <span class="n">index1</span> <span class="o">=</span> <span class="n">index2</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">slider</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;slider&#39;</span><span class="p">)</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">index1</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">index2</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">index2</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">team</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Team</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">team</span><span class="o">.</span><span class="n">hex_accuracy</span><span class="p">(</span><span class="s1">&#39;2017-18&#39;</span><span class="p">)</span>
+            <span class="n">slider</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;slider&#39;</span><span class="p">)</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="mi">1996</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="mi">2017</span>
+            <span class="n">slider</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">2017</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+
+<span class="k">def</span> <span class="nf">update_plot_type</span><span class="p">(</span><span class="n">attrname</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Activted by the radio button callback function when the staus of the button pressed changes. The function will check the new state and display the desired frequency or accuracy plot for the team or player string in the search input box&quot;&quot;&quot;</span>
+    <span class="n">rootLayout</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;mainLayout&#39;</span><span class="p">)</span>
+    <span class="n">listOfSubLayouts</span> <span class="o">=</span> <span class="n">rootLayout</span><span class="o">.</span><span class="n">children</span>
+    <span class="k">if</span> <span class="n">button_group1</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">button_group2</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">player</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Player</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">hex_freq</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">player</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Player</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">hex_accuracy</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">button_group2</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">team</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Team</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">team</span><span class="o">.</span><span class="n">hex_freq</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">team</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Team</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">season</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">team</span><span class="o">.</span><span class="n">hex_accuracy</span><span class="p">(</span><span class="n">season</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">update_year</span><span class="p">(</span><span class="n">attrname</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Activates when the mouse is released over a new slider position or when a new palyer/team is requested. The plot for the correct year is generated using the slider value to create a string for the correct season to pass to map_classes (eg. 2017 --&gt; &#39;2018-2018&#39;). The script removes the old plot from the layout matrix and renders the new one in its place. Both radio button groups are also checked to provide the correct plot type.&quot;&quot;&quot;</span>
+    <span class="n">rootLayout</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;mainLayout&#39;</span><span class="p">)</span>
+    <span class="n">listOfSubLayouts</span> <span class="o">=</span> <span class="n">rootLayout</span><span class="o">.</span><span class="n">children</span>
+    <span class="k">if</span> <span class="n">button_group1</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">button_group2</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">player</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Player</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">nextyear</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">years</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">nextyear</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">hex_freq</span><span class="p">(</span><span class="n">season</span><span class="o">=</span><span class="n">years</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">player</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Player</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">nextyear</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">years</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">nextyear</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">hex_accuracy</span><span class="p">(</span><span class="n">season</span><span class="o">=</span><span class="n">years</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">button_group2</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">team</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Team</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">nextyear</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">years</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">nextyear</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">team</span><span class="o">.</span><span class="n">hex_freq</span><span class="p">(</span><span class="n">season</span><span class="o">=</span><span class="n">years</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">plotToRemove</span> <span class="o">=</span> <span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_by_name</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">plotToRemove</span><span class="p">)</span>
+            <span class="n">team</span> <span class="o">=</span> <span class="n">map_classes</span><span class="o">.</span><span class="n">Team</span><span class="p">(</span><span class="n">search_bar</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">nextyear</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">years</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">nextyear</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">team</span><span class="o">.</span><span class="n">hex_accuracy</span><span class="p">(</span><span class="n">years</span><span class="p">)</span>
+            <span class="n">plotToAdd</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">listOfSubLayouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plotToAdd</span><span class="p">)</span>
+
+<span class="c1">#Set up callback event behavior</span>
+<span class="sd">&quot;&quot;&quot; These define the attribute of each widget that is continiously checked and defines the callback functions to be run when the atribute is changed by the user.&quot;&quot;&quot;</span>
+<span class="n">search</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;clicks&#39;</span><span class="p">,</span> <span class="n">update_search_term</span><span class="p">,</span> <span class="n">update_year</span><span class="p">)</span>
+<span class="n">button_group2</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="n">update_plot_type</span><span class="p">)</span>
+<span class="n">slider</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="n">update_year</span><span class="p">)</span>
+
+<span class="c1">#Name the html document</span>
+<span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;GUI&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">NBA Data Visualization</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Before Use/README.html">1. NDV Read ME File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Before Use/Requirements.html">2. NDV Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">3. Project Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Map Test.html">4. Map Test Script Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Map Classes.html">5. Map Classes Script Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. GUI Script Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">6.1. DESCRIPTION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">6.2. FUNCTIONS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code">6.3. SOURCE CODE</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Map Classes.html" title="previous chapter">5. Map Classes Script Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Maya Calabria, Bryce Mann, Juan Carlos del Rio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/User Guide/GUI.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
