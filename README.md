@@ -52,4 +52,4 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ## Documentation
 
- For all [documentation](index.html)
+ For all [documentation](file:///index.html)
