@@ -14,13 +14,13 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ![Architecture]
 
-[Architecture]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "High level system diagram"
+[Architecture]: https://raw.githubusercontent.com/mayacalabria/FinalSoftDesProject/master/ClassMaterials/architecture_final.png "High level system diagram"
 
 ## Project Progression
 
 ![Progression]
 
-[Progression]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Project development over time"
+[Progression]: https://raw.githubusercontent.com/mayacalabria/FinalSoftDesProject/master/ClassMaterials/progress.png "Project development over time"
 
 ## Demo Video
 
@@ -50,3 +50,7 @@ For our final project we created a webapp that allows users to visualize the sho
 * Open the link shown in the terminal in your browser of choice
 
 * Enjoy!
+
+## Documentation
+
+ For all documentation open FinalSoftDesProject/_build/html/index.html
