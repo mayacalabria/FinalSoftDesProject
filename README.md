@@ -52,4 +52,4 @@ For our final project we created a webapp that allows users to visualize the sho
 
 ## For all Documentation
  * Navigate to main project directory
- * $ firefox _build/html/index.html
+ * $firefox_build/html/index.html
