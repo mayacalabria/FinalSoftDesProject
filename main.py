@@ -23,7 +23,7 @@ def backend():
 
 @app.route('/project_description', methods=['POST','GET'])
 def project_description():
-    return 'Project Description Coming'
+    return render_template('architecture.html')
 
 @app.route('/player', methods=['POST','GET'])
 def data_viz():
