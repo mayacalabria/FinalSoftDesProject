@@ -7,13 +7,14 @@
 ***
 
 ## Project Description
-
+For our final project we created a webapp that allows users to visualize the shot patterns for every team and player in the NBA since 1996.
 
 ***
 
 ## To Install before use
 
-$pip install -r requirements.txt
+* $pip install -r requirements.txt
+  * requirements.txt can be found under /Before Use/requirements.txt
 
 ## How to Run
 
