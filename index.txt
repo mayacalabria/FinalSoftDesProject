@@ -11,10 +11,9 @@ Welcome to NBA Data Visualization's documentation!
    :numbered:
    :caption: Contents:
 
+   User Guide/Intro
    Before Use/README
    Before Use/Requirements
-
-   User Guide/Intro
    User Guide/Map Test
    User Guide/Map Classes
    User Guide/GUI
