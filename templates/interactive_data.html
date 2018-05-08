@@ -2,21 +2,37 @@
 <head>
 <style>
 p,p2 {text-align:center;}
-p,p2 {color:black;}
+script,p,p2 {color:white;}
 p,p2 {font-family: "Courier New",Courier,monospace;}}
+p {font-size: 30px;}
 body {
-    background-color: rgba(0, 50, 200, 1);
+    background-color: rgba(0, 50, 230,1);
+    margin: 70px;
+    padding: 0;
 }
 </style>
 </head>
 <body>
 
-<p>Interactive Visualization Tool</p>
+<p>Interactive Visualization Tool</p><br>
 
-{{ bokS|safe }}
+{{ bokS|safe }}<br>
 
-<p2>****EXPLANATION OF WHAT THE DIFFERENT PLOTS MEAN AND WHY THEY
-  ARE IMPORTANT****</p2>
+<p2>The heat maps above show how the given player or team differs from the
+league average, in either shooting percentage or shot location frequency.
+To get this visualization, we leveraged the fact that the NBA splits the
+court up into distinct shooting zones, which lets every (x,y) location be
+associated with one of these zones. To build our heat maps we wrote scripts
+to go through all of the data and calculate each player and team's shooting
+percentage and frequency by zone (or percentage of their total shots coming from
+a given zone); for each year the league averages for these values were
+subtracted from the player and team's values. These differences are what we
+used to associate zones with colors. Both types of heat map uses the same
+color scheme, where red means they are above the leage average, blue means
+they are below, and white means they are right in the middle. For a more
+exact view of how they compared to the league, just rest your curser over a
+given hexagon and you will be able to see the exact percentage difference.
+</p2>
 
 </body>
 </html>
