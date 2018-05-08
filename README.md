@@ -41,7 +41,7 @@ For our final project we created a webapp that allows users to visualize the sho
 * Go to the directory where the scripts are located
 
 * In the comand line run:
-  * $ bokeh serve GUI.py --allow-websocket-origin=127.0.0.1:5000
+  * $ bokeh serve GUI.py '--'allow-websocket-origin=127.0.0.1:5000
 
 * Then run:
   * $ python main.py
