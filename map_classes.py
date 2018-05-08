@@ -1,3 +1,6 @@
+"""Player, Team and Error classes that are used to grab and plot data as
+widgets report interactions"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as lines
@@ -225,10 +228,3 @@ class Error():
         p.toolbar.logo = None
         p.toolbar_location = None
         return p
-
-
-
-
-if __name__ == "__main__":
-    durant = Player('Steen Curry')
-    show(durant.hex_freq())
