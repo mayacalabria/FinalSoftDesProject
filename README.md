@@ -10,6 +10,8 @@
 For our final project we created a webapp that allows users to visualize the shot patterns for every team and player in the NBA since 1996.
 
 ***
+##Demo Video
+[NARATED DEMO VIDEO](https://www.youtube.com/watch?v=yQ2LuFMj8M4&feature=youtu.be)
 
 ## To Install before use
 
