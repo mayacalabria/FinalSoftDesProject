@@ -29,7 +29,7 @@ For our final project we created a webapp that allows users to visualize the sho
 ## To Install before use
 
 * $pip install -r Requirements.txt
-  * Requirements.txt can be found under \ /BeforeUse/Requirements.txt \ 
+  * Requirements.txt can be found under in the BeforeUse folder
 
 ## How to Run
 
