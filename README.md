@@ -42,7 +42,7 @@ For our final project we created a webapp that allows users to visualize the sho
 
 * In the comand line run:
   * $ bokeh serve GUI.py \-\-allow-websocket-origin=127.0.0.1:5000
-  (Make sure there are two dashes with no space before allow, Markdown can't render them separately.)
+  * (Make sure there are two dashes with no space before allow, Markdown can't render them separately.)
 
 * Then run:
   * $ python main.py
