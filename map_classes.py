@@ -30,13 +30,16 @@ class Player():
         'Kevin Durant', 'LeBron James', "Shaquille O'Neal"
         """
         pid_dict = pickle.load(open('pid_dict.pickle','rb'))
+        #search for name string in dict
         new_dict = {v: k for k, v in pid_dict.items()}
+        #if name is valid fully initialize class
         if name in new_dict:
             self.name = name
             self.id = new_dict[name]
             self.percent_low = -10
             self.percent_hi = 10
             self.error_flag = 0
+        #if not set the error flag to True
         else:
             self.error_flag = 1
 
@@ -44,6 +47,7 @@ class Player():
         """ Returns the last season that a player played in. """
         if self.error_flag == 1:
             return '2017-18'
+        #grab the last season on file for the player
         else:
             player_dir = os.listdir(os.path.join(os.getcwd(),'../PlayerData2/'+self.id))
             years = []
@@ -57,6 +61,7 @@ class Player():
         """ Returns first season of player's career. """
         if self.error_flag == 1:
             return '2016-17'
+        #return first season on file for the player
         else:
             player_dir = os.listdir(os.path.join(os.getcwd(),'../PlayerData2/'+self.id))
             years = []
@@ -70,6 +75,7 @@ class Player():
         """ Takes season, and returns all player shot data for that season as a pandas frame. """
         if season == None:  # defaults to the most recent season played, if no season passed
             season = self.final_season()
+        #read shot file if it exists, otherwise return empty dataframe
         shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../PlayerData2/'+self.id+'/'+season+'.csv'))
         if os.path.exists(shots_dir):
             return pd.DataFrame.from_csv(shots_dir)
@@ -98,11 +104,14 @@ class Player():
         """ Generates a hex bin plot that compares a player's shooting percentages to the
         leagues by zone. Shows accuracy compared to league.
         Takes season as a string, defaults to last played season"""
+        #if the error_flag is true return the error plot
         if self.error_flag == 1:
             error = Error()
             return error.error_graph()
         else:
             shots = self.generate_shots(season)
+            #if there is no data for the season just plot the court with
+            #informative tile
             if shots.empty:
                 p = figure(title='No Data for the Selected Season',
                     tools="wheel_zoom,reset", match_aspect=True,
@@ -111,23 +120,26 @@ class Player():
                 p.axis.visible = False
                 draw_court(p)
             else:
+                #sort the bins by zone, and initialize figure to plot on
                 all_bins = sort_all_bins(shots)
                 p = figure(title=self.name+' Heatmap: accuracy compared to league',
                     tools="wheel_zoom,reset", match_aspect=True,
                     background_fill_color='#BB7E3B',name='plot')
                 p.grid.visible = False
                 p.axis.visible = False
+                #create hex tiles and define color ranges
                 p.hex_tile(q="q", r="r", size=0.1, line_color='black', source=all_bins,
                     fill_color=linear_cmap('counts', cc.coolwarm, self.percent_low, self.percent_hi))
                 draw_court(p)
+                #colorbar stuff
                 color_mapper = LinearColorMapper(palette=cc.coolwarm,low=self.percent_low,high=self.percent_hi)
                 color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
                 p.add_layout(color_bar, 'right')
-                p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
 
+                p.add_layout(Title(text="Shooting percentage difference from league",align = 'center'),'right')
+                #hover functionality
                 hover = HoverTool(tooltips=[("%" + "difference", "@counts"+"%")],
                           mode="mouse", point_policy="follow_mouse")
-
                 p.add_tools(hover)
 
         return p
@@ -135,10 +147,13 @@ class Player():
     def hex_freq(self,season=None):
         """ Generates a hex bin plot that compares a player's shooting percentages to the
         leagues by zone. Shows accuracy compared to league.
-        Takes season as a string, defaults to last played season"""
+        Takes season as a string, defaults to last played season...
+        Identical to hex_accuracy excepf sort_all_bins replaced with
+        sort_all_bins_freq"""
         if self.error_flag == 1:
             error = Error()
             return error.error_graph()
+
         else:
             shots = self.generate_shots(season)
             if shots.empty:
@@ -177,6 +192,7 @@ class Team(Player):
 
          """
         teamid_dict = pickle.load(open('teamid_dict.pickle','rb'))
+        #searching for team abbreviation and initialize class if its there
         new_dict = {v: k for k, v in teamid_dict.items()}
         if abrv in new_dict:
             self.name = abrv
@@ -184,6 +200,7 @@ class Team(Player):
             self.percent_low = -5
             self.percent_hi = 5
             self.error_flag = 0
+        #otherwise set error flag
         else:
             self.error_flag = 1
 
@@ -192,6 +209,7 @@ class Team(Player):
         Takes season as a string, defaults to '2017-18' """
         if season == None:
             season = '2017-18'
+        #search for relavent season, return empty dataframe if it doesnt exist
         shots_dir = os.path.abspath(os.path.join(os.getcwd(),'../TeamData2/'+self.id+'/'+season+'.csv'))
         if os.path.exists(shots_dir):
             shots = pd.DataFrame.from_csv(shots_dir)
@@ -205,6 +223,9 @@ class Error():
         pass
 
     def error_graph(self):
+        """plotting error graph in case of misspelling to avoid errors breaking
+        the program"""
+        
         p = figure(title='Uh oh!', x_range=(0,1), y_range=(0,2),
             tools="wheel_zoom,reset", match_aspect=True, name='plot')
 
