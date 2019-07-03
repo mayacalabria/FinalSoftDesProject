@@ -58,8 +58,9 @@ Having learned this, we knew we needed a plotting tool that had more customizabi
 * In the comand line run:
   * $ bokeh serve GUI.py \-\-allow-websocket-origin=127.0.0.1:5000
   * (Make sure there are two dashes with no space before allow.)
+  * Open a new terminal
 
-* Then run:
+* In the new terminal navigate to the main directory again and run:
   * $ python main.py
 
 * Open the link shown in the terminal in your browser of choice
