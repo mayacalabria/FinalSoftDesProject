@@ -43,13 +43,22 @@ Having learned this, we knew we needed a plotting tool that had more customizabi
 
 ## To Install, before use
 
+* Clone this repository onto your local machine
 * $pip install -r Requirements.txt
   * Requirements.txt can be found in the BeforeUse folder
 
 ## How to Run
 
 * Download PlayerData2 and TeamData2 from this [link](https://drive.google.com/drive/folders/1GbswBgChzBKQoBmv7sv0RqX9-l3cJXR0?usp=sharing) (this is necessary because each folder was too large to store on github)
-  * This github repo, PlayerData2, and TeamData2 all need to be separate folders in the same directory for the tool to work
+  * Keep this cloned repo, PlayerData2, and TeamData2 all in separate folders in the same directory for the tool to work (see below)
+  * File structure:
+	Main Directory	
+	|	
+	+--\[FinalSoftDesProject](https://github.com/mayacalabria/FinalSoftDesProject)
+	|
+	+--\PlayerData2
+	|
+	+--\TeamData2
   * Make sure to copy both PlayerData2 and TeamData2
   * Keep the folders named PlayerData2 and TeamData2 otherwise the file paths will not be correct
 
